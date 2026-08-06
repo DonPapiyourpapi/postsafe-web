@@ -235,12 +235,80 @@ h1, h2, h3 { font-weight: 600; }
 .folder.is-hit .folder__ic { color: var(--accent); }
 
 /* ==========================================================================
+   Das iPhone, mit dem der erste Brief abfotografiert wird
+   ========================================================================== */
+
+.phone {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 90;
+  width: 1px;                 /* Maße kommen aus dem Skript */
+  aspect-ratio: 1 / 2.03;
+  border-radius: 13% / 6.4%;
+  border: 3px solid #1b1b22;
+  background: transparent;
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.16),
+    0 0 0 2px rgba(0, 0, 0, 0.35),
+    0 40px 80px rgba(15, 15, 25, 0.28);
+  transform-origin: 50% 50%;
+  opacity: 0;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+.phone__island {
+  position: absolute;
+  top: 1.6%;
+  left: 50%;
+  width: 30%;
+  height: 2.6%;
+  transform: translateX(-50%);
+  background: #1b1b22;
+  border-radius: 999px;
+}
+
+/* Der Sucher: vier Ecken um den Brief */
+.phone__view {
+  position: absolute;
+  inset: 20% 7%;
+  --c: var(--accent);
+  --t: 2px;
+  --l: 16px;
+  opacity: 0;
+  background:
+    linear-gradient(var(--c), var(--c)) 0 0 / var(--l) var(--t) no-repeat,
+    linear-gradient(var(--c), var(--c)) 0 0 / var(--t) var(--l) no-repeat,
+    linear-gradient(var(--c), var(--c)) 100% 0 / var(--l) var(--t) no-repeat,
+    linear-gradient(var(--c), var(--c)) 100% 0 / var(--t) var(--l) no-repeat,
+    linear-gradient(var(--c), var(--c)) 0 100% / var(--l) var(--t) no-repeat,
+    linear-gradient(var(--c), var(--c)) 0 100% / var(--t) var(--l) no-repeat,
+    linear-gradient(var(--c), var(--c)) 100% 100% / var(--l) var(--t) no-repeat,
+    linear-gradient(var(--c), var(--c)) 100% 100% / var(--t) var(--l) no-repeat;
+}
+
+.phone__flash {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: #fff;
+  opacity: 0;
+}
+
+html:not(.js) .phone { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .phone { display: none; }
+}
+
+/* ==========================================================================
    Die Geschichte: erster Bildschirm und Stapel in einem Stück
    ========================================================================== */
 
 .story {
   position: relative;
-  height: 480vh;
+  height: 520vh;
 }
 
 .story__stick {
@@ -407,7 +475,7 @@ h1, h2, h3 { font-weight: 600; }
   align-items: center;
   gap: 0.5rem;
   opacity: 0;
-  animation: hintIn 1s var(--ease) 1.6s forwards;
+  transition: opacity 0.8s var(--ease) 0.9s;
 }
 
 .story__hint span {
@@ -426,7 +494,6 @@ h1, h2, h3 { font-weight: 600; }
   animation: trickle 2.6s var(--ease-soft) infinite;
 }
 
-@keyframes hintIn { to { opacity: 1; } }
 @keyframes trickle {
   0%   { transform: translateY(-100%); }
   60%  { transform: translateY(100%); }
@@ -434,7 +501,7 @@ h1, h2, h3 { font-weight: 600; }
 }
 
 @media (max-width: 767px) {
-  .story { height: 430vh; }
+  .story { height: 460vh; }
   .story__hint { display: none; }
   .story__words {
     top: clamp(5rem, 12vh, 7rem);

@@ -40,20 +40,20 @@
   var words = story && story.querySelector("[data-words] > div");
   var hint = story && story.querySelector(".story__hint");
   var folderBox = story && story.querySelector("[data-folders]");
+  var phone = story && story.querySelector("[data-phone]");
   var letters = story ? [].slice.call(story.querySelectorAll("[data-ltr]")) : [];
   var folders = story ? [].slice.call(story.querySelectorAll(".folders .folder")) : [];
   var caps = story ? [].slice.call(story.querySelectorAll("[data-cap]")) : [];
   var layout = null;
 
-  /* Ein aufgeräumter Fächer zu Beginn … */
-  var HX = [-0.26, 0.20, -0.08, 0.26, -0.18, 0.05];
-  var HY = [0.17, 0.10, 0.00, -0.08, 0.05, -0.15];
-  var HR = [-7, 5, -2, 7, -5, 1.5];
+  /* Brief 0 liegt oben auf — er wird zuerst abfotografiert. */
+  var HX = [-0.06, 0.22, -0.24, 0.16, -0.16, 0.06];
+  var HY = [0.02, 0.12, 0.16, -0.10, -0.06, -0.16];
+  var HR = [-2.5, 6, -8, 5, -6, 2];
 
-  /* … und der Stapel, den niemand sortiert hat. */
-  var PX = [-0.20, 0.17, -0.06, 0.13, -0.15, 0.04];
-  var PY = [0.20, 0.13, 0.03, -0.05, -0.12, -0.20];
-  var PR = [-12, 8, -4, 10, -8, 3];
+  var PX = [-0.05, 0.16, -0.19, 0.12, -0.14, 0.04];
+  var PY = [0.04, 0.14, 0.19, -0.06, -0.12, -0.19];
+  var PR = [-4, 8, -11, 9, -7, 3];
 
   function measure() {
     if (!stage) return;
@@ -90,18 +90,25 @@
       };
     });
 
+    /* Das iPhone: so groß, dass der Brief in den Sucher passt —
+       am Telefon nur so hoch, dass es über den Ordnern bleibt. */
+    var phoneW = Math.min((narrow ? H * 0.52 : H * 0.94) / 2.03, cardW / 0.84);
+    if (phone) phone.style.width = phoneW.toFixed(1) + "px";
+
     var fr = folderBox ? folderBox.getBoundingClientRect() : null;
     var mid0 = boxes.length ? (boxes[0].cy - boxes[0].h / 2 + boxes[boxes.length - 1].cy + boxes[boxes.length - 1].h / 2) / 2 : H / 2;
 
     layout = {
       W: W, H: H, narrow: narrow, cardW: cardW, cardH: cardH,
       marks: marks, boxes: boxes,
+      phoneW: phoneW, phoneH: phoneW * 2.03,
+      photoFit: Math.min(1, (phoneW * 0.84) / cardW),
       shiftX: fr && !narrow ? Math.max(0, (W - fr.width) / 2) : 0,
       shiftY: narrow ? H / 2 - mid0 : 0,
       heroX: narrow ? W * 0.5 : W * 0.72,
       heroY: narrow ? H * 0.7 : H * 0.5,
       pileX: narrow ? W * 0.5 : W * 0.26,
-      pileY: narrow ? H * 0.25 : H * 0.5
+      pileY: narrow ? H * 0.27 : H * 0.5
     };
   }
 
@@ -120,7 +127,7 @@
     if (hint) hint.style.opacity = (1 - span(q, 0, 0.04)).toFixed(3);
 
     /* Am Ende rückt die fertige Ablage in die Mitte. */
-    var mid = easeInOut(span(q, 0.88, 1));
+    var mid = easeInOut(span(q, 0.92, 1));
     if (folderBox) {
       folderBox.style.opacity = show.toFixed(3);
       folderBox.style.transform =
@@ -131,18 +138,24 @@
 
     var counts = [0, 0, 0, 0, 0, 0];
     var hits = [false, false, false, false, false, false];
+    var firstX = 0, firstY = 0, firstP = 0, firstLp = 0;
 
     for (var i = 0; i < n; i++) {
       var el = letters[i];
       var k = +(el.getAttribute("data-folder") || 0);
       var box = layout.boxes[k] || layout.boxes[0];
 
-      var start = 0.18 + i * (0.56 / n);
-      var lp = span(q, start, start + 0.23);
+      /* Der erste Brief bekommt Zeit fürs Abfotografieren. */
+      var first = i === 0;
+      var start = first ? 0.18 : 0.44 + (i - 1) * 0.0725;
+      var lp = span(q, start, start + (first ? 0.28 : 0.17));
 
-      var lift = Math.sin(Math.PI * span(lp, 0, 0.42));
-      var read = span(lp, 0.06, 0.4);
-      var t = easeInOut(span(lp, 0.42, 1));
+      var lift = first
+        ? span(lp, 0, 0.12) * (1 - span(lp, 0.5, 0.64))
+        : Math.sin(Math.PI * span(lp, 0, 0.42));
+      var photo = first ? span(lp, 0.02, 0.18) * (1 - span(lp, 0.44, 0.58)) : 0;
+      var read = span(lp, first ? 0.34 : 0.06, first ? 0.62 : 0.4);
+      var t = easeInOut(span(lp, first ? 0.66 : 0.42, 1));
 
       /* Ruheort: erst Fächer, dann Stapel */
       var restX = lerp(layout.heroX + layout.cardW * HX[i], layout.pileX + layout.cardW * PX[i], gather);
@@ -152,18 +165,21 @@
 
       var landS = box ? clamp((box.h * 0.5) / layout.cardH, 0.08, 0.4) : 0.2;
 
+      if (first) { firstX = restX; firstY = restY; firstP = photo; firstLp = lp; }
+
       var cx = lerp(restX, box.cx - layout.cardW * 0.12, t);
       var cy = lerp(restY, box.cy, t) - Math.sin(Math.PI * t) * (layout.narrow ? 16 : 30);
-      var rot = lerp(restR, 0, easeOut(span(lp, 0.3, 0.95)));
-      var sc = lerp(1 + 0.045 * lift, landS, t);
-      var op = 1 - span(t, 0.72, 0.99);
+      var rot = lerp(restR, 0, easeOut(span(lp, first ? 0.02 : 0.3, first ? 0.2 : 0.95)));
+      var sc = lerp(lerp(1 + 0.045 * lift, layout.photoFit, photo), landS, t);
+      /* Während des Fotos treten die übrigen Briefe zurück. */
+      var op = (1 - span(t, 0.72, 0.99)) * (first ? 1 : 1 - firstP * 0.65);
 
       el.style.transform =
         "translate3d(" + (cx - layout.cardW / 2).toFixed(2) + "px," +
         (cy - layout.cardH / 2).toFixed(2) + "px,0) rotate(" + rot.toFixed(2) +
         "deg) scale(" + sc.toFixed(3) + ")";
       el.style.opacity = op.toFixed(3);
-      el.style.zIndex = String(lp > 0.02 ? 20 + Math.round(lp * 40) + i : i);
+      el.style.zIndex = String(lp > 0.02 ? 20 + Math.round(lp * 40) + i : n - i);
 
       var sheet = el.firstElementChild;
       if (sheet) sheet.style.boxShadow = lift > 0.06 ? "var(--shadow-3)" : "";
@@ -190,6 +206,28 @@
       if (t > 0.8 && t < 0.995) hits[k] = true;
     }
 
+    if (phone) {
+      var pIn = span(firstLp, 0.02, 0.18);
+      var pOut = span(firstLp, 0.42, 0.56);
+      var pVis = pIn * (1 - pOut);
+      phone.style.opacity = pVis.toFixed(3);
+      if (pVis > 0.001) {
+        var pY = lerp(layout.cardH * 0.55, 0, easeOut(pIn)) + lerp(0, layout.cardH * 0.7, pOut);
+        phone.style.transform =
+          "translate3d(" + (firstX - layout.phoneW / 2).toFixed(1) + "px," +
+          (firstY - layout.phoneH / 2 + pY).toFixed(1) + "px,0) rotate(" +
+          lerp(-3.5, 0, easeOut(pIn)).toFixed(2) + "deg) scale(" +
+          lerp(1.05, 1, easeOut(pIn)).toFixed(3) + ")";
+        var view = phone.querySelector(".phone__view");
+        if (view) view.style.opacity = (span(firstLp, 0.12, 0.22) * (1 - pOut)).toFixed(3);
+        var flash = phone.querySelector(".phone__flash");
+        if (flash) {
+          var fl = firstLp < 0.3 ? span(firstLp, 0.26, 0.3) : 1 - span(firstLp, 0.3, 0.38);
+          flash.style.opacity = (clamp(fl, 0, 1) * 0.85).toFixed(3);
+        }
+      }
+    }
+
     for (var f = 0; f < folders.length; f++) {
       folders[f].classList.toggle("is-hit", hits[f]);
       var nEl = folders[f].querySelector("[data-n]");
@@ -200,7 +238,7 @@
       }
     }
 
-    var on = q < 0.16 ? -1 : q < 0.29 ? 0 : q < 0.8 ? 1 : q < 0.87 ? -1 : 2;
+    var on = q < 0.07 ? -1 : q < 0.18 ? 0 : q < 0.89 ? 1 : q < 0.94 ? -1 : 2;
     caps.forEach(function (c, i) { c.classList.toggle("is-on", i === on); });
   }
 
