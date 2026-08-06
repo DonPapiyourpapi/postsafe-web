@@ -207,8 +207,9 @@ h1, h2, h3 { font-weight: 600; }
   font-weight: 600;
   letter-spacing: -0.012em;
   color: var(--ink);
-  transition: border-color 0.35s var(--ease-soft), transform 0.35s var(--ease),
-              box-shadow 0.35s var(--ease);
+  transition: border-color 0.3s var(--ease-soft), transform 0.35s var(--ease),
+              box-shadow 0.35s var(--ease), background-color 0.3s var(--ease-soft),
+              color 0.3s var(--ease-soft);
 }
 
 .folder__ic { flex: none; color: var(--muted); }
@@ -222,17 +223,31 @@ h1, h2, h3 { font-weight: 600; }
   color: var(--muted);
   font-variant-numeric: tabular-nums;
   opacity: 0;
-  transition: opacity 0.3s var(--ease-soft);
+  transform-origin: 100% 50%;
+  transition: opacity 0.3s var(--ease-soft), transform 0.4s var(--ease),
+              color 0.3s var(--ease-soft);
 }
 
 .folder__n.is-on { opacity: 1; }
 
+/* Der Moment, in dem ein Brief im Ordner landet */
 .folder.is-hit {
-  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
-  box-shadow: 0 0 0 3px var(--accent-soft);
+  transition-duration: 0.16s;
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 12%, var(--surface));
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--accent) 26%, transparent),
+    0 12px 28px color-mix(in srgb, var(--accent) 28%, transparent);
+  transform: scale(1.04);
 }
 
-.folder.is-hit .folder__ic { color: var(--accent); }
+.folder.is-hit .folder__ic,
+.folder.is-hit .folder__name { color: var(--accent); }
+
+.folder.is-hit .folder__n {
+  color: var(--accent);
+  transform: scale(1.35);
+}
 
 /* ==========================================================================
    Das iPhone, mit dem der erste Brief abfotografiert wird

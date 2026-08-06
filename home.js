@@ -129,7 +129,8 @@
         ? span(lp, 0, 0.12) * (1 - span(lp, 0.5, 0.64))
         : Math.sin(Math.PI * span(lp, 0, 0.42)),
       read: span(lp, two ? 0.34 : 0.06, two ? 0.62 : 0.4),
-      t: easeInOut(span(lp, two ? 0.66 : 0.42, 1))
+      t: easeInOut(span(lp, two ? 0.66 : 0.42, 1)),
+      end: start + (two ? 0.24 : 0.13)
     };
   }
 
@@ -229,7 +230,9 @@
       }
 
       if (t > 0.9) counts[k]++;
-      if (t > 0.8 && t < 0.995) hits[k] = true;
+      /* Der Ordner bleibt noch ein Stück hervorgehoben, nachdem der
+         Brief hineingerutscht ist — sonst ist der Moment zu kurz. */
+      if (t > 0.45 && q < st.end + 0.05) hits[k] = true;
     }
 
     if (phone) {
