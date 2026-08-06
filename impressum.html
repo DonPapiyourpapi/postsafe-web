@@ -5,18 +5,29 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Impressum — PostSafe</title>
 <meta name="robots" content="index, follow">
+<meta name="theme-color" content="#fcfbf9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0a0a0c" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header class="site">
-  <div class="wrap">
-    <a class="brand" href="/">PostSafe</a>
-    <nav>
-      <a href="/datenschutz.html">Datenschutz</a>
-      <a href="/agb.html">Nutzungsbedingungen</a>
-      <a href="/impressum.html">Impressum</a>
+<header class="site-head">
+  <div class="site-head__in">
+    <a class="brand" href="index.html">
+      <svg class="brand__mark" width="22" height="22" viewBox="0 0 22 22" aria-hidden="true" focusable="false">
+        <rect width="22" height="22" rx="6.5" fill="currentColor" opacity=".92"/>
+        <path d="M5.6 7.4h10.8v7.2H5.6z" fill="none" stroke="var(--bg)" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M5.6 8.1l5.4 3.9 5.4-3.9" fill="none" stroke="var(--bg)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      PostSafe
+    </a>
+    <nav class="site-nav" aria-label="Rechtliches">
+      <a href="datenschutz.html">Datenschutz</a>
+      <a href="agb.html">Nutzungsbedingungen</a>
+      <a href="impressum.html" aria-current="page">Impressum</a>
     </nav>
+    <a class="head-back" href="#recht">Rechtliches</a>
   </div>
 </header>
 
@@ -79,11 +90,27 @@
 
 </main>
 
-<footer class="site">
-  <div class="wrap">
-    <a href="/datenschutz.html">Datenschutz</a>
-    <a href="/agb.html">Nutzungsbedingungen</a>
-    <a href="/impressum.html">Impressum</a>
+<footer class="site-foot" id="recht">
+  <div class="site-foot__in">
+    <div>
+      <p class="site-foot__brand">
+        <svg class="brand__mark" width="20" height="20" viewBox="0 0 22 22" aria-hidden="true">
+          <rect width="22" height="22" rx="6.5" fill="currentColor" opacity=".92"/>
+          <path d="M5.6 7.4h10.8v7.2H5.6z" fill="none" stroke="var(--bg)" stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M5.6 8.1l5.4 3.9 5.4-3.9" fill="none" stroke="var(--bg)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        PostSafe
+      </p>
+      <p class="site-foot__note">Post ordnen, ohne dass jemand mitliest.</p>
+    </div>
+    <nav class="foot-links" aria-label="Rechtliches und Kontakt">
+      <a href="index.html">Startseite</a>
+      <a href="datenschutz.html">Datenschutz</a>
+      <a href="agb.html">Nutzungsbedingungen</a>
+      <a href="impressum.html">Impressum</a>
+      <a href="mailto:kontakt@postsafe.eu">kontakt@postsafe.eu</a>
+    </nav>
+    <p class="site-foot__legal">© 2026 Josef Werner</p>
   </div>
 </footer>
 

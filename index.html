@@ -2,77 +2,294 @@
 <html lang="de">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>PostSafe — Briefpost scannen, ordnen, Fristen behalten</title>
-<meta name="description" content="PostSafe scannt Ihre Briefpost, liest Fristen und Beträge aus und legt alles in Ihrer eigenen iCloud ab. Kein fremder Server sieht Ihre Briefe.">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PostSafe — Ihre Post ordnet sich von selbst</title>
+<meta name="description" content="PostSafe ordnet Ihre Briefpost: Sie fotografieren den Brief, PostSafe sortiert ihn ein und erinnert an Fristen. Die Briefe bleiben in Ihrer eigenen iCloud.">
+<meta name="theme-color" content="#fcfbf9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0a0a0c" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://postsafe.eu/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="de_DE">
+<meta property="og:site_name" content="PostSafe">
+<meta property="og:url" content="https://postsafe.eu/">
+<meta property="og:title" content="PostSafe — Ihre Post ordnet sich von selbst">
+<meta property="og:description" content="Sie fotografieren den Brief. PostSafe sortiert ihn ein und erinnert an Fristen. Die Briefe bleiben in Ihrer eigenen iCloud.">
+<meta property="og:image" content="https://postsafe.eu/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="PostSafe — Ihre Post ordnet sich von selbst.">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="home.css">
 </head>
 <body>
 
-<header class="site">
-  <div class="wrap">
-    <a class="brand" href="/">PostSafe</a>
-    <nav>
-      <a href="/datenschutz.html">Datenschutz</a>
-      <a href="/agb.html">Nutzungsbedingungen</a>
-      <a href="/impressum.html">Impressum</a>
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
+
+<header class="site-head" id="top">
+  <div class="site-head__in">
+    <a class="brand" href="index.html">
+      <svg class="brand__mark" width="22" height="22" viewBox="0 0 22 22" aria-hidden="true" focusable="false">
+        <rect width="22" height="22" rx="6.5" fill="currentColor" opacity=".92"/>
+        <path d="M5.6 7.4h10.8v7.2H5.6z" fill="none" stroke="var(--bg)" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M5.6 8.1l5.4 3.9 5.4-3.9" fill="none" stroke="var(--bg)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      PostSafe
+    </a>
+    <nav class="site-nav" aria-label="Rechtliches">
+      <a href="datenschutz.html">Datenschutz</a>
+      <a href="agb.html">Nutzungsbedingungen</a>
+      <a href="impressum.html">Impressum</a>
     </nav>
+    <a class="head-back" href="#recht">Rechtliches</a>
   </div>
 </header>
 
-<main class="wrap">
+<main id="inhalt">
 
-<h1>Ihre Briefpost, geordnet — und niemand liest mit.</h1>
+  <!-- 1 — Erster Bildschirm ------------------------------------------------ -->
+  <section class="hero">
+    <div class="hero__glow" aria-hidden="true"></div>
+    <div class="shell hero__in">
+      <div class="hero__text">
+        <h1 class="display rise is-in">Ihre Post ordnet sich von selbst.</h1>
+        <p class="hero__sub rise is-in" style="--delay:.12s">
+          Sie fotografieren den Brief. Mehr müssen Sie nicht tun.
+        </p>
+        <p class="hero__badge rise is-in" style="--delay:.24s">
+          <span class="dot" aria-hidden="true"></span> Für iPhone. Bald verfügbar.
+        </p>
+      </div>
 
-<p class="lead">
-  PostSafe fotografiert Ihre Briefe, erkennt Absender, Beträge und Fristen, sortiert sie ein und
-  erinnert Sie rechtzeitig. Die Briefe bleiben dabei in <strong>Ihrer eigenen iCloud</strong> — nicht
-  auf einem fremden Server.
-</p>
+      <div class="fan rise is-in" style="--delay:.3s" role="img"
+           aria-label="Illustration: drei Briefe liegen locker übereinander, einer trägt eine erkannte Frist.">
+        <div class="paper" aria-hidden="true">
+          <div class="paper__top"><span class="paper__from">Stadtwerke</span></div>
+          <div class="paper__lines"><i style="--w:96%"></i><i style="--w:82%"></i><i style="--w:90%"></i><i style="--w:44%"></i></div>
+        </div>
+        <div class="paper" aria-hidden="true">
+          <div class="paper__top"><span class="paper__from">Versicherung</span></div>
+          <div class="paper__lines"><i style="--w:88%"></i><i style="--w:96%"></i><i style="--w:61%"></i></div>
+        </div>
+        <div class="paper" aria-hidden="true">
+          <div class="paper__top"><span class="paper__from">Finanzamt</span><span class="paper__chip">Frist 14. August</span></div>
+          <div class="paper__lines"><i style="--w:92%"></i><i style="--w:74%"></i><i style="--w:88%"></i><i style="--w:52%"></i></div>
+        </div>
+      </div>
+    </div>
+    <div class="hero__hint" aria-hidden="true">Scrollen<span></span></div>
+  </section>
 
-<h2>Warum das anders ist</h2>
-<ul>
-  <li><strong>Ihre Briefe liegen bei Ihnen.</strong> Sie werden in Ihrer privaten iCloud-Datenbank
-      gespeichert und belegen Ihren Speicher. Der Anbieter hat keinen Zugriff darauf.</li>
-  <li><strong>Der Server speichert keine Inhalte.</strong> Kein Bild, kein Text, kein Absender, kein
-      Betrag, kein Ordnername.</li>
-  <li><strong>Verarbeitung in Europa.</strong> Die Texterkennung läuft bei einem europäischen Anbieter,
-      Ihre Daten werden dort nicht zum Training von KI-Modellen verwendet.</li>
-  <li><strong>Ihr Archiv bleibt Ihnen.</strong> Auch nach einer Kündigung können Sie alle erfassten
-      Briefe unbefristet lesen, durchsuchen und exportieren.</li>
-</ul>
+  <!-- 2 — Der Stapel -------------------------------------------------------- -->
+  <section class="pile" id="ordnung" data-scene>
+    <div class="pile__sticky">
+      <div class="stage" data-stage role="img"
+           aria-label="Illustration: ein unordentlicher Stapel Briefe löst sich auf. Jeder Brief wird gelesen und legt sich als ruhige Zeile in eine geordnete Liste.">
+        <div class="stage__glow" aria-hidden="true"></div>
 
-<h2>Rechtliches</h2>
-<div class="cards">
-  <a class="card" href="/datenschutz.html">
-    <strong>Datenschutzerklärung</strong>
-    <span>Welche Daten wo verarbeitet werden — und welche nicht.</span>
-  </a>
-  <a class="card" href="/agb.html">
-    <strong>Nutzungsbedingungen</strong>
-    <span>Leistungen, Abos, Kündigung, Haftung.</span>
-  </a>
-  <a class="card" href="/impressum.html">
-    <strong>Impressum</strong>
-    <span>Anbieter und Kontakt.</span>
-  </a>
-</div>
+        <div class="ltr" data-ltr>
+          <div class="paper">
+            <div class="paper__top"><span class="paper__from">Stadtwerke</span><span class="paper__chip">248,50 €</span></div>
+            <div class="paper__lines"><i style="--w:94%"></i><i style="--w:78%"></i><i style="--w:88%"></i></div>
+          </div>
+          <div class="scan" aria-hidden="true"></div>
+        </div>
 
-<h2>Kontakt</h2>
-<p>
-  Fragen zur App, zum Konto oder zum Datenschutz:
-  <a href="mailto:kontakt@postsafe.eu">kontakt@postsafe.eu</a>
-</p>
+        <div class="ltr" data-ltr>
+          <div class="paper">
+            <div class="paper__top"><span class="paper__from">Finanzamt</span><span class="paper__chip">Frist 14. August</span></div>
+            <div class="paper__lines"><i style="--w:90%"></i><i style="--w:96%"></i><i style="--w:56%"></i></div>
+          </div>
+          <div class="scan" aria-hidden="true"></div>
+        </div>
+
+        <div class="ltr" data-ltr>
+          <div class="paper">
+            <div class="paper__top"><span class="paper__from">Krankenkasse</span></div>
+            <div class="paper__lines"><i style="--w:86%"></i><i style="--w:92%"></i><i style="--w:64%"></i></div>
+          </div>
+          <div class="scan" aria-hidden="true"></div>
+        </div>
+
+        <div class="ltr" data-ltr>
+          <div class="paper">
+            <div class="paper__top"><span class="paper__from">Versicherung</span><span class="paper__chip">Frist 31. August</span></div>
+            <div class="paper__lines"><i style="--w:96%"></i><i style="--w:70%"></i><i style="--w:84%"></i></div>
+          </div>
+          <div class="scan" aria-hidden="true"></div>
+        </div>
+
+        <div class="ltr" data-ltr>
+          <div class="paper">
+            <div class="paper__top"><span class="paper__from">Bank</span></div>
+            <div class="paper__lines"><i style="--w:82%"></i><i style="--w:94%"></i><i style="--w:60%"></i></div>
+          </div>
+          <div class="scan" aria-hidden="true"></div>
+        </div>
+
+        <div class="ltr" data-ltr>
+          <div class="paper">
+            <div class="paper__top"><span class="paper__from">Vermieter</span><span class="paper__chip">1.020,00 €</span></div>
+            <div class="paper__lines"><i style="--w:92%"></i><i style="--w:76%"></i><i style="--w:88%"></i></div>
+          </div>
+          <div class="scan" aria-hidden="true"></div>
+        </div>
+      </div>
+
+      <div class="pile__caps">
+        <h2 class="cap" data-cap>Der Stapel wird nicht kleiner.</h2>
+        <p class="cap cap--sub" data-cap>Bis Sie ihn einmal abfotografieren.</p>
+        <p class="cap" data-cap>Dann ist der Tisch leer — und alles ist da.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 — Fristen ----------------------------------------------------------- -->
+  <section class="band" id="frist" data-reveal>
+    <div class="shell band__in">
+      <div class="band__text">
+        <h2 class="title rise">Sie wissen, was wann fällig ist.</h2>
+        <p class="say rise" style="--delay:.1s">
+          Das Datum aus dem Brief steht auf Wunsch in Ihrem Kalender.
+          Sie werden erinnert, bevor es eng wird.
+        </p>
+      </div>
+      <div class="band__art rise" style="--delay:.15s">
+        <div class="due" role="img" aria-label="Illustration: die Frist aus einem Brief wandert in einen Kalender und rastet dort auf dem 14. ein.">
+          <div class="due__letter">
+            <div class="paper" aria-hidden="true">
+              <div class="paper__top"><span class="paper__from">Finanzamt</span><span class="paper__chip" style="visibility:hidden">14. August</span></div>
+              <div class="paper__lines"><i style="--w:92%"></i><i style="--w:78%"></i><i style="--w:88%"></i><i style="--w:50%"></i></div>
+            </div>
+            <span class="due__date" aria-hidden="true" data-fly>14. August</span>
+          </div>
+          <div class="cal" aria-hidden="true">
+            <div class="cal__head">August</div>
+            <div class="cal__grid" data-cal>
+              <b>1</b><b>2</b><b>3</b><b>4</b><b>5</b><b>6</b><b>7</b>
+              <b>8</b><b>9</b><b>10</b><b>11</b><b>12</b><b>13</b><b class="is-target" data-target>14</b>
+              <b>15</b><b>16</b><b>17</b><b>18</b><b>19</b><b>20</b><b>21</b>
+              <b>22</b><b>23</b><b>24</b><b>25</b><b>26</b><b>27</b><b>28</b>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 — Vertrauen --------------------------------------------------------- -->
+  <section class="trust" data-reveal>
+    <div class="shell band__in">
+      <div class="band__text">
+        <h2 class="title rise">Ihre Briefe bleiben bei Ihnen.</h2>
+        <p class="say rise" style="--delay:.1s">
+          Sie liegen in Ihrer eigenen iCloud und belegen Ihren Speicher.
+          Wir kommen nicht daran.
+        </p>
+      </div>
+      <div class="band__art rise" style="--delay:.15s">
+        <div class="vault" role="img" aria-label="Illustration: Ihre Briefe liegen innerhalb Ihrer eigenen iCloud. Der Server daneben bleibt leer.">
+          <div class="vault__inside">
+            <span class="vault__label">Ihre iCloud</span>
+            <div class="vault__stack">
+              <div class="row"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><rect x="1" y="2.5" width="12" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M1.4 3.6L7 7.6l5.6-4" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg> Stadtwerke <i></i></div>
+              <div class="row"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><rect x="1" y="2.5" width="12" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M1.4 3.6L7 7.6l5.6-4" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg> Finanzamt <i></i></div>
+              <div class="row"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><rect x="1" y="2.5" width="12" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M1.4 3.6L7 7.6l5.6-4" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg> Versicherung <i></i></div>
+            </div>
+          </div>
+          <div class="vault__link" aria-hidden="true"></div>
+          <div class="vault__outside">
+            <p class="vault__empty"><b>Unser Server</b>Kein Bild, kein Text, kein Ordnername.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 — Archiv ------------------------------------------------------------ -->
+  <section class="band band--flip" data-reveal>
+    <div class="shell band__in">
+      <div class="band__text">
+        <h2 class="title rise">Was einmal drin ist, bleibt Ihnen.</h2>
+        <p class="say rise" style="--delay:.1s">
+          Auch wenn Sie eines Tages aufhören: Ihre Briefe bleiben lesbar,
+          durchsuchbar und exportierbar. Ohne Ablaufdatum.
+        </p>
+      </div>
+      <div class="band__art rise" style="--delay:.15s">
+        <div class="keep" role="img" aria-label="Illustration: das Archiv bleibt vollständig, auch wenn kein Abo mehr läuft.">
+          <div class="row">Stadtwerke <i></i></div>
+          <div class="row">Finanzamt <i></i></div>
+          <div class="row">Krankenkasse <i></i></div>
+          <div class="row">Versicherung <i></i></div>
+          <p class="keep__gone">Abo beendet — neue Scans pausieren.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 — Bald -------------------------------------------------------------- -->
+  <section class="soon" data-reveal>
+    <div class="shell soon__in">
+      <h2 class="title rise">PostSafe kommt für das iPhone.</h2>
+      <p class="say rise" style="--delay:.1s">
+        Die App ist in Arbeit. Wenn Sie hören möchten, sobald es losgeht,
+        schreiben Sie uns eine Zeile.
+      </p>
+      <div class="actions rise" style="--delay:.2s">
+        <a class="btn btn--primary" href="mailto:kontakt@postsafe.eu?subject=PostSafe%20%E2%80%94%20Bescheid%20geben">
+          kontakt@postsafe.eu
+        </a>
+        <a class="btn btn--quiet" href="datenschutz.html">Wie wir mit Daten umgehen</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 — Kleingedrucktes für Neugierige ------------------------------------ -->
+  <section class="fine" data-reveal>
+    <div class="shell">
+      <div class="fine__head">
+        <h2 class="rise">Für alle, die es genauer wissen wollen</h2>
+      </div>
+      <div class="fine__grid">
+        <p class="rise"><b>Gelesen wird in Europa</b>Briefe werden bei einem europäischen Anbieter ausgelesen. Zum Training von KI-Modellen werden sie dort nicht verwendet.</p>
+        <p class="rise" style="--delay:.08s"><b>Ordnernamen bleiben auf dem Gerät</b>Wie Sie Ihre Ordner nennen, erfährt niemand außer Ihnen.</p>
+        <p class="rise" style="--delay:.16s"><b>Auf dem Server bleibt nichts liegen</b>Kein Bild, kein Text, kein Absender, kein Betrag. So ist die App gebaut, und das wird laufend geprüft.</p>
+        <p class="rise" style="--delay:.24s"><b>Anmeldung mit Apple</b>Ein eigenes Passwort brauchen Sie nicht.</p>
+      </div>
+      <p class="fine__note rise" style="--delay:.3s">
+        PostSafe hilft beim Ordnen und Erinnern und ersetzt keine Rechtsberatung.
+        Was die App später kostet, steht in den <a href="agb.html">Nutzungsbedingungen</a>.
+      </p>
+    </div>
+  </section>
 
 </main>
 
-<footer class="site">
-  <div class="wrap">
-    <a href="/datenschutz.html">Datenschutz</a>
-    <a href="/agb.html">Nutzungsbedingungen</a>
-    <a href="/impressum.html">Impressum</a>
+<footer class="site-foot" id="recht">
+  <div class="site-foot__in">
+    <div>
+      <p class="site-foot__brand">
+        <svg class="brand__mark" width="20" height="20" viewBox="0 0 22 22" aria-hidden="true">
+          <rect width="22" height="22" rx="6.5" fill="currentColor" opacity=".92"/>
+          <path d="M5.6 7.4h10.8v7.2H5.6z" fill="none" stroke="var(--bg)" stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M5.6 8.1l5.4 3.9 5.4-3.9" fill="none" stroke="var(--bg)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        PostSafe
+      </p>
+      <p class="site-foot__note">Post ordnen, ohne dass jemand mitliest.</p>
+    </div>
+    <nav class="foot-links" aria-label="Rechtliches und Kontakt">
+      <a href="datenschutz.html">Datenschutz</a>
+      <a href="agb.html">Nutzungsbedingungen</a>
+      <a href="impressum.html">Impressum</a>
+      <a href="mailto:kontakt@postsafe.eu">kontakt@postsafe.eu</a>
+    </nav>
+    <p class="site-foot__legal">© 2026 Josef Werner</p>
   </div>
 </footer>
 
+<script src="home.js" defer></script>
 </body>
 </html>

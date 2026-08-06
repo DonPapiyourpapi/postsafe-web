@@ -1,0 +1,896 @@
+/* ==========================================================================
+   PostSafe — Startseite
+   ========================================================================== */
+
+.shell {
+  max-width: 78rem;
+  margin: 0 auto;
+  padding-inline: var(--pad);
+}
+
+h1, h2, h3 { font-weight: 600; }
+
+.display {
+  font-size: clamp(2.55rem, 6.6vw, 5.2rem);
+  line-height: 1.02;
+  letter-spacing: -0.042em;
+  margin: 0;
+  max-width: 17ch;
+  text-wrap: balance;
+}
+
+.title {
+  font-size: clamp(1.95rem, 4.4vw, 3.2rem);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  margin: 0 0 0.9rem;
+  text-wrap: balance;
+}
+
+.say {
+  font-size: clamp(1.05rem, 1.35vw, 1.2rem);
+  line-height: 1.55;
+  color: var(--ink-2);
+  margin: 0;
+  max-width: var(--measure);
+  text-wrap: pretty;
+}
+
+.eyebrow {
+  font-size: 0.82rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 0 0 1.1rem;
+  font-weight: 600;
+}
+
+/* --- Sanftes Erscheinen ---------------------------------------------------- */
+
+.rise {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+  filter: blur(6px);
+  transition:
+    opacity 0.9s var(--ease) var(--delay, 0s),
+    transform 1.1s var(--ease) var(--delay, 0s),
+    filter 0.9s var(--ease) var(--delay, 0s);
+  will-change: transform, opacity;
+}
+
+.is-in .rise, .rise.is-in {
+  opacity: 1;
+  transform: none;
+  filter: blur(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise { opacity: 1; transform: none; filter: none; }
+}
+
+/* ==========================================================================
+   1 — Erster Bildschirm
+   ========================================================================== */
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  padding: 4rem 0 5rem;
+  overflow: clip;
+}
+
+.hero__glow {
+  position: absolute;
+  inset: -20% -10% auto -10%;
+  height: 90%;
+  background:
+    radial-gradient(45% 55% at 72% 18%, var(--accent-soft), transparent 70%),
+    radial-gradient(40% 50% at 18% 8%, color-mix(in srgb, var(--ink) 6%, transparent), transparent 70%);
+  pointer-events: none;
+  animation: drift 26s ease-in-out infinite alternate;
+}
+
+@keyframes drift {
+  from { transform: translate3d(-2%, -1%, 0) scale(1); }
+  to   { transform: translate3d(3%, 2%, 0) scale(1.08); }
+}
+
+.hero__in {
+  position: relative;
+  display: grid;
+  gap: clamp(2rem, 5vw, 3rem);
+  width: 100%;
+  align-items: center;
+}
+
+.hero__sub {
+  margin: 1.4rem 0 0;
+  font-size: clamp(1.12rem, 1.7vw, 1.4rem);
+  line-height: 1.45;
+  color: var(--ink-2);
+  max-width: 26rem;
+  text-wrap: pretty;
+}
+
+.hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 2rem 0 0;
+  padding: 0.5rem 0.95rem 0.5rem 0.75rem;
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  font-size: 0.92rem;
+  color: var(--muted);
+  background: color-mix(in srgb, var(--surface) 60%, transparent);
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex: none;
+  box-shadow: 0 0 0 0 var(--accent-soft);
+  animation: pulse 3.4s var(--ease-soft) infinite;
+}
+
+@keyframes pulse {
+  0%, 70%, 100% { box-shadow: 0 0 0 0 var(--accent-soft); }
+  35%           { box-shadow: 0 0 0 7px transparent; }
+}
+
+/* Briefe im Kopfbereich */
+
+.fan {
+  position: relative;
+  height: clamp(15rem, 42vw, 27rem);
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+.fan .paper {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: min(78%, 20rem);
+  transform:
+    translate3d(calc(-50% + var(--x, 0px) + var(--mx, 0px)), calc(-50% + var(--y, 0px) + var(--my, 0px)), 0)
+    rotate(var(--r, 0deg));
+  transition: transform 0.9s var(--ease);
+}
+
+.fan .paper:nth-child(1) { --x: -34px; --y: 46px;  --r: -7deg;  --depth: 0.35; }
+.fan .paper:nth-child(2) { --x: 26px;  --y: 8px;   --r: 4deg;   --depth: 0.6; }
+.fan .paper:nth-child(3) { --x: -12px; --y: -52px; --r: -1.5deg;--depth: 1; }
+
+/* --- Papier: die Brief-Illustration --------------------------------------- */
+
+.paper {
+  background: var(--paper);
+  color: var(--paper-ink);
+  border: 1px solid var(--paper-line);
+  border-radius: 16px;
+  box-shadow: var(--shadow-2);
+  padding: 1rem 1.15rem 1.2rem;
+  overflow: hidden;
+}
+
+.paper__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+  min-height: 1.7rem;
+  margin-bottom: 0.9rem;
+}
+
+.paper__from {
+  font-size: 0.9rem;
+  font-weight: 620;
+  letter-spacing: -0.012em;
+  white-space: nowrap;
+}
+
+.paper__lines {
+  display: grid;
+  gap: 8px;
+}
+
+.paper__lines i {
+  display: block;
+  height: 6px;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--paper-ink) 12%, transparent);
+  width: var(--w, 100%);
+}
+
+.paper__chip {
+  flex: none;
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.24rem 0.55rem;
+  border-radius: 7px;
+  font-size: 0.78rem;
+  font-weight: 620;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+.hero__hint {
+  position: absolute;
+  left: 50%;
+  bottom: 1.6rem;
+  transform: translateX(-50%);
+  color: var(--muted);
+  font-size: 0.8rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+  animation: hintIn 1s var(--ease) 1.6s forwards;
+}
+
+.hero__hint span {
+  width: 1px;
+  height: 34px;
+  background: linear-gradient(var(--line-2), transparent);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero__hint span::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  animation: trickle 2.6s var(--ease-soft) infinite;
+}
+
+@keyframes hintIn { to { opacity: 1; } }
+@keyframes trickle {
+  0%   { transform: translateY(-100%); }
+  60%  { transform: translateY(100%); }
+  100% { transform: translateY(100%); }
+}
+
+@media (max-width: 767px) {
+  .hero { padding: 1rem 0 3rem; }
+  .hero__hint { display: none; }
+  .hero__in { gap: clamp(1.5rem, 4vh, 2.5rem); }
+  .fan {
+    height: clamp(16rem, 38vh, 24rem);
+    margin-bottom: -1rem;
+  }
+  .fan .paper { width: min(86%, 21rem); }
+  .fan .paper:nth-child(1) { --x: -30px; --y: 62px; --r: -8deg; }
+  .fan .paper:nth-child(2) { --x: 30px;  --y: 14px; --r: 5deg; }
+  .fan .paper:nth-child(3) { --x: -14px; --y: -60px; --r: -2deg; }
+}
+
+@media (min-width: 768px) {
+  .hero__in {
+    grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+    gap: clamp(2rem, 4vw, 4rem);
+  }
+  .fan { height: clamp(20rem, 34vw, 30rem); }
+  .fan .paper { width: min(84%, 23rem); }
+}
+
+@media (min-width: 1400px) {
+  .hero__in {
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+    gap: 5rem;
+  }
+  .fan { height: clamp(24rem, 26vw, 32rem); }
+  .fan .paper { width: min(88%, 26rem); }
+}
+
+/* ==========================================================================
+   2 — Der Stapel (Scroll-Szene)
+   ========================================================================== */
+
+.pile {
+  position: relative;
+  height: 360vh;
+}
+
+.pile__sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(1rem, 3vh, 2.5rem);
+  padding: clamp(4rem, 9vh, 6rem) var(--pad) clamp(2rem, 6vh, 4rem);
+  overflow: hidden;
+}
+
+.stage {
+  position: relative;
+  flex: 1 1 auto;
+  max-width: 72rem;
+  width: 100%;
+  margin: 0 auto;
+  min-height: 0;
+}
+
+.stage__glow {
+  position: absolute;
+  left: 50%;
+  top: 55%;
+  width: 80%;
+  height: 60%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(50% 50% at 50% 50%, var(--accent-soft), transparent 70%);
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+.stage .ltr {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: min(320px, 40%);    /* endgültige Maße kommen aus dem Skript */
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+
+.paper__chip { transform-origin: 0 50%; }
+
+.stage .ltr .paper { height: 100%; display: flex; flex-direction: column; }
+.stage .ltr .paper__lines { flex: 1 1 auto; align-content: start; }
+
+/* Der Lesestreifen, der über einen Brief wandert */
+.scan {
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.scan::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 62%;
+  top: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    color-mix(in srgb, var(--accent) 7%, transparent) 62%,
+    color-mix(in srgb, var(--accent) 38%, transparent) 96%,
+    color-mix(in srgb, var(--accent) 55%, transparent) 100%
+  );
+  transform: translateY(var(--scan, -70%));
+}
+
+/* Die geordnete Zeile, in die ein Brief einrastet */
+.slot {
+  position: absolute;
+  border-radius: 12px;
+  border: 1px dashed var(--line-2);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.folder {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.folder svg { flex: none; }
+
+.pile__caps {
+  position: relative;
+  flex: none;
+  min-height: 6.5rem;
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+
+.cap {
+  grid-area: 1 / 1;
+  margin: 0;
+  max-width: 34rem;
+  opacity: 0;
+  transform: translate3d(0, 12px, 0);
+  transition: opacity 0.5s var(--ease-soft), transform 0.6s var(--ease);
+  font-size: clamp(1.5rem, 3.4vw, 2.4rem);
+  line-height: 1.15;
+  letter-spacing: -0.032em;
+  font-weight: 600;
+  text-wrap: balance;
+}
+
+.cap--sub {
+  font-size: clamp(1.05rem, 1.5vw, 1.25rem);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--ink-2);
+  line-height: 1.45;
+}
+
+.cap.is-on { opacity: 1; transform: none; }
+
+/* Ohne Skript und ohne Bewegung: dieselbe Aussage, ruhig und vollständig. */
+
+html:not(.js) .stage {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  gap: 1rem;
+}
+
+html:not(.js) .stage .ltr { position: static; width: min(17rem, 42%); }
+
+html:not(.js) .pile { height: auto; }
+html:not(.js) .pile__sticky { position: static; height: auto; padding-block: 5rem; }
+html:not(.js) .pile__caps { display: block; max-width: 34rem; margin: 0 auto; }
+html:not(.js) .cap { opacity: 1; transform: none; margin: 0.6rem 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pile { height: auto; }
+  .pile__sticky { position: static; height: auto; min-height: 0; padding-block: 5rem; }
+  .stage { height: min(70vh, 34rem); }
+  .cap { transition: none; opacity: 1; transform: none; margin: 0.6rem 0; }
+  .pile__caps { display: block; max-width: 36rem; margin: 2.5rem auto 0; }
+}
+
+@media (max-width: 767px) {
+  .pile { height: 320vh; }
+  .pile__caps { min-height: 7.5rem; }
+}
+
+/* ==========================================================================
+   Bänder (Abschnitte 3 & 5)
+   ========================================================================== */
+
+.band {
+  padding: clamp(5rem, 13vh, 10rem) 0;
+}
+
+.band__in {
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 4rem);
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .band__in {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  }
+  .band--flip .band__text { order: 2; }
+  .band--flip .band__art  { order: 1; }
+}
+
+/* --- Frist: Datum wandert in den Kalender --------------------------------- */
+
+.due {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: clamp(0.75rem, 2.2vw, 1.6rem);
+  align-items: center;
+}
+
+.due__letter { position: relative; }
+
+.due__date {
+  position: absolute;
+  top: 1.06rem;
+  right: 1.15rem;
+  z-index: 3;
+  padding: 0.24rem 0.55rem;
+  border-radius: 7px;
+  font-size: 0.78rem;
+  font-weight: 620;
+  white-space: nowrap;
+  background: var(--accent);
+  color: var(--accent-ink);
+  box-shadow: 0 6px 16px color-mix(in srgb, var(--accent) 35%, transparent);
+  transform: translate3d(0, 0, 0) scale(1);
+  transition: transform 1.05s var(--ease) 0.4s, opacity 0.3s var(--ease-soft) 1.3s;
+}
+
+.is-in .due__date {
+  transform: translate3d(var(--fx), var(--fy), 0) scale(0.5);
+  opacity: 0;
+}
+
+.cal {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: var(--shadow-1);
+  padding: 0.9rem;
+}
+
+.cal__head {
+  font-size: 0.8rem;
+  font-weight: 620;
+  color: var(--muted);
+  padding: 0.1rem 0.25rem 0.75rem;
+  letter-spacing: 0.02em;
+}
+
+.cal__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.cal__grid b {
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  font-size: 0.72rem;
+  font-weight: 400;
+  color: var(--muted);
+  border-radius: 7px;
+}
+
+.cal__grid b.is-target {
+  position: relative;
+  color: var(--ink);
+  font-weight: 620;
+}
+
+.cal__grid b.is-target::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 7px;
+  background: var(--accent-soft);
+  transform: scale(0.4);
+  opacity: 0;
+  transition: transform 0.5s var(--ease) 1.35s, opacity 0.4s var(--ease-soft) 1.35s;
+}
+
+.is-in .cal__grid b.is-target::before { transform: scale(1); opacity: 1; }
+
+.cal__grid b.is-target::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 10px;
+  border: 1.5px solid var(--accent);
+  opacity: 0;
+  transform: scale(0.7);
+}
+
+.is-in .cal__grid b.is-target::after { animation: snap 0.7s var(--ease) 1.35s; }
+
+@keyframes snap {
+  0%   { opacity: 0.9; transform: scale(0.7); }
+  60%  { opacity: 0.5; transform: scale(1.05); }
+  100% { opacity: 0; transform: scale(1.15); }
+}
+
+.no-fly .due__date { transform: none !important; opacity: 1 !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .cal__grid b.is-target::before { transform: scale(1); opacity: 1; }
+}
+
+/* ==========================================================================
+   4 — Vertrauen (umgekehrtes Band)
+   ========================================================================== */
+
+.trust {
+  position: relative;
+  background: #101014;
+  color: #f4f4f6;
+  --ink: #f4f4f6;
+  --ink-2: #c2c2cc;
+  --muted: #8b8b96;
+  --line: #26262d;
+  --line-2: #34343d;
+  --surface: #17171c;
+  --surface-2: #1e1e24;
+  --paper: #1c1c22;
+  --paper-line: #2e2e37;
+  --paper-ink: #f0f0f3;
+  --accent: #9fb7ff;
+  --accent-soft: rgba(159, 183, 255, 0.14);
+  padding: clamp(5rem, 14vh, 11rem) 0;
+  overflow: clip;
+}
+
+.trust::before,
+.trust::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--line-2), transparent);
+}
+.trust::before { top: 0; }
+.trust::after  { bottom: 0; }
+
+.vault {
+  position: relative;
+  display: grid;
+  gap: 0.9rem;
+  grid-template-columns: minmax(0, 1.45fr) 2.5rem minmax(0, 1fr);
+  align-items: center;
+}
+
+.vault__inside {
+  position: relative;
+  border: 1.5px solid color-mix(in srgb, var(--accent) 42%, transparent);
+  border-radius: 20px;
+  padding: 1.15rem 1.15rem 1.35rem;
+  background:
+    radial-gradient(120% 90% at 50% 0%, var(--accent-soft), transparent 72%),
+    var(--surface);
+}
+
+.vault__label {
+  position: absolute;
+  top: -0.72rem;
+  left: 1.1rem;
+  background: #101014;
+  padding: 0 0.5rem;
+  font-size: 0.76rem;
+  font-weight: 620;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+}
+
+.vault__stack { display: grid; gap: 0.55rem; }
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  background: var(--paper);
+  border: 1px solid var(--paper-line);
+  border-radius: 11px;
+  padding: 0.62rem 0.8rem;
+  font-size: 0.86rem;
+  font-weight: 560;
+  color: var(--paper-ink);
+}
+
+.row i {
+  display: block;
+  height: 6px;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--paper-ink) 15%, transparent);
+  flex: 1 1 auto;
+  max-width: 8rem;
+}
+
+.row svg { flex: none; color: var(--muted); }
+
+.vault__outside {
+  position: relative;
+  border: 1.5px dashed var(--line-2);
+  border-radius: 20px;
+  padding: 1.15rem 1rem;
+  min-height: 8.5rem;
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+
+.vault__empty {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.vault__empty b {
+  display: block;
+  color: var(--ink-2);
+  font-weight: 600;
+  margin-bottom: 0.15rem;
+}
+
+.vault__link {
+  position: relative;
+  align-self: center;
+  height: 1.5px;
+  background: repeating-linear-gradient(90deg, var(--line-2) 0 6px, transparent 6px 12px);
+}
+
+@media (max-width: 899px) {
+  .vault {
+    grid-template-columns: 1fr;
+    gap: 1.6rem;
+  }
+  .vault__link {
+    justify-self: center;
+    width: 1.5px;
+    height: 2.2rem;
+    background: repeating-linear-gradient(180deg, var(--line-2) 0 6px, transparent 6px 12px);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .trust { background: #15151a; }
+  .vault__label { background: #15151a; }
+}
+
+/* ==========================================================================
+   5 — Archiv
+   ========================================================================== */
+
+.keep {
+  position: relative;
+  display: grid;
+  gap: 0.6rem;
+  padding: 1.4rem;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  box-shadow: var(--shadow-1);
+}
+
+.keep .row {
+  background: var(--surface-2);
+  border-color: var(--line);
+  color: var(--ink);
+  transition: transform 0.5s var(--ease), border-color 0.4s var(--ease-soft);
+}
+
+.keep .row:hover {
+  transform: translateX(4px);
+  border-color: var(--line-2);
+}
+
+.keep__gone {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-top: 0.4rem;
+  padding: 0.55rem 0.8rem;
+  border-radius: 11px;
+  border: 1px dashed var(--line-2);
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.keep__gone s { text-decoration-color: color-mix(in srgb, var(--muted) 60%, transparent); }
+
+/* ==========================================================================
+   6 — Bald
+   ========================================================================== */
+
+.soon {
+  padding: clamp(5rem, 14vh, 11rem) 0 clamp(4rem, 10vh, 8rem);
+  text-align: center;
+}
+
+.soon__in {
+  max-width: 44rem;
+  margin: 0 auto;
+}
+
+.soon .say { margin: 1.1rem auto 0; }
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  justify-content: center;
+  margin-top: 2.4rem;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 52px;
+  padding: 0.85rem 1.5rem;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: -0.01em;
+  transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease),
+              background-color 0.3s var(--ease-soft), border-color 0.3s var(--ease-soft);
+}
+
+.btn--primary {
+  background: var(--ink);
+  color: var(--bg);
+  box-shadow: var(--shadow-1);
+}
+
+.btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-2);
+}
+
+.btn--quiet {
+  color: var(--ink-2);
+  border: 1px solid var(--line-2);
+}
+
+.btn--quiet:hover {
+  color: var(--ink);
+  border-color: var(--ink-2);
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   7 — Für alle, die es genauer wissen wollen
+   ========================================================================== */
+
+.fine {
+  border-top: 1px solid var(--line);
+  padding: clamp(3rem, 8vh, 5rem) 0 clamp(3.5rem, 9vh, 6rem);
+}
+
+.fine__head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+  margin-bottom: 2rem;
+}
+
+.fine__head h2 {
+  font-size: 1.02rem;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: var(--ink-2);
+  font-weight: 600;
+}
+
+.fine__grid {
+  display: grid;
+  gap: 1.6rem 2.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+}
+
+.fine__grid p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  max-width: 26rem;
+}
+
+.fine__grid b {
+  display: block;
+  color: var(--ink-2);
+  font-weight: 600;
+  margin-bottom: 0.1rem;
+}
+
+.fine__note {
+  margin: 2.5rem 0 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+  max-width: 40rem;
+}
+
+.fine__note a { color: var(--muted); }
+.fine__note a:hover { color: var(--ink); }
