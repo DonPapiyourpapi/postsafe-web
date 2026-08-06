@@ -301,7 +301,7 @@ html:not(.js) .phone { display: none; }
 
 .story {
   position: relative;
-  height: 520vh;
+  height: 580vh;
 }
 
 .story__stick {
@@ -467,7 +467,7 @@ html:not(.js) .phone { display: none; }
 }
 
 @media (max-width: 767px) {
-  .story { height: 460vh; }
+  .story { height: 520vh; }
   .story__hint { display: none; }
   .story__words {
     top: clamp(5rem, 12vh, 7rem);

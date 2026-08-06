@@ -115,9 +115,36 @@
     };
   }
 
+  /* Die ersten beiden Briefe werden mit dem iPhone abfotografiert und
+     bekommen dafür Zeit; die übrigen laufen im schnelleren Takt durch. */
+  function sched(i, q) {
+    var two = i < 2;
+    var start = two ? 0.16 + i * 0.22 : 0.59 + (i - 2) * 0.062;
+    var lp = span(q, start, start + (two ? 0.24 : 0.13));
+    return {
+      two: two,
+      lp: lp,
+      photo: two ? span(lp, 0.02, 0.18) * (1 - span(lp, 0.44, 0.58)) : 0,
+      lift: two
+        ? span(lp, 0, 0.12) * (1 - span(lp, 0.5, 0.64))
+        : Math.sin(Math.PI * span(lp, 0, 0.42)),
+      read: span(lp, two ? 0.34 : 0.06, two ? 0.62 : 0.4),
+      t: easeInOut(span(lp, two ? 0.66 : 0.42, 1))
+    };
+  }
+
+  /* Kurzes Blinzeln des Suchers im Moment der Aufnahme */
+  function dip(lp) {
+    return clamp(lp < 0.3 ? span(lp, 0.26, 0.3) : 1 - span(lp, 0.3, 0.36), 0, 1);
+  }
+
   function paint(q) {
     if (!layout) return;
     var n = letters.length;
+
+    var S = [];
+    for (var j = 0; j < n; j++) S.push(sched(j, q));
+    var maxPhoto = Math.max(S[0].photo, n > 1 ? S[1].photo : 0);
 
     var out = easeInOut(span(q, 0.02, 0.12));        /* die Worte treten ab */
     var gather = easeInOut(span(q, 0.02, 0.15));     /* Fächer wird zum Stapel */
@@ -130,7 +157,7 @@
     if (hint) hint.style.opacity = (1 - span(q, 0, 0.04)).toFixed(3);
 
     /* Am Ende rückt die fertige Ablage in die Mitte. */
-    var mid = easeInOut(span(q, 0.92, 1));
+    var mid = easeInOut(span(q, 0.91, 1));
     if (folderBox) {
       folderBox.style.opacity = show.toFixed(3);
       folderBox.style.transform =
@@ -141,24 +168,20 @@
 
     var counts = [0, 0, 0, 0, 0, 0];
     var hits = [false, false, false, false, false, false];
-    var firstX = 0, firstY = 0, firstP = 0, firstLp = 0;
+    var restAt = [{ x: 0, y: 0 }, { x: 0, y: 0 }];
 
     for (var i = 0; i < n; i++) {
       var el = letters[i];
       var k = +(el.getAttribute("data-folder") || 0);
       var box = layout.boxes[k] || layout.boxes[0];
 
-      /* Der erste Brief bekommt Zeit fürs Abfotografieren. */
-      var first = i === 0;
-      var start = first ? 0.18 : 0.44 + (i - 1) * 0.0725;
-      var lp = span(q, start, start + (first ? 0.28 : 0.17));
-
-      var lift = first
-        ? span(lp, 0, 0.12) * (1 - span(lp, 0.5, 0.64))
-        : Math.sin(Math.PI * span(lp, 0, 0.42));
-      var photo = first ? span(lp, 0.02, 0.18) * (1 - span(lp, 0.44, 0.58)) : 0;
-      var read = span(lp, first ? 0.34 : 0.06, first ? 0.62 : 0.4);
-      var t = easeInOut(span(lp, first ? 0.66 : 0.42, 1));
+      var st = S[i];
+      var first = st.two;
+      var lp = st.lp;
+      var lift = st.lift;
+      var photo = st.photo;
+      var read = st.read;
+      var t = st.t;
 
       /* Ruheort: erst Fächer, dann Stapel */
       var restX = lerp(layout.heroX + layout.cardW * HX[i], layout.pileX + layout.cardW * PX[i], gather);
@@ -168,14 +191,14 @@
 
       var landS = box ? clamp((box.h * 0.5) / layout.cardH, 0.08, 0.4) : 0.2;
 
-      if (first) { firstX = restX; firstY = restY; firstP = photo; firstLp = lp; }
+      if (i < 2) { restAt[i] = { x: restX, y: restY }; }
 
       var cx = lerp(restX, box.cx - layout.cardW * 0.12, t);
       var cy = lerp(restY, box.cy, t) - Math.sin(Math.PI * t) * (layout.narrow ? 16 : 30);
       var rot = lerp(restR, 0, easeOut(span(lp, first ? 0.02 : 0.3, first ? 0.2 : 0.95)));
       var sc = lerp(lerp(1 + 0.045 * lift, layout.photoFit, photo), landS, t);
-      /* Während des Fotos treten die übrigen Briefe zurück. */
-      var op = (1 - span(t, 0.72, 0.99)) * (first ? 1 : 1 - firstP * 0.65);
+      /* Während einer Aufnahme treten die übrigen Briefe zurück. */
+      var op = (1 - span(t, 0.72, 0.99)) * (1 - Math.max(0, maxPhoto - photo) * 0.65);
 
       el.style.transform =
         "translate3d(" + (cx - layout.cardW / 2).toFixed(2) + "px," +
@@ -210,22 +233,30 @@
     }
 
     if (phone) {
-      var pIn = span(firstLp, 0.02, 0.18);
-      var pOut = span(firstLp, 0.42, 0.56);
+      /* Es kommt zum ersten Brief, wandert zum zweiten weiter
+         und fährt erst danach wieder weg. */
+      var pIn = span(S[0].lp, 0.02, 0.18);
+      var pOut = span(S[1].lp, 0.42, 0.58);
       var pVis = pIn * (1 - pOut);
       phone.style.opacity = pVis.toFixed(3);
       if (pVis > 0.001) {
+        var hand = easeInOut(span(q, 0.3, 0.385));
+        var px = lerp(restAt[0].x, restAt[1].x, hand);
+        var py = lerp(restAt[0].y, restAt[1].y, hand);
         var pY = lerp(layout.cardH * 0.55, 0, easeOut(pIn)) + lerp(0, layout.cardH * 0.7, pOut);
         phone.style.transform =
-          "translate3d(" + (firstX - layout.phoneW / 2).toFixed(1) + "px," +
-          (firstY - layout.phoneH / 2 + pY).toFixed(1) + "px,0) rotate(" +
+          "translate3d(" + (px - layout.phoneW / 2).toFixed(1) + "px," +
+          (py - layout.phoneH / 2 + pY).toFixed(1) + "px,0) rotate(" +
           lerp(-3.5, 0, easeOut(pIn)).toFixed(2) + "deg) scale(" +
           lerp(1.05, 1, easeOut(pIn)).toFixed(3) + ")";
         var view = phone.querySelector(".phone__view");
         if (view) {
-          var lock = span(firstLp, 0.1, 0.24);
-          var blink = firstLp < 0.3 ? span(firstLp, 0.26, 0.3) : 1 - span(firstLp, 0.3, 0.36);
-          view.style.opacity = (lock * (1 - pOut) * (1 - clamp(blink, 0, 1) * 0.85)).toFixed(3);
+          var lock = Math.max(
+            span(S[0].lp, 0.1, 0.24) * (1 - span(S[0].lp, 0.44, 0.58)),
+            span(S[1].lp, 0.1, 0.24) * (1 - pOut)
+          );
+          var blink = 1 - Math.max(dip(S[0].lp), dip(S[1].lp)) * 0.85;
+          view.style.opacity = (lock * blink).toFixed(3);
           view.style.transform = "scale(" + lerp(1.1, 1, easeOut(lock)).toFixed(3) + ")";
         }
       }
@@ -241,7 +272,7 @@
       }
     }
 
-    var on = q < 0.07 ? -1 : q < 0.18 ? 0 : q < 0.89 ? 1 : q < 0.94 ? -1 : 2;
+    var on = q < 0.05 ? -1 : q < 0.15 ? 0 : q < 0.88 ? 1 : q < 0.92 ? -1 : 2;
     caps.forEach(function (c, i) { c.classList.toggle("is-on", i === on); });
   }
 
