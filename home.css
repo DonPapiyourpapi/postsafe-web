@@ -277,6 +277,7 @@ h1, h2, h3 { font-weight: 600; }
   --t: 2px;
   --l: 16px;
   opacity: 0;
+  transform-origin: 50% 50%;
   background:
     linear-gradient(var(--c), var(--c)) 0 0 / var(--l) var(--t) no-repeat,
     linear-gradient(var(--c), var(--c)) 0 0 / var(--t) var(--l) no-repeat,
@@ -286,14 +287,6 @@ h1, h2, h3 { font-weight: 600; }
     linear-gradient(var(--c), var(--c)) 0 100% / var(--t) var(--l) no-repeat,
     linear-gradient(var(--c), var(--c)) 100% 100% / var(--l) var(--t) no-repeat,
     linear-gradient(var(--c), var(--c)) 100% 100% / var(--t) var(--l) no-repeat;
-}
-
-.phone__flash {
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background: #fff;
-  opacity: 0;
 }
 
 html:not(.js) .phone { display: none; }
@@ -344,33 +337,6 @@ html:not(.js) .phone { display: none; }
   color: var(--ink-2);
   max-width: 26rem;
   text-wrap: pretty;
-}
-
-.hero__badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  margin: 2rem 0 0;
-  padding: 0.5rem 0.95rem 0.5rem 0.75rem;
-  border: 1px solid var(--line-2);
-  border-radius: 999px;
-  font-size: 0.92rem;
-  color: var(--muted);
-}
-
-.dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--accent);
-  flex: none;
-  box-shadow: 0 0 0 0 var(--accent-soft);
-  animation: pulse 3.4s var(--ease-soft) infinite;
-}
-
-@keyframes pulse {
-  0%, 70%, 100% { box-shadow: 0 0 0 0 var(--accent-soft); }
-  35%           { box-shadow: 0 0 0 7px transparent; }
 }
 
 .story__glow {

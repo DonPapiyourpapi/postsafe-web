@@ -92,8 +92,11 @@
 
     /* Das iPhone: so groß, dass der Brief in den Sucher passt —
        am Telefon nur so hoch, dass es über den Ordnern bleibt. */
-    var phoneW = Math.min((narrow ? H * 0.52 : H * 0.94) / 2.03, cardW / 0.84);
-    if (phone) phone.style.width = phoneW.toFixed(1) + "px";
+    var phoneW = Math.min((narrow ? H * 0.56 : H * 0.94) / 2.03, cardW / 0.84);
+    if (phone) {
+      phone.style.width = phoneW.toFixed(1) + "px";
+      phone.style.height = (phoneW * 2.03).toFixed(1) + "px";
+    }
 
     var fr = folderBox ? folderBox.getBoundingClientRect() : null;
     var mid0 = boxes.length ? (boxes[0].cy - boxes[0].h / 2 + boxes[boxes.length - 1].cy + boxes[boxes.length - 1].h / 2) / 2 : H / 2;
@@ -219,11 +222,11 @@
           lerp(-3.5, 0, easeOut(pIn)).toFixed(2) + "deg) scale(" +
           lerp(1.05, 1, easeOut(pIn)).toFixed(3) + ")";
         var view = phone.querySelector(".phone__view");
-        if (view) view.style.opacity = (span(firstLp, 0.12, 0.22) * (1 - pOut)).toFixed(3);
-        var flash = phone.querySelector(".phone__flash");
-        if (flash) {
-          var fl = firstLp < 0.3 ? span(firstLp, 0.26, 0.3) : 1 - span(firstLp, 0.3, 0.38);
-          flash.style.opacity = (clamp(fl, 0, 1) * 0.85).toFixed(3);
+        if (view) {
+          var lock = span(firstLp, 0.1, 0.24);
+          var blink = firstLp < 0.3 ? span(firstLp, 0.26, 0.3) : 1 - span(firstLp, 0.3, 0.36);
+          view.style.opacity = (lock * (1 - pOut) * (1 - clamp(blink, 0, 1) * 0.85)).toFixed(3);
+          view.style.transform = "scale(" + lerp(1.1, 1, easeOut(lock)).toFixed(3) + ")";
         }
       }
     }
