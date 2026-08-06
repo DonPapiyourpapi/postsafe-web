@@ -108,19 +108,15 @@ img, svg { max-width: 100%; }
 
 /* --- Kopfzeile ------------------------------------------------------------ */
 
+/* Immer durchsichtig: der Inhalt beginnt oben am Rand, ohne sichtbare Kante. */
 .site-head {
-  position: sticky;
+  position: absolute;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 50;
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.3s var(--ease-soft), background-color 0.3s var(--ease-soft);
-}
-
-.site-head.is-stuck {
-  background: color-mix(in srgb, var(--bg) 78%, transparent);
-  border-bottom-color: var(--line);
-  -webkit-backdrop-filter: saturate(180%) blur(16px);
-  backdrop-filter: saturate(180%) blur(16px);
+  background: none;
+  border: none;
 }
 
 .site-head__in {
@@ -261,7 +257,7 @@ img, svg { max-width: 100%; }
 .wrap {
   max-width: 46rem;
   margin: 0 auto;
-  padding: clamp(2rem, 5vw, 3.5rem) var(--pad) clamp(3.5rem, 8vw, 6rem);
+  padding: clamp(6.5rem, 14vh, 9rem) var(--pad) clamp(3.5rem, 8vw, 6rem);
 }
 
 .wrap h1 {

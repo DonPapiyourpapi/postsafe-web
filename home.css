@@ -11,8 +11,8 @@
 h1, h2, h3 { font-weight: 600; }
 
 .display {
-  font-size: clamp(2.55rem, 6.6vw, 5.2rem);
-  line-height: 1.02;
+  font-size: clamp(2.4rem, 6.2vw, 4.9rem);
+  line-height: 1.03;
   letter-spacing: -0.042em;
   margin: 0;
   max-width: 17ch;
@@ -34,15 +34,6 @@ h1, h2, h3 { font-weight: 600; }
   margin: 0;
   max-width: var(--measure);
   text-wrap: pretty;
-}
-
-.eyebrow {
-  font-size: 0.82rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin: 0 0 1.1rem;
-  font-weight: 600;
 }
 
 /* --- Sanftes Erscheinen ---------------------------------------------------- */
@@ -69,46 +60,218 @@ h1, h2, h3 { font-weight: 600; }
 }
 
 /* ==========================================================================
-   1 — Erster Bildschirm
+   Der Brief
    ========================================================================== */
 
-.hero {
+.sheet {
   position: relative;
-  min-height: 100vh;
-  min-height: 100svh;
+  height: 100%;
+  background: var(--paper);
+  color: var(--paper-ink);
+  border: 1px solid var(--paper-line);
+  border-radius: 5px;
+  box-shadow: var(--shadow-2);
+  padding: 8.5% 8% 9%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.sheet__from {
+  font-size: 0.82em;
+  font-weight: 620;
+  letter-spacing: -0.012em;
+  white-space: nowrap;
+  overflow: hidden;
+  margin-bottom: 6%;
+}
+
+.sheet i {
+  display: block;
+  height: 0.3em;
+  min-height: 3px;
+  border-radius: 2px;
+  background: color-mix(in srgb, var(--paper-ink) 13%, transparent);
+  width: var(--w, 100%);
+  flex: none;
+}
+
+.sheet__addr {
+  display: grid;
+  gap: 0.34em;
+  margin-bottom: 8%;
+}
+
+.sheet__subj {
+  margin-bottom: 6%;
+}
+
+.sheet__subj i {
+  height: 0.42em;
+  min-height: 4px;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--paper-ink) 30%, transparent);
+}
+
+.sheet__body {
+  display: grid;
+  gap: 0.46em;
+  align-content: start;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.sheet__body p {
+  display: flex;
+  gap: 0.3em;
+  margin: 0;
+}
+
+/* Ein Wort, das beim Lesen erkannt wird */
+.sheet .mark {
+  position: relative;
+  transition: background-color 0.28s var(--ease-soft), box-shadow 0.28s var(--ease-soft);
+}
+
+.sheet .mark.is-read {
+  background: var(--accent);
+  box-shadow: 0 0 0 0.22em var(--accent-soft);
+}
+
+.sheet__foot { margin-top: 5%; }
+
+.sheet__foot i {
+  height: 0.28em;
+  background: color-mix(in srgb, var(--paper-ink) 22%, transparent);
+}
+
+/* Die Notiz, die PostSafe an den Brief heftet */
+.tag {
+  position: absolute;
+  top: 6%;
+  right: -0.6em;
+  z-index: 3;
+  padding: 0.3em 0.6em;
+  border-radius: 6px;
+  font-size: 0.78em;
+  font-weight: 620;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  background: var(--accent);
+  color: var(--accent-ink);
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--accent) 34%, transparent);
+  opacity: 0;
+}
+
+/* Der Lesestreifen */
+.scan {
+  position: absolute;
+  inset: 0;
+  border-radius: 5px;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.scan::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 46%;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    color-mix(in srgb, var(--accent) 4%, transparent) 78%,
+    color-mix(in srgb, var(--accent) 16%, transparent) 97.5%,
+    color-mix(in srgb, var(--accent) 45%, transparent) 100%
+  );
+  transform: translateY(var(--scan, -60%));
+  box-shadow: 0 1px 10px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+/* ==========================================================================
+   Der Ordner
+   ========================================================================== */
+
+.folder {
   display: flex;
   align-items: center;
-  padding: 4rem 0 5rem;
-  overflow: clip;
+  gap: 0.7rem;
+  padding: 0.7rem 0.85rem;
+  border-radius: 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+  transition: border-color 0.35s var(--ease-soft), transform 0.35s var(--ease),
+              box-shadow 0.35s var(--ease);
 }
 
-.hero__glow {
-  position: absolute;
-  inset: -20% -10% auto -10%;
-  height: 90%;
-  background:
-    radial-gradient(45% 55% at 72% 18%, var(--accent-soft), transparent 70%),
-    radial-gradient(40% 50% at 18% 8%, color-mix(in srgb, var(--ink) 6%, transparent), transparent 70%);
-  pointer-events: none;
-  animation: drift 26s ease-in-out infinite alternate;
+.folder__ic { flex: none; color: var(--muted); }
+
+.folder__name { flex: 1 1 auto; }
+
+.folder__n {
+  flex: none;
+  font-size: 0.78rem;
+  font-weight: 620;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  opacity: 0;
+  transition: opacity 0.3s var(--ease-soft);
 }
 
-@keyframes drift {
-  from { transform: translate3d(-2%, -1%, 0) scale(1); }
-  to   { transform: translate3d(3%, 2%, 0) scale(1.08); }
+.folder__n.is-on { opacity: 1; }
+
+.folder.is-hit {
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
 }
 
-.hero__in {
+.folder.is-hit .folder__ic { color: var(--accent); }
+
+/* ==========================================================================
+   Die Geschichte: erster Bildschirm und Stapel in einem Stück
+   ========================================================================== */
+
+.story {
   position: relative;
-  display: grid;
-  gap: clamp(2rem, 5vw, 3rem);
-  width: 100%;
-  align-items: center;
+  height: 480vh;
+}
+
+.story__stick {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100svh;
+  overflow: hidden;
+}
+
+.story__words {
+  position: absolute;
+  z-index: 4;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  padding-inline: var(--pad);
+  pointer-events: none;
+}
+
+.story__words > div {
+  max-width: 78rem;
+  margin: 0 auto;
+  pointer-events: auto;
+  will-change: transform, opacity;
 }
 
 .hero__sub {
   margin: 1.4rem 0 0;
-  font-size: clamp(1.12rem, 1.7vw, 1.4rem);
+  font-size: clamp(1.1rem, 1.6vw, 1.35rem);
   line-height: 1.45;
   color: var(--ink-2);
   max-width: 26rem;
@@ -125,7 +288,6 @@ h1, h2, h3 { font-weight: 600; }
   border-radius: 999px;
   font-size: 0.92rem;
   color: var(--muted);
-  background: color-mix(in srgb, var(--surface) 60%, transparent);
 }
 
 .dot {
@@ -143,93 +305,101 @@ h1, h2, h3 { font-weight: 600; }
   35%           { box-shadow: 0 0 0 7px transparent; }
 }
 
-/* Briefe im Kopfbereich */
-
-.fan {
-  position: relative;
-  height: clamp(15rem, 42vw, 27rem);
-  perspective: 1200px;
-  transform-style: preserve-3d;
-}
-
-.fan .paper {
+.story__glow {
   position: absolute;
-  left: 50%;
-  top: 50%;
-  width: min(78%, 20rem);
-  transform:
-    translate3d(calc(-50% + var(--x, 0px) + var(--mx, 0px)), calc(-50% + var(--y, 0px) + var(--my, 0px)), 0)
-    rotate(var(--r, 0deg));
-  transition: transform 0.9s var(--ease);
+  inset: -25% -10% auto -10%;
+  height: 120%;
+  background:
+    radial-gradient(42% 52% at 74% 24%, var(--accent-soft), transparent 70%),
+    radial-gradient(38% 48% at 16% 4%, color-mix(in srgb, var(--ink) 6%, transparent), transparent 70%);
+  pointer-events: none;
+  animation: drift 26s ease-in-out infinite alternate;
 }
 
-.fan .paper:nth-child(1) { --x: -34px; --y: 46px;  --r: -7deg;  --depth: 0.35; }
-.fan .paper:nth-child(2) { --x: 26px;  --y: 8px;   --r: 4deg;   --depth: 0.6; }
-.fan .paper:nth-child(3) { --x: -12px; --y: -52px; --r: -1.5deg;--depth: 1; }
-
-/* --- Papier: die Brief-Illustration --------------------------------------- */
-
-.paper {
-  background: var(--paper);
-  color: var(--paper-ink);
-  border: 1px solid var(--paper-line);
-  border-radius: 16px;
-  box-shadow: var(--shadow-2);
-  padding: 1rem 1.15rem 1.2rem;
-  overflow: hidden;
+@keyframes drift {
+  from { transform: translate3d(-2%, -1%, 0) scale(1); }
+  to   { transform: translate3d(3%, 2%, 0) scale(1.08); }
 }
 
-.paper__top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.8rem;
-  min-height: 1.7rem;
-  margin-bottom: 0.9rem;
+/* Die Bühne, auf der die Briefe liegen */
+
+.stage {
+  position: absolute;
+  inset: clamp(4.5rem, 10vh, 7rem) var(--pad) clamp(7rem, 16vh, 9.5rem);
+  max-width: 78rem;
+  margin: 0 auto;
 }
 
-.paper__from {
-  font-size: 0.9rem;
-  font-weight: 620;
-  letter-spacing: -0.012em;
-  white-space: nowrap;
+.stage .ltr {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 14rem;
+  aspect-ratio: 1 / 1.36;
+  transform-origin: 50% 50%;
+  will-change: transform, opacity;
 }
 
-.paper__lines {
+.folders {
+  position: absolute;
   display: grid;
-  gap: 8px;
+  gap: 0.5rem;
+  align-content: center;
+  transform-origin: 50% 50%;
+  opacity: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: min(34%, 21rem);
 }
 
-.paper__lines i {
-  display: block;
-  height: 6px;
-  border-radius: 3px;
-  background: color-mix(in srgb, var(--paper-ink) 12%, transparent);
-  width: var(--w, 100%);
+.folders .folder { box-shadow: var(--shadow-1); }
+
+.story__caps {
+  position: absolute;
+  z-index: 4;
+  left: 0;
+  right: 0;
+  bottom: clamp(1.6rem, 5vh, 3.2rem);
+  padding-inline: var(--pad);
+  display: grid;
+  place-items: center;
+  text-align: center;
+  pointer-events: none;
 }
 
-.paper__chip {
-  flex: none;
-  align-self: center;
-  display: inline-flex;
-  align-items: center;
-  padding: 0.24rem 0.55rem;
-  border-radius: 7px;
-  font-size: 0.78rem;
-  font-weight: 620;
+.cap {
+  grid-area: 1 / 1;
+  margin: 0;
+  max-width: 36rem;
+  opacity: 0;
+  transform: translate3d(0, 12px, 0);
+  transition: opacity 0.5s var(--ease-soft), transform 0.6s var(--ease);
+  font-size: clamp(1.35rem, 3vw, 2.15rem);
+  line-height: 1.16;
+  letter-spacing: -0.032em;
+  font-weight: 600;
+  text-wrap: balance;
+}
+
+.cap--sub {
+  font-size: clamp(1.02rem, 1.45vw, 1.2rem);
+  font-weight: 400;
   letter-spacing: -0.01em;
-  white-space: nowrap;
-  background: var(--accent-soft);
-  color: var(--accent);
+  color: var(--ink-2);
+  line-height: 1.45;
 }
 
-.hero__hint {
+.cap.is-on { opacity: 1; transform: none; }
+
+.story__hint {
   position: absolute;
   left: 50%;
   bottom: 1.6rem;
+  z-index: 5;
   transform: translateX(-50%);
   color: var(--muted);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   display: flex;
@@ -240,15 +410,15 @@ h1, h2, h3 { font-weight: 600; }
   animation: hintIn 1s var(--ease) 1.6s forwards;
 }
 
-.hero__hint span {
+.story__hint span {
   width: 1px;
-  height: 34px;
+  height: 32px;
   background: linear-gradient(var(--line-2), transparent);
   position: relative;
   overflow: hidden;
 }
 
-.hero__hint span::after {
+.story__hint span::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -264,210 +434,65 @@ h1, h2, h3 { font-weight: 600; }
 }
 
 @media (max-width: 767px) {
-  .hero { padding: 1rem 0 3rem; }
-  .hero__hint { display: none; }
-  .hero__in { gap: clamp(1.5rem, 4vh, 2.5rem); }
-  .fan {
-    height: clamp(16rem, 38vh, 24rem);
-    margin-bottom: -1rem;
+  .story { height: 430vh; }
+  .story__hint { display: none; }
+  .story__words {
+    top: clamp(5rem, 12vh, 7rem);
+    transform: none;
   }
-  .fan .paper { width: min(86%, 21rem); }
-  .fan .paper:nth-child(1) { --x: -30px; --y: 62px; --r: -8deg; }
-  .fan .paper:nth-child(2) { --x: 30px;  --y: 14px; --r: 5deg; }
-  .fan .paper:nth-child(3) { --x: -14px; --y: -60px; --r: -2deg; }
-}
-
-@media (min-width: 768px) {
-  .hero__in {
-    grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
-    gap: clamp(2rem, 4vw, 4rem);
+  .stage { inset: clamp(4rem, 9vh, 5.5rem) var(--pad) clamp(7.5rem, 16vh, 9.5rem); }
+  .folders {
+    width: 100%;
+    right: 0;
+    left: 0;
+    top: auto;
+    bottom: 0;
+    height: 46%;
+    align-content: end;
   }
-  .fan { height: clamp(20rem, 34vw, 30rem); }
-  .fan .paper { width: min(84%, 23rem); }
 }
 
-@media (min-width: 1400px) {
-  .hero__in {
-    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
-    gap: 5rem;
-  }
-  .fan { height: clamp(24rem, 26vw, 32rem); }
-  .fan .paper { width: min(88%, 26rem); }
-}
+/* Ohne Skript oder ohne Bewegung: dieselbe Aussage, ruhig und vollständig. */
 
-/* ==========================================================================
-   2 — Der Stapel (Scroll-Szene)
-   ========================================================================== */
+html:not(.js) .story,
+html:not(.js) .story__stick { height: auto; position: static; }
 
-.pile {
-  position: relative;
-  height: 360vh;
-}
+html:not(.js) .story__stick { padding: 8rem 0 4rem; }
 
-.pile__sticky {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  height: 100svh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: clamp(1rem, 3vh, 2.5rem);
-  padding: clamp(4rem, 9vh, 6rem) var(--pad) clamp(2rem, 6vh, 4rem);
-  overflow: hidden;
-}
-
-.stage {
-  position: relative;
-  flex: 1 1 auto;
-  max-width: 72rem;
-  width: 100%;
-  margin: 0 auto;
-  min-height: 0;
-}
-
-.stage__glow {
-  position: absolute;
-  left: 50%;
-  top: 55%;
-  width: 80%;
-  height: 60%;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(50% 50% at 50% 50%, var(--accent-soft), transparent 70%);
-  opacity: 0.9;
-  pointer-events: none;
-}
-
-.stage .ltr {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: min(320px, 40%);    /* endgültige Maße kommen aus dem Skript */
-  transform-origin: 50% 50%;
-  will-change: transform;
-}
-
-.paper__chip { transform-origin: 0 50%; }
-
-.stage .ltr .paper { height: 100%; display: flex; flex-direction: column; }
-.stage .ltr .paper__lines { flex: 1 1 auto; align-content: start; }
-
-/* Der Lesestreifen, der über einen Brief wandert */
-.scan {
-  position: absolute;
-  inset: 0;
-  border-radius: 14px;
-  overflow: hidden;
-  pointer-events: none;
-  opacity: 0;
-}
-
-.scan::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 62%;
-  top: 0;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    color-mix(in srgb, var(--accent) 7%, transparent) 62%,
-    color-mix(in srgb, var(--accent) 38%, transparent) 96%,
-    color-mix(in srgb, var(--accent) 55%, transparent) 100%
-  );
-  transform: translateY(var(--scan, -70%));
-}
-
-/* Die geordnete Zeile, in die ein Brief einrastet */
-.slot {
-  position: absolute;
-  border-radius: 12px;
-  border: 1px dashed var(--line-2);
-  opacity: 0;
-  pointer-events: none;
-}
-
-.folder {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--muted);
-  white-space: nowrap;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.folder svg { flex: none; }
-
-.pile__caps {
-  position: relative;
-  flex: none;
-  min-height: 6.5rem;
-  display: grid;
-  place-items: center;
-  text-align: center;
-}
-
-.cap {
-  grid-area: 1 / 1;
-  margin: 0;
-  max-width: 34rem;
-  opacity: 0;
-  transform: translate3d(0, 12px, 0);
-  transition: opacity 0.5s var(--ease-soft), transform 0.6s var(--ease);
-  font-size: clamp(1.5rem, 3.4vw, 2.4rem);
-  line-height: 1.15;
-  letter-spacing: -0.032em;
-  font-weight: 600;
-  text-wrap: balance;
-}
-
-.cap--sub {
-  font-size: clamp(1.05rem, 1.5vw, 1.25rem);
-  font-weight: 400;
-  letter-spacing: -0.01em;
-  color: var(--ink-2);
-  line-height: 1.45;
-}
-
-.cap.is-on { opacity: 1; transform: none; }
-
-/* Ohne Skript und ohne Bewegung: dieselbe Aussage, ruhig und vollständig. */
+html:not(.js) .story__words,
+html:not(.js) .story__caps,
+html:not(.js) .stage,
+html:not(.js) .folders { position: static; opacity: 1; transform: none; inset: auto; }
 
 html:not(.js) .stage {
   display: flex;
   flex-wrap: wrap;
-  align-content: center;
   justify-content: center;
   gap: 1rem;
+  margin: 3rem auto;
+  padding-inline: var(--pad);
 }
 
-html:not(.js) .stage .ltr { position: static; width: min(17rem, 42%); }
-
-html:not(.js) .pile { height: auto; }
-html:not(.js) .pile__sticky { position: static; height: auto; padding-block: 5rem; }
-html:not(.js) .pile__caps { display: block; max-width: 34rem; margin: 0 auto; }
+html:not(.js) .stage .ltr { position: static; width: min(11rem, 40%); }
+html:not(.js) .folders { display: grid; gap: 0.5rem; max-width: 26rem; margin: 0 auto; padding-inline: var(--pad); }
+html:not(.js) .story__caps { display: block; max-width: 36rem; margin: 2.5rem auto 0; padding-inline: var(--pad); }
 html:not(.js) .cap { opacity: 1; transform: none; margin: 0.6rem 0; }
+html:not(.js) .story__hint { display: none; }
+html:not(.js) .tag { position: static; display: inline-block; opacity: 1; }
 
 @media (prefers-reduced-motion: reduce) {
-  .pile { height: auto; }
-  .pile__sticky { position: static; height: auto; min-height: 0; padding-block: 5rem; }
-  .stage { height: min(70vh, 34rem); }
-  .cap { transition: none; opacity: 1; transform: none; margin: 0.6rem 0; }
-  .pile__caps { display: block; max-width: 36rem; margin: 2.5rem auto 0; }
-}
-
-@media (max-width: 767px) {
-  .pile { height: 320vh; }
-  .pile__caps { min-height: 7.5rem; }
+  .story { height: auto; }
+  .story__hint { display: none; }
+  .story__stick { position: static; height: auto; padding: 8rem 0 4rem; overflow: visible; }
+  .story__words { position: static; transform: none; }
+  .stage { position: relative; inset: auto; height: min(62vh, 30rem); margin: 3rem auto 0; }
+  .folders { opacity: 1; }
+  .story__caps { position: static; display: block; max-width: 36rem; margin: 2.5rem auto 0; }
+  .cap { opacity: 1; transform: none; transition: none; margin: 0.7rem 0; }
 }
 
 /* ==========================================================================
-   Bänder (Abschnitte 3 & 5)
+   Bänder
    ========================================================================== */
 
 .band {
@@ -493,26 +518,30 @@ html:not(.js) .cap { opacity: 1; transform: none; margin: 0.6rem 0; }
 .due {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
-  gap: clamp(0.75rem, 2.2vw, 1.6rem);
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 2.2rem);
   align-items: center;
 }
 
-.due__letter { position: relative; }
+.due__letter {
+  position: relative;
+  aspect-ratio: 1 / 1.36;
+  font-size: clamp(12px, 1.5vw, 16px);
+}
 
 .due__date {
   position: absolute;
-  top: 1.06rem;
-  right: 1.15rem;
-  z-index: 3;
-  padding: 0.24rem 0.55rem;
-  border-radius: 7px;
-  font-size: 0.78rem;
+  top: 6%;
+  right: -0.6em;
+  z-index: 4;
+  padding: 0.3em 0.6em;
+  border-radius: 6px;
+  font-size: 0.78em;
   font-weight: 620;
   white-space: nowrap;
   background: var(--accent);
   color: var(--accent-ink);
-  box-shadow: 0 6px 16px color-mix(in srgb, var(--accent) 35%, transparent);
+  box-shadow: 0 6px 18px color-mix(in srgb, var(--accent) 34%, transparent);
   transform: translate3d(0, 0, 0) scale(1);
   transition: transform 1.05s var(--ease) 0.4s, opacity 0.3s var(--ease-soft) 1.3s;
 }
@@ -522,20 +551,21 @@ html:not(.js) .cap { opacity: 1; transform: none; margin: 0.6rem 0; }
   opacity: 0;
 }
 
+.no-fly .due__date { transform: none !important; opacity: 1 !important; }
+
 .cal {
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: 16px;
   box-shadow: var(--shadow-1);
-  padding: 0.9rem;
+  padding: 1rem;
 }
 
 .cal__head {
   font-size: 0.8rem;
   font-weight: 620;
   color: var(--muted);
-  padding: 0.1rem 0.25rem 0.75rem;
-  letter-spacing: 0.02em;
+  padding: 0.1rem 0.25rem 0.8rem;
 }
 
 .cal__grid {
@@ -548,7 +578,7 @@ html:not(.js) .cap { opacity: 1; transform: none; margin: 0.6rem 0; }
   aspect-ratio: 1;
   display: grid;
   place-items: center;
-  font-size: 0.72rem;
+  font-size: 0.74rem;
   font-weight: 400;
   color: var(--muted);
   border-radius: 7px;
@@ -591,14 +621,138 @@ html:not(.js) .cap { opacity: 1; transform: none; margin: 0.6rem 0; }
   100% { opacity: 0; transform: scale(1.15); }
 }
 
-.no-fly .due__date { transform: none !important; opacity: 1 !important; }
+.cal__note {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.9rem 0 0;
+  padding-top: 0.85rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.86rem;
+  color: var(--muted);
+}
+
+.cal__note svg { flex: none; color: var(--accent); }
 
 @media (prefers-reduced-motion: reduce) {
   .cal__grid b.is-target::before { transform: scale(1); opacity: 1; }
 }
 
+/* --- Suche über alle Ordner hinweg ---------------------------------------- */
+
+.find {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  box-shadow: var(--shadow-1);
+  padding: 1.1rem;
+}
+
+.find__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  font-size: 1rem;
+  font-weight: 560;
+}
+
+.find__bar svg { flex: none; color: var(--muted); }
+
+.find__word {
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 0;
+  transition: max-width 1.1s steps(9, end) 0.35s;
+}
+
+.is-in .find__word { max-width: 9ch; }
+
+.find__caret {
+  width: 1.5px;
+  height: 1.15em;
+  background: var(--accent);
+  animation: blink 1.1s steps(2, end) infinite;
+}
+
+@keyframes blink { 50% { opacity: 0; } }
+
+.find__hits {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 0.85rem;
+}
+
+.hit {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  padding: 0.7rem 0.85rem;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--bg-elev);
+  opacity: 0;
+  transform: translate3d(0, 10px, 0) scale(0.985);
+  transition: opacity 0.5s var(--ease) var(--d), transform 0.6s var(--ease) var(--d);
+}
+
+.is-in .hit { opacity: 1; transform: none; }
+
+.hit b {
+  font-size: 0.92rem;
+  font-weight: 620;
+  letter-spacing: -0.012em;
+  white-space: nowrap;
+}
+
+.hit u {
+  text-decoration: none;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 620;
+  font-size: 0.86rem;
+  padding: 0.1rem 0.22rem;
+  margin-inline: -0.1rem;
+  border-radius: 5px;
+}
+
+.hit span {
+  flex: 1 1 auto;
+  font-size: 0.86rem;
+  color: var(--muted);
+  text-align: right;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hit em {
+  flex: none;
+  font-style: normal;
+  font-size: 0.78rem;
+  color: var(--muted);
+  border: 1px solid var(--line-2);
+  border-radius: 999px;
+  padding: 0.15rem 0.55rem;
+}
+
+@media (max-width: 520px) {
+  .hit { flex-wrap: wrap; gap: 0.35rem 0.5rem; }
+  .hit span { text-align: left; flex-basis: 100%; order: 3; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .find__word { max-width: 9ch; transition: none; }
+  .find__caret { animation: none; }
+  .hit { opacity: 1; transform: none; }
+}
+
 /* ==========================================================================
-   4 — Vertrauen (umgekehrtes Band)
+   Vertrauen (umgekehrtes Band)
    ========================================================================== */
 
 .trust {
@@ -665,30 +819,6 @@ html:not(.js) .cap { opacity: 1; transform: none; margin: 0.6rem 0; }
 
 .vault__stack { display: grid; gap: 0.55rem; }
 
-.row {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-  background: var(--paper);
-  border: 1px solid var(--paper-line);
-  border-radius: 11px;
-  padding: 0.62rem 0.8rem;
-  font-size: 0.86rem;
-  font-weight: 560;
-  color: var(--paper-ink);
-}
-
-.row i {
-  display: block;
-  height: 6px;
-  border-radius: 3px;
-  background: color-mix(in srgb, var(--paper-ink) 15%, transparent);
-  flex: 1 1 auto;
-  max-width: 8rem;
-}
-
-.row svg { flex: none; color: var(--muted); }
-
 .vault__outside {
   position: relative;
   border: 1.5px dashed var(--line-2);
@@ -714,17 +844,13 @@ html:not(.js) .cap { opacity: 1; transform: none; margin: 0.6rem 0; }
 }
 
 .vault__link {
-  position: relative;
   align-self: center;
   height: 1.5px;
   background: repeating-linear-gradient(90deg, var(--line-2) 0 6px, transparent 6px 12px);
 }
 
 @media (max-width: 899px) {
-  .vault {
-    grid-template-columns: 1fr;
-    gap: 1.6rem;
-  }
+  .vault { grid-template-columns: 1fr; gap: 1.6rem; }
   .vault__link {
     justify-self: center;
     width: 1.5px;
@@ -739,13 +865,13 @@ html:not(.js) .cap { opacity: 1; transform: none; margin: 0.6rem 0; }
 }
 
 /* ==========================================================================
-   5 — Archiv
+   Archiv
    ========================================================================== */
 
 .keep {
   position: relative;
   display: grid;
-  gap: 0.6rem;
+  gap: 0.55rem;
   padding: 1.4rem;
   background: var(--surface);
   border: 1px solid var(--line);
@@ -753,34 +879,32 @@ html:not(.js) .cap { opacity: 1; transform: none; margin: 0.6rem 0; }
   box-shadow: var(--shadow-1);
 }
 
-.keep .row {
+.keep .folder {
   background: var(--surface-2);
-  border-color: var(--line);
-  color: var(--ink);
   transition: transform 0.5s var(--ease), border-color 0.4s var(--ease-soft);
 }
 
-.keep .row:hover {
+.keep .folder:hover {
   transform: translateX(4px);
   border-color: var(--line-2);
 }
+
+.keep .folder__n { opacity: 1; }
 
 .keep__gone {
   display: flex;
   align-items: center;
   gap: 0.55rem;
-  margin-top: 0.4rem;
-  padding: 0.55rem 0.8rem;
-  border-radius: 11px;
+  margin: 0.35rem 0 0;
+  padding: 0.6rem 0.85rem;
+  border-radius: 12px;
   border: 1px dashed var(--line-2);
   color: var(--muted);
   font-size: 0.86rem;
 }
 
-.keep__gone s { text-decoration-color: color-mix(in srgb, var(--muted) 60%, transparent); }
-
 /* ==========================================================================
-   6 — Bald
+   Bald
    ========================================================================== */
 
 .soon {
@@ -788,11 +912,7 @@ html:not(.js) .cap { opacity: 1; transform: none; margin: 0.6rem 0; }
   text-align: center;
 }
 
-.soon__in {
-  max-width: 44rem;
-  margin: 0 auto;
-}
-
+.soon__in { max-width: 44rem; margin: 0 auto; }
 .soon .say { margin: 1.1rem auto 0; }
 
 .actions {
@@ -815,7 +935,7 @@ html:not(.js) .cap { opacity: 1; transform: none; margin: 0.6rem 0; }
   text-decoration: none;
   letter-spacing: -0.01em;
   transition: transform 0.4s var(--ease), box-shadow 0.4s var(--ease),
-              background-color 0.3s var(--ease-soft), border-color 0.3s var(--ease-soft);
+              color 0.3s var(--ease-soft), border-color 0.3s var(--ease-soft);
 }
 
 .btn--primary {
@@ -841,7 +961,7 @@ html:not(.js) .cap { opacity: 1; transform: none; margin: 0.6rem 0; }
 }
 
 /* ==========================================================================
-   7 — Für alle, die es genauer wissen wollen
+   Kleingedrucktes
    ========================================================================== */
 
 .fine {
@@ -849,12 +969,7 @@ html:not(.js) .cap { opacity: 1; transform: none; margin: 0.6rem 0; }
   padding: clamp(3rem, 8vh, 5rem) 0 clamp(3.5rem, 9vh, 6rem);
 }
 
-.fine__head {
-  display: flex;
-  align-items: baseline;
-  gap: 0.8rem;
-  margin-bottom: 2rem;
-}
+.fine__head { margin-bottom: 2rem; }
 
 .fine__head h2 {
   font-size: 1.02rem;

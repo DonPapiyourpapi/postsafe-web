@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>PostSafe — Ihre Post ordnet sich von selbst</title>
-<meta name="description" content="PostSafe ordnet Ihre Briefpost: Sie fotografieren den Brief, PostSafe sortiert ihn ein und erinnert an Fristen. Die Briefe bleiben in Ihrer eigenen iCloud.">
+<meta name="description" content="PostSafe ordnet Ihre Briefpost: Sie fotografieren den Brief, PostSafe liest ihn, legt ihn in den passenden Ordner und erinnert an Fristen. Die Briefe bleiben in Ihrer eigenen iCloud.">
 <meta name="theme-color" content="#fcfbf9" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0a0a0c" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="PostSafe">
 <meta property="og:url" content="https://postsafe.eu/">
 <meta property="og:title" content="PostSafe — Ihre Post ordnet sich von selbst">
-<meta property="og:description" content="Sie fotografieren den Brief. PostSafe sortiert ihn ein und erinnert an Fristen. Die Briefe bleiben in Ihrer eigenen iCloud.">
+<meta property="og:description" content="Sie fotografieren den Brief. PostSafe liest ihn, legt ihn in den passenden Ordner und erinnert an Fristen. Die Briefe bleiben in Ihrer eigenen iCloud.">
 <meta property="og:image" content="https://postsafe.eu/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -48,119 +48,197 @@
 
 <main id="inhalt">
 
-  <!-- 1 — Erster Bildschirm ------------------------------------------------ -->
-  <section class="hero">
-    <div class="hero__glow" aria-hidden="true"></div>
-    <div class="shell hero__in">
-      <div class="hero__text">
-        <h1 class="display rise is-in">Ihre Post ordnet sich von selbst.</h1>
-        <p class="hero__sub rise is-in" style="--delay:.12s">
-          Sie fotografieren den Brief. Mehr müssen Sie nicht tun.
-        </p>
-        <p class="hero__badge rise is-in" style="--delay:.24s">
-          <span class="dot" aria-hidden="true"></span> Für iPhone. Bald verfügbar.
-        </p>
+  <!-- 1 — Erster Bildschirm und der Stapel: ein Stück ------------------------ -->
+  <section class="story" id="ordnung" data-story>
+    <div class="story__stick">
+      <div class="story__glow" aria-hidden="true"></div>
+
+      <div class="story__words" data-words>
+        <div>
+          <h1 class="display">Ihre Post ordnet sich von selbst.</h1>
+          <p class="hero__sub">Sie fotografieren den Brief. Mehr müssen Sie nicht tun.</p>
+          <p class="hero__badge">
+            <span class="dot" aria-hidden="true"></span> Für iPhone. Bald verfügbar.
+          </p>
+        </div>
       </div>
 
-      <div class="fan rise is-in" style="--delay:.3s" role="img"
-           aria-label="Illustration: drei Briefe liegen locker übereinander, einer trägt eine erkannte Frist.">
-        <div class="paper" aria-hidden="true">
-          <div class="paper__top"><span class="paper__from">Stadtwerke</span></div>
-          <div class="paper__lines"><i style="--w:96%"></i><i style="--w:82%"></i><i style="--w:90%"></i><i style="--w:44%"></i></div>
-        </div>
-        <div class="paper" aria-hidden="true">
-          <div class="paper__top"><span class="paper__from">Versicherung</span></div>
-          <div class="paper__lines"><i style="--w:88%"></i><i style="--w:96%"></i><i style="--w:61%"></i></div>
-        </div>
-        <div class="paper" aria-hidden="true">
-          <div class="paper__top"><span class="paper__from">Finanzamt</span><span class="paper__chip">Frist 14. August</span></div>
-          <div class="paper__lines"><i style="--w:92%"></i><i style="--w:74%"></i><i style="--w:88%"></i><i style="--w:52%"></i></div>
-        </div>
-      </div>
-    </div>
-    <div class="hero__hint" aria-hidden="true">Scrollen<span></span></div>
-  </section>
-
-  <!-- 2 — Der Stapel -------------------------------------------------------- -->
-  <section class="pile" id="ordnung" data-scene>
-    <div class="pile__sticky">
       <div class="stage" data-stage role="img"
-           aria-label="Illustration: ein unordentlicher Stapel Briefe löst sich auf. Jeder Brief wird gelesen und legt sich als ruhige Zeile in eine geordnete Liste.">
-        <div class="stage__glow" aria-hidden="true"></div>
+           aria-label="Illustration: ein Stapel ungeöffneter Briefe. Jeder Brief wird gelesen, einzelne Angaben werden erkannt, dann wandert er in seinen Ordner — Wohnen, Behörden, Versicherungen, Finanzen.">
 
-        <div class="ltr" data-ltr>
-          <div class="paper">
-            <div class="paper__top"><span class="paper__from">Stadtwerke</span><span class="paper__chip">248,50 €</span></div>
-            <div class="paper__lines"><i style="--w:94%"></i><i style="--w:78%"></i><i style="--w:88%"></i></div>
+        <article class="ltr" data-ltr data-folder="0">
+          <div class="sheet">
+            <div class="sheet__from">Stadtwerke</div>
+            <div class="sheet__addr"><i style="--w:58%"></i><i style="--w:42%"></i><i style="--w:64%"></i></div>
+            <div class="sheet__subj"><i style="--w:70%"></i></div>
+            <div class="sheet__body">
+              <p><i style="--w:18%"></i><i style="--w:30%"></i><i style="--w:14%"></i><i style="--w:24%"></i></p>
+              <p><i style="--w:22%"></i><i style="--w:16%"></i><i style="--w:34%"></i><i style="--w:12%"></i></p>
+              <p><i style="--w:15%"></i><i class="mark" data-mark style="--w:27%"></i><i style="--w:20%"></i><i style="--w:16%"></i></p>
+              <p><i style="--w:28%"></i><i style="--w:14%"></i><i style="--w:22%"></i><i style="--w:24%"></i></p>
+              <p><i style="--w:16%"></i><i style="--w:24%"></i><i class="mark" data-mark style="--w:19%"></i><i style="--w:26%"></i></p>
+              <p><i style="--w:20%"></i><i style="--w:30%"></i><i style="--w:16%"></i></p>
+            </div>
+            <div class="sheet__foot"><i style="--w:38%"></i></div>
           </div>
+          <span class="tag" data-tag>248,50 €</span>
           <div class="scan" aria-hidden="true"></div>
-        </div>
+        </article>
 
-        <div class="ltr" data-ltr>
-          <div class="paper">
-            <div class="paper__top"><span class="paper__from">Finanzamt</span><span class="paper__chip">Frist 14. August</span></div>
-            <div class="paper__lines"><i style="--w:90%"></i><i style="--w:96%"></i><i style="--w:56%"></i></div>
+        <article class="ltr" data-ltr data-folder="1">
+          <div class="sheet">
+            <div class="sheet__from">Finanzamt</div>
+            <div class="sheet__addr"><i style="--w:52%"></i><i style="--w:60%"></i><i style="--w:38%"></i></div>
+            <div class="sheet__subj"><i style="--w:64%"></i></div>
+            <div class="sheet__body">
+              <p><i style="--w:24%"></i><i style="--w:18%"></i><i style="--w:28%"></i><i style="--w:16%"></i></p>
+              <p><i style="--w:14%"></i><i class="mark" data-mark style="--w:24%"></i><i style="--w:30%"></i><i style="--w:14%"></i></p>
+              <p><i style="--w:30%"></i><i style="--w:20%"></i><i style="--w:26%"></i></p>
+              <p><i style="--w:18%"></i><i style="--w:26%"></i><i style="--w:16%"></i><i style="--w:22%"></i></p>
+              <p><i style="--w:22%"></i><i class="mark" data-mark style="--w:31%"></i><i style="--w:15%"></i></p>
+              <p><i style="--w:26%"></i><i style="--w:18%"></i><i style="--w:24%"></i></p>
+            </div>
+            <div class="sheet__foot"><i style="--w:34%"></i></div>
           </div>
+          <span class="tag" data-tag>Frist 14. August</span>
           <div class="scan" aria-hidden="true"></div>
-        </div>
+        </article>
 
-        <div class="ltr" data-ltr>
-          <div class="paper">
-            <div class="paper__top"><span class="paper__from">Krankenkasse</span></div>
-            <div class="paper__lines"><i style="--w:86%"></i><i style="--w:92%"></i><i style="--w:64%"></i></div>
+        <article class="ltr" data-ltr data-folder="2">
+          <div class="sheet">
+            <div class="sheet__from">Krankenkasse</div>
+            <div class="sheet__addr"><i style="--w:46%"></i><i style="--w:62%"></i><i style="--w:50%"></i></div>
+            <div class="sheet__subj"><i style="--w:76%"></i></div>
+            <div class="sheet__body">
+              <p><i style="--w:20%"></i><i style="--w:26%"></i><i style="--w:18%"></i><i style="--w:22%"></i></p>
+              <p><i style="--w:28%"></i><i style="--w:16%"></i><i style="--w:32%"></i></p>
+              <p><i style="--w:16%"></i><i style="--w:22%"></i><i class="mark" data-mark style="--w:25%"></i><i style="--w:18%"></i></p>
+              <p><i style="--w:24%"></i><i style="--w:30%"></i><i style="--w:14%"></i></p>
+              <p><i style="--w:18%"></i><i class="mark" data-mark style="--w:28%"></i><i style="--w:20%"></i></p>
+            </div>
+            <div class="sheet__foot"><i style="--w:40%"></i></div>
           </div>
+          <span class="tag" data-tag>Frist 2. September</span>
           <div class="scan" aria-hidden="true"></div>
-        </div>
+        </article>
 
-        <div class="ltr" data-ltr>
-          <div class="paper">
-            <div class="paper__top"><span class="paper__from">Versicherung</span><span class="paper__chip">Frist 31. August</span></div>
-            <div class="paper__lines"><i style="--w:96%"></i><i style="--w:70%"></i><i style="--w:84%"></i></div>
+        <article class="ltr" data-ltr data-folder="2">
+          <div class="sheet">
+            <div class="sheet__from">Versicherung</div>
+            <div class="sheet__addr"><i style="--w:54%"></i><i style="--w:40%"></i><i style="--w:58%"></i></div>
+            <div class="sheet__subj"><i style="--w:68%"></i></div>
+            <div class="sheet__body">
+              <p><i style="--w:16%"></i><i style="--w:28%"></i><i style="--w:20%"></i><i style="--w:22%"></i></p>
+              <p><i style="--w:26%"></i><i class="mark" data-mark style="--w:22%"></i><i style="--w:30%"></i></p>
+              <p><i style="--w:20%"></i><i style="--w:18%"></i><i style="--w:26%"></i><i style="--w:16%"></i></p>
+              <p><i style="--w:30%"></i><i style="--w:16%"></i><i class="mark" data-mark style="--w:24%"></i></p>
+              <p><i style="--w:22%"></i><i style="--w:28%"></i><i style="--w:18%"></i></p>
+              <p><i style="--w:18%"></i><i style="--w:24%"></i><i style="--w:20%"></i></p>
+            </div>
+            <div class="sheet__foot"><i style="--w:36%"></i></div>
           </div>
+          <span class="tag" data-tag>412,00 €</span>
           <div class="scan" aria-hidden="true"></div>
-        </div>
+        </article>
 
-        <div class="ltr" data-ltr>
-          <div class="paper">
-            <div class="paper__top"><span class="paper__from">Bank</span></div>
-            <div class="paper__lines"><i style="--w:82%"></i><i style="--w:94%"></i><i style="--w:60%"></i></div>
+        <article class="ltr" data-ltr data-folder="3">
+          <div class="sheet">
+            <div class="sheet__from">Bank</div>
+            <div class="sheet__addr"><i style="--w:50%"></i><i style="--w:56%"></i><i style="--w:44%"></i></div>
+            <div class="sheet__subj"><i style="--w:60%"></i></div>
+            <div class="sheet__body">
+              <p><i style="--w:22%"></i><i style="--w:18%"></i><i style="--w:30%"></i></p>
+              <p><i style="--w:16%"></i><i style="--w:26%"></i><i style="--w:20%"></i><i style="--w:18%"></i></p>
+              <p><i style="--w:28%"></i><i class="mark" data-mark style="--w:23%"></i><i style="--w:22%"></i></p>
+              <p><i style="--w:20%"></i><i style="--w:32%"></i><i style="--w:16%"></i></p>
+              <p><i style="--w:24%"></i><i style="--w:16%"></i><i class="mark" data-mark style="--w:26%"></i></p>
+            </div>
+            <div class="sheet__foot"><i style="--w:32%"></i></div>
           </div>
+          <span class="tag" data-tag>Frist 30. August</span>
           <div class="scan" aria-hidden="true"></div>
-        </div>
+        </article>
 
-        <div class="ltr" data-ltr>
-          <div class="paper">
-            <div class="paper__top"><span class="paper__from">Vermieter</span><span class="paper__chip">1.020,00 €</span></div>
-            <div class="paper__lines"><i style="--w:92%"></i><i style="--w:76%"></i><i style="--w:88%"></i></div>
+        <article class="ltr" data-ltr data-folder="0">
+          <div class="sheet">
+            <div class="sheet__from">Vermieter</div>
+            <div class="sheet__addr"><i style="--w:44%"></i><i style="--w:58%"></i><i style="--w:48%"></i></div>
+            <div class="sheet__subj"><i style="--w:74%"></i></div>
+            <div class="sheet__body">
+              <p><i style="--w:18%"></i><i style="--w:24%"></i><i style="--w:28%"></i><i style="--w:14%"></i></p>
+              <p><i style="--w:30%"></i><i style="--w:18%"></i><i style="--w:24%"></i></p>
+              <p><i style="--w:14%"></i><i class="mark" data-mark style="--w:29%"></i><i style="--w:22%"></i><i style="--w:16%"></i></p>
+              <p><i style="--w:26%"></i><i style="--w:20%"></i><i style="--w:28%"></i></p>
+              <p><i style="--w:20%"></i><i style="--w:16%"></i><i class="mark" data-mark style="--w:22%"></i><i style="--w:24%"></i></p>
+              <p><i style="--w:24%"></i><i style="--w:30%"></i></p>
+            </div>
+            <div class="sheet__foot"><i style="--w:42%"></i></div>
           </div>
+          <span class="tag" data-tag>1.020,00 €</span>
           <div class="scan" aria-hidden="true"></div>
+        </article>
+
+        <div class="folders" data-folders aria-hidden="true">
+          <div class="folder" data-folder>
+            <svg class="folder__ic" width="18" height="15" viewBox="0 0 18 15" aria-hidden="true"><path d="M1 3.2A1.7 1.7 0 0 1 2.7 1.5h3.4l1.6 2h7.6A1.7 1.7 0 0 1 17 5.2v7.1a1.7 1.7 0 0 1-1.7 1.7H2.7A1.7 1.7 0 0 1 1 12.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+            <span class="folder__name">Wohnen</span>
+            <span class="folder__n" data-n>0</span>
+          </div>
+          <div class="folder" data-folder>
+            <svg class="folder__ic" width="18" height="15" viewBox="0 0 18 15" aria-hidden="true"><path d="M1 3.2A1.7 1.7 0 0 1 2.7 1.5h3.4l1.6 2h7.6A1.7 1.7 0 0 1 17 5.2v7.1a1.7 1.7 0 0 1-1.7 1.7H2.7A1.7 1.7 0 0 1 1 12.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+            <span class="folder__name">Behörden</span>
+            <span class="folder__n" data-n>0</span>
+          </div>
+          <div class="folder" data-folder>
+            <svg class="folder__ic" width="18" height="15" viewBox="0 0 18 15" aria-hidden="true"><path d="M1 3.2A1.7 1.7 0 0 1 2.7 1.5h3.4l1.6 2h7.6A1.7 1.7 0 0 1 17 5.2v7.1a1.7 1.7 0 0 1-1.7 1.7H2.7A1.7 1.7 0 0 1 1 12.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+            <span class="folder__name">Versicherungen</span>
+            <span class="folder__n" data-n>0</span>
+          </div>
+          <div class="folder" data-folder>
+            <svg class="folder__ic" width="18" height="15" viewBox="0 0 18 15" aria-hidden="true"><path d="M1 3.2A1.7 1.7 0 0 1 2.7 1.5h3.4l1.6 2h7.6A1.7 1.7 0 0 1 17 5.2v7.1a1.7 1.7 0 0 1-1.7 1.7H2.7A1.7 1.7 0 0 1 1 12.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+            <span class="folder__name">Finanzen</span>
+            <span class="folder__n" data-n>0</span>
+          </div>
         </div>
       </div>
 
-      <div class="pile__caps">
+      <div class="story__caps">
         <h2 class="cap" data-cap>Der Stapel wird nicht kleiner.</h2>
-        <p class="cap cap--sub" data-cap>Bis Sie ihn einmal abfotografieren.</p>
-        <p class="cap" data-cap>Dann ist der Tisch leer — und alles ist da.</p>
+        <p class="cap cap--sub" data-cap>Ein Foto genügt. PostSafe liest den Brief und legt ihn ab.</p>
+        <p class="cap" data-cap>Einsortiert. Und in fünf Jahren noch zu finden.</p>
       </div>
+
+      <div class="story__hint" aria-hidden="true">Scrollen<span></span></div>
     </div>
   </section>
 
-  <!-- 3 — Fristen ----------------------------------------------------------- -->
+  <!-- 2 — Fristen ----------------------------------------------------------- -->
   <section class="band" id="frist" data-reveal>
     <div class="shell band__in">
       <div class="band__text">
-        <h2 class="title rise">Sie wissen, was wann fällig ist.</h2>
+        <h2 class="title rise">Die Frist merkt sich PostSafe.</h2>
         <p class="say rise" style="--delay:.1s">
-          Das Datum aus dem Brief steht auf Wunsch in Ihrem Kalender.
-          Sie werden erinnert, bevor es eng wird.
+          Steht im Brief ein Datum, erkennt PostSafe es und schlägt Ihnen eine
+          Erinnerung vor. Ein Tippen, und sie steht in Ihrem Kalender.
         </p>
       </div>
       <div class="band__art rise" style="--delay:.15s">
-        <div class="due" role="img" aria-label="Illustration: die Frist aus einem Brief wandert in einen Kalender und rastet dort auf dem 14. ein.">
+        <div class="due" role="img" aria-label="Illustration: das Datum aus einem Brief wandert in einen Kalender und rastet auf dem 14. August ein.">
           <div class="due__letter">
-            <div class="paper" aria-hidden="true">
-              <div class="paper__top"><span class="paper__from">Finanzamt</span><span class="paper__chip" style="visibility:hidden">14. August</span></div>
-              <div class="paper__lines"><i style="--w:92%"></i><i style="--w:78%"></i><i style="--w:88%"></i><i style="--w:50%"></i></div>
+            <div class="sheet" aria-hidden="true">
+              <div class="sheet__from">Finanzamt</div>
+              <div class="sheet__addr"><i style="--w:52%"></i><i style="--w:60%"></i><i style="--w:38%"></i></div>
+              <div class="sheet__subj"><i style="--w:64%"></i></div>
+              <div class="sheet__body">
+                <p><i style="--w:24%"></i><i style="--w:18%"></i><i style="--w:28%"></i><i style="--w:16%"></i></p>
+                <p><i style="--w:14%"></i><i class="mark is-read" style="--w:24%"></i><i style="--w:30%"></i></p>
+                <p><i style="--w:30%"></i><i style="--w:20%"></i><i style="--w:26%"></i></p>
+                <p><i style="--w:18%"></i><i style="--w:26%"></i><i style="--w:16%"></i><i style="--w:22%"></i></p>
+                <p><i style="--w:22%"></i><i style="--w:31%"></i><i style="--w:15%"></i></p>
+                <p><i style="--w:26%"></i><i style="--w:18%"></i><i style="--w:24%"></i></p>
+                <p><i style="--w:20%"></i><i style="--w:28%"></i></p>
+              </div>
+              <div class="sheet__foot"><i style="--w:34%"></i></div>
             </div>
             <span class="due__date" aria-hidden="true" data-fly>14. August</span>
           </div>
@@ -172,6 +250,37 @@
               <b>15</b><b>16</b><b>17</b><b>18</b><b>19</b><b>20</b><b>21</b>
               <b>22</b><b>23</b><b>24</b><b>25</b><b>26</b><b>27</b><b>28</b>
             </div>
+            <p class="cal__note">
+              <svg width="15" height="15" viewBox="0 0 15 15" aria-hidden="true"><path d="M7.5 1.8a5.7 5.7 0 1 1 0 11.4 5.7 5.7 0 0 1 0-11.4zM7.5 4.6v3.2l2.2 1.3" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Erinnerung vorgeschlagen — drei Tage vorher
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 — Suchen ------------------------------------------------------------ -->
+  <section class="band band--flip" id="suche" data-reveal>
+    <div class="shell band__in">
+      <div class="band__text">
+        <h2 class="title rise">Ein Wort genügt.</h2>
+        <p class="say rise" style="--delay:.1s">
+          Sie müssen nicht wissen, in welchem Ordner etwas liegt. Suchen Sie nach
+          „Rechnung“ — PostSafe findet sie in allen Briefen, über alle Ordner hinweg.
+        </p>
+      </div>
+      <div class="band__art rise" style="--delay:.15s">
+        <div class="find" role="img" aria-label="Illustration: die Suche nach dem Wort Rechnung liefert Treffer aus den Ordnern Wohnen, Versicherungen und Finanzen.">
+          <p class="find__bar" aria-hidden="true">
+            <svg width="17" height="17" viewBox="0 0 17 17"><circle cx="7.2" cy="7.2" r="5.2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M11.2 11.2 15 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <span class="find__word">Rechnung</span>
+            <span class="find__caret"></span>
+          </p>
+          <div class="find__hits" aria-hidden="true">
+            <div class="hit" style="--d:.75s"><b>Stadtwerke</b><span><u>Rechnung</u> · 248,50 €</span><em>Wohnen</em></div>
+            <div class="hit" style="--d:.95s"><b>Versicherung</b><span><u>Rechnung</u> · 412,00 €</span><em>Versicherungen</em></div>
+            <div class="hit" style="--d:1.15s"><b>Bank</b><span>Jahresab<u>rechnung</u></span><em>Finanzen</em></div>
           </div>
         </div>
       </div>
@@ -189,13 +298,25 @@
         </p>
       </div>
       <div class="band__art rise" style="--delay:.15s">
-        <div class="vault" role="img" aria-label="Illustration: Ihre Briefe liegen innerhalb Ihrer eigenen iCloud. Der Server daneben bleibt leer.">
+        <div class="vault" role="img" aria-label="Illustration: Ihre Ordner liegen innerhalb Ihrer eigenen iCloud. Der Server daneben bleibt leer.">
           <div class="vault__inside">
             <span class="vault__label">Ihre iCloud</span>
             <div class="vault__stack">
-              <div class="row"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><rect x="1" y="2.5" width="12" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M1.4 3.6L7 7.6l5.6-4" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg> Stadtwerke <i></i></div>
-              <div class="row"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><rect x="1" y="2.5" width="12" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M1.4 3.6L7 7.6l5.6-4" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg> Finanzamt <i></i></div>
-              <div class="row"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><rect x="1" y="2.5" width="12" height="9" rx="2" fill="none" stroke="currentColor" stroke-width="1.3"/><path d="M1.4 3.6L7 7.6l5.6-4" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg> Versicherung <i></i></div>
+              <div class="folder">
+                <svg class="folder__ic" width="18" height="15" viewBox="0 0 18 15" aria-hidden="true"><path d="M1 3.2A1.7 1.7 0 0 1 2.7 1.5h3.4l1.6 2h7.6A1.7 1.7 0 0 1 17 5.2v7.1a1.7 1.7 0 0 1-1.7 1.7H2.7A1.7 1.7 0 0 1 1 12.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+                <span class="folder__name">Wohnen</span>
+                <span class="folder__n is-on">2</span>
+              </div>
+              <div class="folder">
+                <svg class="folder__ic" width="18" height="15" viewBox="0 0 18 15" aria-hidden="true"><path d="M1 3.2A1.7 1.7 0 0 1 2.7 1.5h3.4l1.6 2h7.6A1.7 1.7 0 0 1 17 5.2v7.1a1.7 1.7 0 0 1-1.7 1.7H2.7A1.7 1.7 0 0 1 1 12.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+                <span class="folder__name">Behörden</span>
+                <span class="folder__n is-on">1</span>
+              </div>
+              <div class="folder">
+                <svg class="folder__ic" width="18" height="15" viewBox="0 0 18 15" aria-hidden="true"><path d="M1 3.2A1.7 1.7 0 0 1 2.7 1.5h3.4l1.6 2h7.6A1.7 1.7 0 0 1 17 5.2v7.1a1.7 1.7 0 0 1-1.7 1.7H2.7A1.7 1.7 0 0 1 1 12.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+                <span class="folder__name">Versicherungen</span>
+                <span class="folder__n is-on">2</span>
+              </div>
             </div>
           </div>
           <div class="vault__link" aria-hidden="true"></div>
@@ -218,11 +339,23 @@
         </p>
       </div>
       <div class="band__art rise" style="--delay:.15s">
-        <div class="keep" role="img" aria-label="Illustration: das Archiv bleibt vollständig, auch wenn kein Abo mehr läuft.">
-          <div class="row">Stadtwerke <i></i></div>
-          <div class="row">Finanzamt <i></i></div>
-          <div class="row">Krankenkasse <i></i></div>
-          <div class="row">Versicherung <i></i></div>
+        <div class="keep" role="img" aria-label="Illustration: die Ordner bleiben vollständig, auch wenn kein Abo mehr läuft.">
+          <div class="folder">
+            <svg class="folder__ic" width="18" height="15" viewBox="0 0 18 15" aria-hidden="true"><path d="M1 3.2A1.7 1.7 0 0 1 2.7 1.5h3.4l1.6 2h7.6A1.7 1.7 0 0 1 17 5.2v7.1a1.7 1.7 0 0 1-1.7 1.7H2.7A1.7 1.7 0 0 1 1 12.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+            <span class="folder__name">Wohnen</span><span class="folder__n">2</span>
+          </div>
+          <div class="folder">
+            <svg class="folder__ic" width="18" height="15" viewBox="0 0 18 15" aria-hidden="true"><path d="M1 3.2A1.7 1.7 0 0 1 2.7 1.5h3.4l1.6 2h7.6A1.7 1.7 0 0 1 17 5.2v7.1a1.7 1.7 0 0 1-1.7 1.7H2.7A1.7 1.7 0 0 1 1 12.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+            <span class="folder__name">Behörden</span><span class="folder__n">1</span>
+          </div>
+          <div class="folder">
+            <svg class="folder__ic" width="18" height="15" viewBox="0 0 18 15" aria-hidden="true"><path d="M1 3.2A1.7 1.7 0 0 1 2.7 1.5h3.4l1.6 2h7.6A1.7 1.7 0 0 1 17 5.2v7.1a1.7 1.7 0 0 1-1.7 1.7H2.7A1.7 1.7 0 0 1 1 12.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+            <span class="folder__name">Versicherungen</span><span class="folder__n">2</span>
+          </div>
+          <div class="folder">
+            <svg class="folder__ic" width="18" height="15" viewBox="0 0 18 15" aria-hidden="true"><path d="M1 3.2A1.7 1.7 0 0 1 2.7 1.5h3.4l1.6 2h7.6A1.7 1.7 0 0 1 17 5.2v7.1a1.7 1.7 0 0 1-1.7 1.7H2.7A1.7 1.7 0 0 1 1 12.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+            <span class="folder__name">Finanzen</span><span class="folder__n">1</span>
+          </div>
           <p class="keep__gone">Abo beendet — neue Scans pausieren.</p>
         </div>
       </div>
