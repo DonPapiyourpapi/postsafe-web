@@ -37,6 +37,8 @@
 
   var story = document.querySelector("[data-story]");
   var stage = story && story.querySelector("[data-stage]");
+  var stick = story && story.querySelector(".story__stick");
+  var wordsBox = story && story.querySelector("[data-words]");
   var words = story && story.querySelector("[data-words] > div");
   var hint = story && story.querySelector(".story__hint");
   var folderBox = story && story.querySelector("[data-folders]");
@@ -61,8 +63,45 @@
     var H = stage.clientHeight;
     if (!W || !H) { layout = null; return; }
 
+    /* Zuerst messen, was von der Briefgröße unabhängig ist: Bühne und Ordner.
+       Erst danach steht fest, wie groß ein Brief sein darf. */
+    var sr = stage.getBoundingClientRect();
+    var boxes = folders.map(function (f) {
+      var r = f.getBoundingClientRect();
+      return {
+        cx: r.left - sr.left + r.width / 2,
+        cy: r.top - sr.top + r.height / 2,
+        h: r.height
+      };
+    });
+    var fr = folderBox ? folderBox.getBoundingClientRect() : null;
+
     var narrow = W < 700;
     var cardW = narrow ? Math.min(W * 0.54, 205) : Math.min(W * 0.26, 250);
+
+    /* Am Telefon stehen Worte, Briefe und Ordner übereinander statt nebeneinander.
+       Zwei Grenzen halten sie auseinander, und die engere gewinnt:
+
+         · der Stapel im ersten Bild beginnt unter der Unterkante der Worte und
+           darf bis zum unteren Rand reichen — dort steht anfangs noch kein Satz;
+         · der Stapel beim Fotografieren bleibt über der ersten Ordnerzeile.
+
+       Passt es nicht, wird der Brief kleiner. Ein Brief, der über der Überschrift
+       oder auf einem Ordner liegt, ist der schlechtere Tausch.
+       Gerechnet über offsetTop, damit ein Umbau mitten im Scrollen nicht die
+       gerade verschobenen Worte misst.
+       1.32 bzw. 1.38 = Höhe des Fächers in Briefhöhen, 1.36 = Seitenverhältnis. */
+    var heroTop = 0;
+    var overFolders = boxes.length ? boxes[0].cy - boxes[0].h / 2 - 12 : H;
+    if (narrow && stick && wordsBox) {
+      var room = stick.clientHeight - stage.offsetTop - 8;
+      heroTop = wordsBox.offsetTop + wordsBox.offsetHeight - stage.offsetTop + 12;
+      cardW = Math.max(124, Math.min(
+        cardW,
+        (room - heroTop) / (1.32 * 1.36),
+        overFolders / (1.38 * 1.36)
+      ));
+    }
     var cardH = cardW * 1.36;
 
     /* Der Brief bringt seine eigene Schriftgröße mit, damit alles mitskaliert. */
@@ -80,16 +119,6 @@
       });
     });
 
-    var sr = stage.getBoundingClientRect();
-    var boxes = folders.map(function (f) {
-      var r = f.getBoundingClientRect();
-      return {
-        cx: r.left - sr.left + r.width / 2,
-        cy: r.top - sr.top + r.height / 2,
-        h: r.height
-      };
-    });
-
     /* Das iPhone: so groß, dass der Brief in den Sucher passt —
        am Telefon nur so hoch, dass es über den Ordnern bleibt. */
     var phoneW = Math.min((narrow ? H * 0.56 : H * 0.94) / 2.03, cardW / 0.84);
@@ -98,7 +127,6 @@
       phone.style.height = (phoneW * 2.03).toFixed(1) + "px";
     }
 
-    var fr = folderBox ? folderBox.getBoundingClientRect() : null;
     var mid0 = boxes.length ? (boxes[0].cy - boxes[0].h / 2 + boxes[boxes.length - 1].cy + boxes[boxes.length - 1].h / 2) / 2 : H / 2;
 
     layout = {
@@ -109,9 +137,10 @@
       shiftX: fr && !narrow ? Math.max(0, (W - fr.width) / 2) : 0,
       shiftY: narrow ? H / 2 - mid0 : 0,
       heroX: narrow ? W * 0.5 : W * 0.72,
-      heroY: narrow ? H * 0.7 : H * 0.5,
+      heroY: narrow ? heroTop + cardH * 0.66 : H * 0.5,
       pileX: narrow ? W * 0.5 : W * 0.26,
-      pileY: narrow ? H * 0.27 : H * 0.5
+      /* Am Telefon mittig in die Luft über der ersten Ordnerzeile */
+      pileY: narrow ? (overFolders - cardH * 1.38) / 2 + cardH * 0.69 : H * 0.5
     };
   }
 

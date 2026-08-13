@@ -267,19 +267,12 @@
 
 .folder__n.is-on { opacity: 1; }
 
-/* Der Moment, in dem ein Brief im Ordner landet */
-.folder.is-hit {
-  border-color: var(--ink);
-  background: var(--ink);
-  color: var(--paper);
-  box-shadow: var(--shadow-m);
-  transform: scale(1.035);
-}
+/* Der Moment, in dem ein Brief im Ordner landet.
+   Kein Rahmen und keine schwarze Fläche: den Moment trägt die Farbe, die
+   einläuft. Ein Rahmen daneben würde als harte Kante darüberliegen. */
+.folder.is-hit { border-color: transparent; }
 
-.folder.is-hit .folder__n {
-  color: var(--paper);
-  transform: scale(1.3);
-}
+.folder.is-hit .folder__n { transform: scale(1.2); }
 
 /* ==========================================================================
    Das iPhone, mit dem die ersten Briefe abfotografiert werden
@@ -798,23 +791,24 @@ html:not(.js) .tag { position: static; display: inline-block; opacity: 1; }
 
 .trust {
   position: relative;
-  background: #0D0D0F;
+  background: #0B0B0B;
   color: #F4F4F1;
   --ink:    #F4F4F1;
-  --ink-2:  #A5A5AC;
-  --ink-3:  #75757D;
-  --card:   #18181B;
-  --card-2: #1F1F23;
-  --line:   #2A2A2F;
-  --paper:  #0D0D0F;
+  --ink-2:  #A4A4A0;
+  --ink-3:  #767674;
+  --card:   #161616;
+  --card-2: #1D1D1D;
+  --line:   #292928;
+  --paper:  #0B0B0B;
   padding: 74px 0;
   overflow: clip;
 }
 
 @media (min-width: 900px) { .trust { padding: 112px 0; } }
 
+/* Im dunklen Modus hebt sich der Abschnitt vom Papier ab, statt darin zu verschwinden */
 @media (prefers-color-scheme: dark) {
-  .trust { background: #18181B; --paper: #18181B; }
+  .trust { background: #151515; --paper: #151515; }
 }
 
 .vault {
@@ -837,7 +831,7 @@ html:not(.js) .tag { position: static; display: inline-block; opacity: 1; }
   position: absolute;
   top: -8px;
   left: 20px;
-  background: #0D0D0F;
+  background: #0B0B0B;
   padding: 0 8px;
   font-size: 11.5px;
   font-weight: 600;
@@ -847,7 +841,7 @@ html:not(.js) .tag { position: static; display: inline-block; opacity: 1; }
 }
 
 @media (prefers-color-scheme: dark) {
-  .vault__label { background: #18181B; }
+  .vault__label { background: #151515; }
 }
 
 .vault__stack { display: grid; gap: 8px; }
@@ -1361,7 +1355,7 @@ html:not(.js) .tag { position: static; display: inline-block; opacity: 1; }
 
 .folder__flood {
   position: absolute;
-  inset: 0;
+  inset: -1px;                /* deckt auch den Rahmen, sonst bleibt dort ein heller Haarstrich */
   z-index: 0;
   opacity: 0;
   --fl: 0%;
