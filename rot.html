@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rot</title>
+<meta name="robots" content="noindex">
+<style>
+  :root { color-scheme: light; }
+  html, body { background: #E01B1B; margin: 0; }
+  body {
+    min-height: 300vh;
+    color: #fff;
+    font: 700 30px/1.25 "Helvetica Neue", Helvetica, Arial, sans-serif;
+    letter-spacing: -.03em;
+    padding: 90px 26px;
+    -webkit-text-size-adjust: 100%;
+  }
+  p { max-width: 16em; margin: 0 0 26px; }
+  small { display: block; font: 400 17px/1.5 inherit; opacity: .85; }
+
+  /* Genau der Anker, um den es geht — unten am Rand, hinter der Seite. */
+  #anker {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    height: 12px;
+    z-index: -1;
+    background: #E01B1B;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+<p>Diese Seite ist komplett rot.</p>
+<p><small>Nichts antippen. Nur schauen, welche Farbe der Balken ganz unten am
+Bildschirm hat, und ein Bildschirmfoto schicken. Einmal ganz oben und einmal,
+nachdem du ein Stück gescrollt hast.</small></p>
+
+<div id="anker" aria-hidden="true"></div>
+</body>
+</html>
