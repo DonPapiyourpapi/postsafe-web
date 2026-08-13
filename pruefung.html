@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Prüfseite — Farbe der Leiste</title>
+<meta name="robots" content="noindex">
+<style>
+  :root { color-scheme: light; }
+  html, body { background: #F1F1EF; }
+  body {
+    margin: 0;
+    padding: 20px 20px 60vh;
+    color: #0D0D0F;
+    font: 400 17px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
+    -webkit-text-size-adjust: 100%;
+  }
+  h1 { font-size: 24px; letter-spacing: -.03em; margin: 0 0 4px; }
+  p.lead { color: #5C5C63; margin: 0 0 24px; }
+  .knopf {
+    display: block; width: 100%; margin: 0 0 10px;
+    padding: 18px; border: 0; border-radius: 14px;
+    font: 600 17px/1 inherit; color: #fff; cursor: pointer;
+  }
+  #rot   { background: #E01B1B; }
+  #gruen { background: #1B8F3A; }
+  #blau  { background: #1B4FE0; }
+  #aus   { background: #444; }
+  .werte {
+    margin-top: 26px; padding: 16px; border-radius: 14px;
+    background: #fff; border: 1px solid #E7E7E3;
+    font: 500 14px/1.7 ui-monospace, Menlo, monospace; word-break: break-all;
+  }
+  .werte b { color: #0D0D0F; }
+  .jetzt { margin-top: 20px; font-weight: 600; }
+
+  /* Der Anker, den Safari abtasten soll — unsichtbar hinter der Seite. */
+  #anker {
+    position: fixed;
+    left: 0; right: 0; bottom: 0;
+    height: 12px;
+    z-index: -1;
+    background: #E01B1B;
+    pointer-events: none;
+  }
+</style>
+</head>
+<body>
+
+<h1>Welche Farbe hat die Leiste?</h1>
+<p class="lead">Tipp auf eine Farbe und schau, ob der Balken unten am Bildschirm sie annimmt.
+Dann ein Bildschirmfoto schicken.</p>
+
+<button class="knopf" id="rot">Anker auf Rot</button>
+<button class="knopf" id="gruen">Anker auf Grün</button>
+<button class="knopf" id="blau">Anker auf Blau</button>
+<button class="knopf" id="aus">Anker ganz aus</button>
+
+<p class="jetzt">Anker steht auf: <span id="stand">Rot</span></p>
+
+<div class="werte" id="werte"></div>
+
+<div id="anker" aria-hidden="true"></div>
+
+<script>
+var anker = document.getElementById('anker');
+var stand = document.getElementById('stand');
+
+function setze(farbe, name) {
+  if (farbe === null) { anker.style.display = 'none'; }
+  else { anker.style.display = 'block'; anker.style.background = farbe; }
+  stand.textContent = name;
+  zeige();
+}
+document.getElementById('rot').onclick   = function () { setze('#E01B1B', 'Rot'); };
+document.getElementById('gruen').onclick = function () { setze('#1B8F3A', 'Grün'); };
+document.getElementById('blau').onclick  = function () { setze('#1B4FE0', 'Blau'); };
+document.getElementById('aus').onclick   = function () { setze(null, 'aus'); };
+
+function zeige() {
+  var st = getComputedStyle(anker);
+  var kand = [];
+  [].forEach.call(document.querySelectorAll('*'), function (e) {
+    var c = getComputedStyle(e);
+    if (c.position !== 'fixed' && c.position !== 'sticky') return;
+    if (c.display === 'none') return;
+    var b = e.getBoundingClientRect();
+    if (b.bottom < window.innerHeight - 4) return;
+    kand.push((e.id || e.tagName.toLowerCase()) + '=' + c.backgroundColor);
+  });
+  document.getElementById('werte').innerHTML =
+    '<b>Anker:</b> ' + st.display + ', ' + st.backgroundColor + '<br>' +
+    '<b>Kandidaten unten:</b> ' + (kand.join(' | ') || 'keine') + '<br>' +
+    '<b>html:</b> ' + getComputedStyle(document.documentElement).backgroundColor + '<br>' +
+    '<b>grober Zeiger:</b> ' + matchMedia('(pointer: coarse)').matches + '<br>' +
+    '<b>schmal (&lt;768):</b> ' + matchMedia('(max-width: 767px)').matches + '<br>' +
+    '<b>Fenster:</b> ' + window.innerWidth + '×' + window.innerHeight +
+    '  <b>Bildschirm:</b> ' + screen.width + '×' + screen.height + '<br>' +
+    '<b>Kennung:</b> ' + navigator.userAgent;
+}
+zeige();
+</script>
+</body>
+</html>
