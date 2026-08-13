@@ -587,32 +587,6 @@ html:not(.js) .tag { position: static; display: inline-block; opacity: 1; }
   font-size: clamp(12px, 1.5vw, 16px);
 }
 
-/* Eine Frist — deshalb rot */
-.due__date {
-  position: absolute;
-  top: 6%;
-  right: -0.6em;
-  z-index: 4;
-  padding: 0 12px;
-  height: 28px;
-  border-radius: 14px;
-  font: 700 13px/1 var(--sans);
-  white-space: nowrap;
-  background: var(--signal);
-  color: #fff;
-  display: inline-flex;
-  align-items: center;
-  transform: translate3d(0, 0, 0) scale(1);
-  transition: transform 1.05s var(--ease) .4s, opacity .3s var(--ease-soft) 1.3s;
-}
-
-.is-in .due__date {
-  transform: translate3d(var(--fx), var(--fy), 0) scale(.5);
-  opacity: 0;
-}
-
-.no-fly .due__date { transform: none !important; opacity: 1 !important; }
-
 .cal {
   background: var(--card);
   border: 1px solid var(--line);
@@ -1340,4 +1314,242 @@ html:not(.js) .tag { position: static; display: inline-block; opacity: 1; }
   font-weight: 600;
   letter-spacing: -.025em;
   margin-bottom: 4px;
+}
+
+/* ==========================================================================
+   Block 1-3 — Farbe: Ordnerfarben im Kopf, Farbeinlauf, Fristkarte
+   ========================================================================== */
+
+/* Der Anteil, den die Farbe im Ordner schon eingenommen hat */
+@property --fl { syntax: "<percentage>"; inherits: false; initial-value: 0%; }
+
+/* --- Ordnermarken schon im ersten Bild ------------------------------------ */
+
+.hero__marks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 26px 0 0;
+}
+
+.hmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 34px;
+  padding: 0 14px 0 4px;
+  border-radius: var(--r-pill);
+  background: var(--card);
+  border: 1px solid var(--line);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: -.025em;
+}
+
+.hmark .sw {
+  width: 26px; height: 26px; border-radius: 50%;
+  overflow: hidden; position: relative; flex: none;
+  background: linear-gradient(150deg, #FFB020, #FF3D78 55%, #7C1FA2);
+}
+.hmark .sw canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+@media (max-width: 767px) { .hero__marks { gap: 6px; margin-top: 20px; } .hmark { height: 30px; font-size: 13px; } }
+
+/* --- Der Farbeinlauf, wenn ein Brief ankommt ------------------------------ */
+
+.folder { position: relative; overflow: hidden; }
+
+.folder__flood {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  opacity: 0;
+  --fl: 0%;
+  -webkit-mask-image: linear-gradient(90deg, #000 0%, #000 var(--fl), transparent calc(var(--fl) + 16%), transparent 100%);
+  mask-image: linear-gradient(90deg, #000 0%, #000 var(--fl), transparent calc(var(--fl) + 16%), transparent 100%);
+  transition: --fl .52s var(--ease-soft), opacity .18s linear;
+}
+.folder__flood canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+.folder .sw, .folder__ic, .folder__name, .folder__n { position: relative; z-index: 1; }
+
+.folder.is-hit .folder__flood { opacity: 1; --fl: 116%; }
+
+/* Text blendet leicht verzoegert mit, kein Sprung */
+.folder.is-hit .folder__name,
+.folder.is-hit .folder__n { color: #fff; transition: color .42s var(--ease-soft) .12s; }
+
+/* Ganz leichtes Ploppen, sobald die Farbe durch ist */
+.folder.is-hit { animation: ploppen .34s var(--ease-soft) .48s; }
+
+@keyframes ploppen {
+  0%   { transform: scale(1); }
+  50%  { transform: scale(1.026); }
+  100% { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .folder.is-hit { animation: none; }
+  .folder__flood { transition: none; }
+}
+
+/* --- Der Brief traegt die Farbe seines Zielordners ------------------------ */
+
+.sheet .mark.is-read {
+  background: var(--fam, var(--ink));
+  box-shadow: 0 0 0 0.22em color-mix(in srgb, var(--fam, var(--ink)) 22%, transparent);
+}
+
+.tag { background: var(--fam, var(--ink)); color: #fff; }
+.tag.ps-sig { background: var(--signal); }
+
+.scan::after {
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    color-mix(in srgb, var(--fam, var(--ink)) 6%, transparent) 74%,
+    color-mix(in srgb, var(--fam, var(--ink)) 30%, transparent) 96%,
+    var(--fam, var(--ink)) 100%
+  );
+}
+
+/* --- Fristkarte ----------------------------------------------------------- */
+
+.fristcard {
+  padding: clamp(26px, 4vw, 44px);
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.fristcard .title,
+.fristcard .say { color: #fff; }
+.fristcard .title { max-width: 15ch; }
+.fristcard .say { font-weight: 600; max-width: 34ch; opacity: .95; }
+
+/* --- Kalender mit zwei Terminen ------------------------------------------- */
+
+.cal__grid b { position: relative; }
+
+.cal__grid b.is-rem,
+.cal__grid b.is-due {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+.cal__grid b.is-rem::before,
+.cal__grid b.is-due::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(.55);
+  transition: opacity .45s var(--ease-soft), transform .5s var(--ease), box-shadow .4s var(--ease-soft);
+}
+
+/* Zuerst nur ein Vorschlag: gestrichelt */
+.is-in .cal__grid b.is-rem::before,
+.is-in .cal__grid b.is-due::before {
+  opacity: 1;
+  transform: scale(1);
+  transition-delay: .35s;
+}
+
+.cal__grid b.is-rem::before { box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--ink) 40%, transparent); }
+.cal__grid b.is-due::before { box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--signal) 55%, transparent); }
+
+/* Angenommen: fest */
+.is-in .cal__grid b.is-rem::before { box-shadow: inset 0 0 0 2px var(--ink); transition-delay: .35s, .35s, 1.5s; }
+.is-in .cal__grid b.is-due::before { background: var(--signal); box-shadow: none; transition-delay: .35s, .35s, 1.5s; }
+
+.cal__grid b.is-due span { position: relative; transition: color .3s var(--ease-soft) 1.5s; }
+.is-in .cal__grid b.is-due span { color: #fff; }
+.cal__grid b span { position: relative; }
+
+.cal__legend {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 8px;
+}
+
+.cal__li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15.5px;
+  font-weight: 600;
+  letter-spacing: -.025em;
+  color: var(--ink-2);
+}
+
+.cal__li .dot { width: 13px; height: 13px; border-radius: 50%; flex: none; }
+.cal__li .dot--rem { box-shadow: inset 0 0 0 2px var(--ink); }
+.cal__li .dot--due { background: var(--signal); }
+
+.cal__li em {
+  font-style: normal;
+  margin-left: auto;
+  font: 500 14px/1 var(--mono);
+  letter-spacing: -.03em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Der Vorschlagsbalken */
+.cal__bar {
+  margin-top: 16px;
+  padding: 12px;
+  border-radius: var(--r-s);
+  background: var(--card-2);
+  display: grid;
+  gap: 10px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity .5s var(--ease) .7s, transform .6s var(--ease) .7s;
+}
+
+.is-in .cal__bar { opacity: 1; transform: none; }
+
+.cal__bartxt {
+  font-size: 15.5px;
+  font-weight: 600;
+  letter-spacing: -.025em;
+  color: var(--ink-2);
+}
+
+.cal__btns { display: flex; gap: 8px; }
+
+.cal__ok {
+  flex: 1 1 auto;
+  height: 40px;
+  border-radius: var(--r-pill);
+  background: var(--ink);
+  color: var(--paper);
+  display: grid;
+  place-items: center;
+  font-size: 15.5px;
+  font-weight: 600;
+  letter-spacing: -.025em;
+}
+
+.cal__alt {
+  height: 40px;
+  padding: 0 18px;
+  border-radius: var(--r-pill);
+  border: 1.5px solid var(--line);
+  display: grid;
+  place-items: center;
+  font-size: 15.5px;
+  font-weight: 600;
+  letter-spacing: -.025em;
+  color: var(--ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cal__grid b.is-rem::before, .cal__grid b.is-due::before { opacity: 1; transform: scale(1); }
+  .cal__bar { opacity: 1; transform: none; }
 }
