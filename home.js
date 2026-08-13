@@ -96,13 +96,16 @@
     if (narrow && stick && wordsBox) {
       var room = stick.clientHeight - stage.offsetTop - 8;
       heroTop = wordsBox.offsetTop + wordsBox.offsetHeight - stage.offsetTop + 12;
-      cardW = Math.max(124, Math.min(
+      cardW = Math.max(112, Math.min(
         cardW,
         (room - heroTop) / (1.32 * 1.36),
         overFolders / (1.38 * 1.36)
       ));
     }
     var cardH = cardW * 1.36;
+
+    /* Am Telefon hängt der Stapel oben in der Luft über den Ordnern. */
+    var pileY = narrow ? cardH * 0.69 + 4 : H * 0.5;
 
     /* Der Brief bringt seine eigene Schriftgröße mit, damit alles mitskaliert. */
     letters.forEach(function (el) {
@@ -119,9 +122,10 @@
       });
     });
 
-    /* Das iPhone: so groß, dass der Brief in den Sucher passt —
-       am Telefon nur so hoch, dass es über den Ordnern bleibt. */
-    var phoneW = Math.min((narrow ? H * 0.56 : H * 0.94) / 2.03, cardW / 0.84);
+    /* Das iPhone: so groß, dass der Brief in den Sucher passt. Am Telefon steht
+       es an der Stelle, an der später die Ordner stehen — die treten erst auf,
+       wenn es wieder weg ist (siehe „show" in paint). */
+    var phoneW = Math.min(H * 0.94 / 2.03, cardW / 0.84);
     if (phone) {
       phone.style.width = phoneW.toFixed(1) + "px";
       phone.style.height = (phoneW * 2.03).toFixed(1) + "px";
@@ -139,8 +143,7 @@
       heroX: narrow ? W * 0.5 : W * 0.72,
       heroY: narrow ? heroTop + cardH * 0.66 : H * 0.5,
       pileX: narrow ? W * 0.5 : W * 0.26,
-      /* Am Telefon mittig in die Luft über der ersten Ordnerzeile */
-      pileY: narrow ? (overFolders - cardH * 1.38) / 2 + cardH * 0.69 : H * 0.5
+      pileY: pileY
     };
   }
 
@@ -178,7 +181,11 @@
 
     var out = easeInOut(span(q, 0.02, 0.12));        /* die Worte treten ab */
     var gather = easeInOut(span(q, 0.02, 0.15));     /* Fächer wird zum Stapel */
-    var show = span(q, 0.13, 0.24);                  /* Ordner treten auf */
+    /* Ordner treten auf. Am Telefon erst, wenn das Fotografieren vorbei ist:
+       dort steht das iPhone genau an ihrer Stelle, und ein leerer Ordner, der
+       eine halbe Bildschirmlänge lang darunter wartet, erzählt ohnehin nichts.
+       Der zweite Brief ist bei 0.52 abfotografiert, der dritte startet bei 0.59. */
+    var show = layout.narrow ? span(q, 0.52, 0.59) : span(q, 0.13, 0.24);
 
     if (words) {
       words.style.opacity = (1 - out).toFixed(3);
@@ -308,11 +315,17 @@
     caps.forEach(function (c, i) { c.classList.toggle("is-on", i === on); });
   }
 
+  /* Der Fortschritt wird an der Höhe des klebenden Blocks gemessen, nicht an
+     window.innerHeight. Am Telefon fährt die Adressleiste beim Scrollen ein und
+     aus; innerHeight springt dabei um rund achtzig Punkte, und die Geschichte
+     sprang mit — Ordner und Sätze zuckten hin und her. Der klebende Block ist
+     100svh hoch und ändert sich dabei nicht. */
   function updateStory() {
     if (!story || !layout) return;
     var rect = story.getBoundingClientRect();
-    if (rect.top > window.innerHeight || rect.bottom < 0) return;
-    var total = rect.height - window.innerHeight;
+    var view = stick ? stick.offsetHeight : window.innerHeight;
+    if (rect.top > view || rect.bottom < 0) return;
+    var total = rect.height - view;
     paint(total > 0 ? clamp(-rect.top / total, 0, 1) : 0);
   }
 
