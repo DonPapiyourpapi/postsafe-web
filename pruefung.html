@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Prüfseite — woher kommt der Balken?</title>
+<title>Prüfseite 2 — welche Bauweise lässt die Fläche hell?</title>
 <meta name="robots" content="noindex">
 <style>
   :root { color-scheme: light; --papier: #F1F1EF; --dunkel: #0B0B0B; }
@@ -16,13 +16,13 @@
     background: var(--papier);
     border-end-start-radius: 24px;
     border-end-end-radius: 24px;
-    padding: 26px 20px 40vh;
+    padding: 26px 20px 0;
     color: #0D0D0F;
     font: 400 17px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
     -webkit-text-size-adjust: 100%;
   }
-  h1 { font-size: 24px; letter-spacing: -.03em; margin: 0 0 4px; }
-  p.lead { color: #5C5C63; margin: 0 0 22px; }
+  h1 { font-size: 23px; letter-spacing: -.03em; margin: 0 0 4px; }
+  p.lead { color: #5C5C63; margin: 0 0 20px; }
   .knopf {
     display: block; width: 100%; margin: 0 0 10px;
     padding: 20px; border: 0; border-radius: 14px;
@@ -32,62 +32,72 @@
   #a { background: #B03030; }
   #b { background: #2C6E9B; }
   #c { background: #2E7D4F; }
-  .jetzt { margin-top: 22px; font-weight: 700; font-size: 19px; }
+  #d { background: #6B4E9B; }
+  .jetzt { margin-top: 20px; font-weight: 700; font-size: 20px; }
 
-  /* --- Der Fuss, genau wie auf der echten Seite --------------------------- */
+  /* Die lange Strecke: hier ist der Fuss weit weg vom unteren Rand. */
+  .strecke { height: 260vh; display: grid; place-items: center; }
+  .strecke p {
+    max-width: 15em; text-align: center; font: 700 22px/1.35 inherit;
+    letter-spacing: -.02em; color: #0D0D0F;
+  }
+
+  /* --- Der Fuss, wie auf der echten Seite --------------------------------- */
   .site-foot {
-    position: sticky;
-    bottom: 0;
-    z-index: 0;
-    margin-top: -24px;
+    position: sticky; bottom: 0; z-index: 0; margin-top: -24px;
     color: #F4F4F1;
     font: 400 16px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
-  .site-foot__in { padding: 40px 20px 56px; }
+  .site-foot__in { padding: 40px 20px 70px; }
 
-  /* A — Farbe im ::before, so steht es gerade auf der echten Seite */
+  /* A — wie jetzt auf der echten Seite: Farbe im ::before des Fusses */
   body.a .site-foot::before {
     content: ""; position: absolute; inset: 0 0 -3px; z-index: -1;
     background: var(--dunkel);
   }
-  /* B — Farbe in einem gewoehnlichen Kind im Fluss */
-  body.b .site-foot__in { background: var(--dunkel); }
-  /* C — kein Fuss traegt Farbe; der Untergrund ist dunkel */
-  body.c { background: var(--dunkel); }
+  /* B — der Fuss ist farblos, dunkel ist der Untergrund (body) */
+  body.b { background: var(--dunkel); }
+  /* C — der Fuss ist farblos, dunkel ist html; body bleibt Papier */
+  body.c { background: var(--papier); }
+  html.c { background: var(--dunkel); }
+  /* D — gar kein Fuss. Nur zur Gegenprobe. */
+  body.d .site-foot { display: none; }
 </style>
 </head>
 <body class="a">
 
 <main>
-  <h1>Woher kommt der schwarze Balken?</h1>
-  <p class="lead">Tipp nacheinander auf die drei Knöpfe und schau jedes Mal auf die
-  Fläche ganz unten am Bildschirm, wo „postsafe.eu“ steht. Schick mir bitte von
-  jeder Einstellung ein Bildschirmfoto.</p>
+  <h1>Welche Bauweise lässt die Fläche unten hell?</h1>
+  <p class="lead"><b>Wichtig:</b> nach jedem Antippen ein Stück nach unten scrollen,
+  bis nur noch die helle Fläche zu sehen ist — der Fuß darf nicht am unteren Rand
+  stehen. Dann Bildschirmfoto.</p>
 
-  <button class="knopf" id="a">Einstellung A
-    <small>So wie jetzt auf der echten Seite</small></button>
-  <button class="knopf" id="b">Einstellung B
-    <small>Farbe in einem gewöhnlichen Kind</small></button>
-  <button class="knopf" id="c">Einstellung C
-    <small>Farbe kommt vom Untergrund</small></button>
+  <button class="knopf" id="a">A — wie jetzt<small>Farbe steckt im Fuß</small></button>
+  <button class="knopf" id="b">B — Untergrund dunkel<small>Fuß farblos, body dunkel</small></button>
+  <button class="knopf" id="c">C — html dunkel<small>Fuß farblos, html dunkel</small></button>
+  <button class="knopf" id="d">D — gar kein Fuß<small>Gegenprobe</small></button>
 
   <p class="jetzt">Eingestellt: <span id="stand">A</span></p>
+
+  <div class="strecke">
+    <p>Hier runterscrollen und schauen,<br>welche Farbe die Fläche<br>ganz unten hat.</p>
+  </div>
 </main>
 
 <footer class="site-foot">
   <div class="site-foot__in">
-    <b>PostSafe</b><br>
-    Das hier ist der Fuß. Er klebt unten, genau wie auf der echten Seite.
+    <b>PostSafe</b><br>Der Fuß. Klebt unten, wie auf der echten Seite.
   </div>
 </footer>
 
 <script>
 var stand = document.getElementById('stand');
-['a', 'b', 'c'].forEach(function (k) {
+['a', 'b', 'c', 'd'].forEach(function (k) {
   document.getElementById(k).onclick = function () {
     document.body.className = k;
+    document.documentElement.className = k;
     stand.textContent = k.toUpperCase();
-    window.scrollTo({ top: 0, behavior: 'instant' });
+    window.scrollTo({ top: Math.round(window.innerHeight * 1.2), behavior: 'instant' });
   };
 });
 </script>
