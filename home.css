@@ -341,8 +341,12 @@
 .story__stick {
   position: sticky;
   top: 0;
-  height: 100vh;
-  height: 100svh;
+  /* Vier Pixel kürzer als das Fenster, damit die Unterkante nicht im Suchfenster
+     liegt, mit dem Safari am unteren Bildschirmrand nach klebenden Elementen
+     sucht, um danach seine Leiste einzufärben. Dort unten wird ohnehin nichts
+     gezeichnet — die Bühne endet gut hundert Pixel darüber. */
+  height: calc(100vh - 4px);
+  height: calc(100svh - 4px);
   overflow: hidden;
 }
 

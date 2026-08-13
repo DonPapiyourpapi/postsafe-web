@@ -332,27 +332,31 @@ main {
   border-end-end-radius: var(--rundung);
 }
 
-/* Der Fuß steht ganz normal im Fluss und wird von foot.js beim Scrollen unten
-   gehalten — nicht mit position: sticky. Der Grund steht in foot.js: Safari
-   färbt seit iOS 26 seine Leiste am unteren Bildschirmrand nach dem
-   nächstgelegenen klebenden oder festen Element, und ein dunkler Fuß dort
-   färbte sie über die ganze Seite hinweg dunkel. Ohne sticky findet die Suche
-   nichts mehr und Safari bleibt beim Hintergrund von html und body — Papier.
+/* Der Fuß klebt wieder unten — aber das klebende Element ist absichtlich nur
+   60 % breit. Safari sucht seit iOS 26 am unteren Bildschirmrand nach Elementen
+   mit position: sticky oder fixed, um danach seine Leiste einzufärben, und
+   verlangt dafür mindestens 80 % Breite. Der schmale Fuß fällt aus diesem
+   Fenster; die dunkle Fläche zeichnet ein Kind, das wieder über die volle
+   Breite geht und nicht klebt. Damit bleibt Safari beim Hintergrund von html
+   und body — Papier.
 
-   Der negative obere Rand zieht ihn eine Rundung unter die Karte; bündig säße
-   ihre Kante genau auf seiner und die runden Ecken wären unsichtbar. Der Rand
+   Am Gerät durchgemessen: mit klebendem, vollbreitem Fuß war die Leiste dunkel,
+   ohne klebendes Element hell. Ein Skript statt sticht schied aus — es lief dem
+   Finger hinterher und ruckelte.
+
+   Die Breiten: 100 / 60 = 166.6667 % bringt das Kind zurück auf volle Breite,
+   (166.6667 − 100) / 2 = 33.3333 % negativer Rand rückt es wieder mittig.
+
+   Der negative obere Rand zieht den Fuß eine Rundung unter die Karte; bündig
+   säße ihre Kante genau auf seiner und die runden Ecken wären unsichtbar. Er
    sitzt am Fuß und nicht an der Karte, weil die Rechtstexte ihrem <main> über
-   .wrap ein eigenes margin geben.
-
-   Der Schatten deckt den Bruchteil-Rest ab, den die 520vh der Szene bei
-   manchen Fensterhöhen unter dem Fuß stehen lassen.                        */
+   .wrap ein eigenes margin geben.                                          */
 .site-foot {
-  position: relative;
+  position: sticky;
+  bottom: 0;
   z-index: 0;
-  margin-top: calc(-1 * var(--rundung));
-  will-change: transform;
-  background: #0B0B0B;
-  box-shadow: 0 3px 0 #0B0B0B;
+  width: 60%;
+  margin: calc(-1 * var(--rundung)) auto 0;
   color: #F4F4F1;
   --ink:    #F4F4F1;
   --ink-2:  #A4A4A0;
@@ -363,8 +367,19 @@ main {
   --paper:  #0B0B0B;
 }
 
+/* Die dunkle Fläche. Klebt nicht, geht über die volle Breite.
+   Die drei Pixel nach unten schlucken den Bruchteil-Rest, den die 520vh der
+   Szene bei manchen Fensterhöhen stehen lassen. */
+.site-foot__flaeche {
+  width: 166.6667%;
+  margin-inline: -33.3333%;
+  background: #0B0B0B;
+  box-shadow: 0 3px 0 #0B0B0B;
+}
+
 @media (prefers-color-scheme: dark) {
-  .site-foot { background: #151515; box-shadow: 0 3px 0 #151515; --paper: #151515; }
+  .site-foot { --paper: #151515; }
+  .site-foot__flaeche { background: #151515; box-shadow: 0 3px 0 #151515; }
 }
 
 .site-foot__in {
