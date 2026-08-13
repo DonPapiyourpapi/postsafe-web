@@ -587,3 +587,35 @@ td { font-variant-numeric: tabular-nums; }
 
 /* Unter 640 px liegen die Rechtsverweise in der Fusszeile. */
 .head-back { display: none; }
+
+/* --- Die Farbe von Safaris Leiste ------------------------------------------
+   Seit iOS 26 faerbt Safari seine schwebende Leiste nach dem naechstgelegenen
+   klebenden oder festen Element am Bildschirmrand — nicht mehr nach
+   <meta name="theme-color">. Statt zu hoffen, dass es nichts findet und auf den
+   Hintergrund von html zurueckfaellt, bekommt es hier ausdruecklich etwas
+   vorgesetzt: ein Streifen in Papierfarbe, dichter am Rand als alles andere.
+
+   Sichtbar sein muss er dafuer nicht: Safari schaut auf die Werte, nicht auf
+   das Bild — sogar Elemente mit opacity: 0 werden abgetastet. Er liegt deshalb
+   mit z-index: -1 hinter der ganzen Seite und ist nirgends zu sehen.
+   Ausserhalb von Telefonen steht er auf display: none — nicht auf opacity: 0,
+   denn durchsichtige Elemente werden weiter abgetastet, nicht angezeigte nicht. */
+
+.tint { display: none; }
+
+/* Riegel ueber Zeigergenauigkeit statt ueber @supports: „grober Zeiger“ trifft
+   Telefone und laesst Rechner aussen vor, und ich kann es hier nachstellen —
+   der @supports-Test auf Apple-Vokabular laesst sich nirgends pruefen. */
+@media (max-width: 767px) and (pointer: coarse) {
+  .tint {
+    display: block;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 12px;
+    z-index: -1;            /* hinter der Seite: nie zu sehen, aber abtastbar */
+    background: var(--paper);
+    pointer-events: none;
+  }
+}
