@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>PostSafe — Ihre Post ordnet sich von selbst</title>
-<meta name="description" content="PostSafe ordnet Ihre Briefpost: Sie fotografieren den Brief, PostSafe liest ihn, legt ihn in den passenden Ordner und erinnert an Fristen. Die Briefe bleiben in Ihrer eigenen iCloud.">
+<title>PostSafe — Deine Post kennt ihren Platz</title>
+<meta name="description" content="PostSafe ordnet deine Briefpost: Du fotografierst den Brief, PostSafe liest ihn, legt ihn in den passenden Ordner und erinnert an Fristen. Die Briefe bleiben in deiner eigenen iCloud.">
 <meta name="theme-color" content="#fcfbf9" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0a0a0c" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -13,12 +13,12 @@
 <meta property="og:locale" content="de_DE">
 <meta property="og:site_name" content="PostSafe">
 <meta property="og:url" content="https://postsafe.eu/">
-<meta property="og:title" content="PostSafe — Ihre Post ordnet sich von selbst">
-<meta property="og:description" content="Sie fotografieren den Brief. PostSafe liest ihn, legt ihn in den passenden Ordner und erinnert an Fristen. Die Briefe bleiben in Ihrer eigenen iCloud.">
+<meta property="og:title" content="PostSafe — Deine Post kennt ihren Platz">
+<meta property="og:description" content="Du fotografierst den Brief. PostSafe liest ihn, legt ihn in den passenden Ordner und erinnert an Fristen. Die Briefe bleiben in deiner eigenen iCloud.">
 <meta property="og:image" content="https://postsafe.eu/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="PostSafe — Ihre Post ordnet sich von selbst.">
+<meta property="og:image:alt" content="PostSafe — Deine Post kennt ihren Platz.">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="home.css">
@@ -32,10 +32,14 @@
     <a class="brand" href="index.html">
       <svg class="brand__mark" width="22" height="22" viewBox="0 0 22 22" aria-hidden="true" focusable="false">
         <rect width="22" height="22" rx="6.5" fill="currentColor" opacity=".92"/>
-        <path d="M5.6 7.4h10.8v7.2H5.6z" fill="none" stroke="var(--bg)" stroke-width="1.5" stroke-linejoin="round"/>
-        <path d="M5.6 8.1l5.4 3.9 5.4-3.9" fill="none" stroke="var(--bg)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M5.6 7.4h10.8v7.2H5.6z" fill="none" stroke="var(--paper)" stroke-width="1.5" stroke-linejoin="round"/>
+        <path d="M5.6 8.1l5.4 3.9 5.4-3.9" fill="none" stroke="var(--paper)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
       PostSafe
+    </a>
+    <a class="head-web ps-chip" href="web.html">
+      <svg width="15" height="15" viewBox="0 0 15 15" aria-hidden="true"><path d="M1.2 1.2h4.4v4.4H1.2zM9.4 1.2h4.4v4.4H9.4zM1.2 9.4h4.4v4.4H1.2z" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M9.4 9.4h2v2h-2zM11.8 11.8h2v2h-2z" fill="currentColor"/></svg>
+      <span class="head-web__long">PostSafe </span>Web
     </a>
     <nav class="site-nav" aria-label="Rechtliches">
       <a href="datenschutz.html">Datenschutz</a>
@@ -55,8 +59,8 @@
 
       <div class="story__words" data-words>
         <div>
-          <h1 class="display">Ihre Post ordnet sich von selbst.</h1>
-          <p class="hero__sub">Sie fotografieren den Brief. Mehr müssen Sie nicht tun.</p>
+          <h1 class="display"><span class="lt">Deine Post</span> kennt ihren Platz.</h1>
+          <p class="hero__sub">Du fotografierst den Brief. Mehr musst du nicht tun.</p>
         </div>
       </div>
 
@@ -116,7 +120,7 @@
             </div>
             <div class="sheet__foot"><i style="--w:34%"></i></div>
           </div>
-          <span class="tag" data-tag>Frist 14. August</span>
+          <span class="tag ps-sig" data-tag>Frist 14. August</span>
           <div class="scan" aria-hidden="true"></div>
         </article>
 
@@ -134,7 +138,7 @@
             </div>
             <div class="sheet__foot"><i style="--w:40%"></i></div>
           </div>
-          <span class="tag" data-tag>Frist 2. September</span>
+          <span class="tag ps-sig" data-tag>Frist 2. September</span>
           <div class="scan" aria-hidden="true"></div>
         </article>
 
@@ -171,7 +175,7 @@
             </div>
             <div class="sheet__foot"><i style="--w:32%"></i></div>
           </div>
-          <span class="tag" data-tag>Frist 30. August</span>
+          <span class="tag ps-sig" data-tag>Frist 30. August</span>
           <div class="scan" aria-hidden="true"></div>
         </article>
 
@@ -182,22 +186,22 @@
 
         <div class="folders" data-folders aria-hidden="true">
           <div class="folder" data-folder>
-            <svg class="folder__ic" width="18" height="15" viewBox="0 0 18 15" aria-hidden="true"><path d="M1 3.2A1.7 1.7 0 0 1 2.7 1.5h3.4l1.6 2h7.6A1.7 1.7 0 0 1 17 5.2v7.1a1.7 1.7 0 0 1-1.7 1.7H2.7A1.7 1.7 0 0 1 1 12.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+            <span class="sw"><canvas class="mo" data-pal="0" data-seed="3.4" aria-hidden="true"></canvas><svg class="folder__ic" width="18" height="15" viewBox="0 0 18 15" aria-hidden="true"><path d="M1 3.2A1.7 1.7 0 0 1 2.7 1.5h3.4l1.6 2h7.6A1.7 1.7 0 0 1 17 5.2v7.1a1.7 1.7 0 0 1-1.7 1.7H2.7A1.7 1.7 0 0 1 1 12.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></span>
             <span class="folder__name">Wohnen</span>
             <span class="folder__n" data-n>0</span>
           </div>
           <div class="folder" data-folder>
-            <svg class="folder__ic" width="18" height="15" viewBox="0 0 18 15" aria-hidden="true"><path d="M1 3.2A1.7 1.7 0 0 1 2.7 1.5h3.4l1.6 2h7.6A1.7 1.7 0 0 1 17 5.2v7.1a1.7 1.7 0 0 1-1.7 1.7H2.7A1.7 1.7 0 0 1 1 12.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+            <span class="sw"><canvas class="mo" data-pal="1" data-seed="7.1" aria-hidden="true"></canvas><svg class="folder__ic" width="18" height="15" viewBox="0 0 18 15" aria-hidden="true"><path d="M1 3.2A1.7 1.7 0 0 1 2.7 1.5h3.4l1.6 2h7.6A1.7 1.7 0 0 1 17 5.2v7.1a1.7 1.7 0 0 1-1.7 1.7H2.7A1.7 1.7 0 0 1 1 12.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></span>
             <span class="folder__name">Behörden</span>
             <span class="folder__n" data-n>0</span>
           </div>
           <div class="folder" data-folder>
-            <svg class="folder__ic" width="18" height="15" viewBox="0 0 18 15" aria-hidden="true"><path d="M1 3.2A1.7 1.7 0 0 1 2.7 1.5h3.4l1.6 2h7.6A1.7 1.7 0 0 1 17 5.2v7.1a1.7 1.7 0 0 1-1.7 1.7H2.7A1.7 1.7 0 0 1 1 12.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+            <span class="sw"><canvas class="mo" data-pal="2" data-seed="11.8" aria-hidden="true"></canvas><svg class="folder__ic" width="18" height="15" viewBox="0 0 18 15" aria-hidden="true"><path d="M1 3.2A1.7 1.7 0 0 1 2.7 1.5h3.4l1.6 2h7.6A1.7 1.7 0 0 1 17 5.2v7.1a1.7 1.7 0 0 1-1.7 1.7H2.7A1.7 1.7 0 0 1 1 12.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></span>
             <span class="folder__name">Versicherungen</span>
             <span class="folder__n" data-n>0</span>
           </div>
           <div class="folder" data-folder>
-            <svg class="folder__ic" width="18" height="15" viewBox="0 0 18 15" aria-hidden="true"><path d="M1 3.2A1.7 1.7 0 0 1 2.7 1.5h3.4l1.6 2h7.6A1.7 1.7 0 0 1 17 5.2v7.1a1.7 1.7 0 0 1-1.7 1.7H2.7A1.7 1.7 0 0 1 1 12.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+            <span class="sw"><canvas class="mo" data-pal="3" data-seed="16.2" aria-hidden="true"></canvas><svg class="folder__ic" width="18" height="15" viewBox="0 0 18 15" aria-hidden="true"><path d="M1 3.2A1.7 1.7 0 0 1 2.7 1.5h3.4l1.6 2h7.6A1.7 1.7 0 0 1 17 5.2v7.1a1.7 1.7 0 0 1-1.7 1.7H2.7A1.7 1.7 0 0 1 1 12.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></span>
             <span class="folder__name">Finanzen</span>
             <span class="folder__n" data-n>0</span>
           </div>
@@ -220,8 +224,8 @@
       <div class="band__text">
         <h2 class="title rise">Die Frist merkt sich PostSafe.</h2>
         <p class="say rise" style="--delay:.1s">
-          Steht im Brief ein Datum, erkennt PostSafe es und schlägt Ihnen eine
-          Erinnerung vor. Ein Tippen, und sie steht in Ihrem Kalender.
+          Steht im Brief ein Datum, erkennt PostSafe es und schlägt dir eine
+          Erinnerung vor. Ein Tippen, und sie steht in deinem Kalender.
         </p>
       </div>
       <div class="band__art rise" style="--delay:.15s">
@@ -268,7 +272,7 @@
       <div class="band__text">
         <h2 class="title rise">Ein Wort genügt.</h2>
         <p class="say rise" style="--delay:.1s">
-          Sie müssen nicht wissen, in welchem Ordner etwas liegt. Suchen Sie nach
+          Du musst nicht wissen, in welchem Ordner etwas liegt. Such nach
           „Rechnung“ — PostSafe findet sie in allen Briefen, über alle Ordner hinweg.
         </p>
       </div>
@@ -293,29 +297,29 @@
   <section class="trust" data-reveal>
     <div class="shell band__in">
       <div class="band__text">
-        <h2 class="title rise">Ihre Briefe bleiben bei Ihnen.</h2>
+        <h2 class="title rise">Deine Briefe bleiben bei dir.</h2>
         <p class="say rise" style="--delay:.1s">
-          Sie liegen in Ihrer eigenen iCloud und belegen Ihren Speicher.
+          Sie liegen in deiner eigenen iCloud und belegen deinen Speicher.
           Wir kommen nicht daran.
         </p>
       </div>
       <div class="band__art rise" style="--delay:.15s">
-        <div class="vault" role="img" aria-label="Illustration: Ihre Ordner liegen innerhalb Ihrer eigenen iCloud. Der Server daneben bleibt leer.">
+        <div class="vault" role="img" aria-label="Illustration: deine Ordner liegen innerhalb deiner eigenen iCloud. Der Server daneben bleibt leer.">
           <div class="vault__inside">
-            <span class="vault__label">Ihre iCloud</span>
+            <span class="vault__label">Deine iCloud</span>
             <div class="vault__stack">
               <div class="folder">
-                <svg class="folder__ic" width="18" height="15" viewBox="0 0 18 15" aria-hidden="true"><path d="M1 3.2A1.7 1.7 0 0 1 2.7 1.5h3.4l1.6 2h7.6A1.7 1.7 0 0 1 17 5.2v7.1a1.7 1.7 0 0 1-1.7 1.7H2.7A1.7 1.7 0 0 1 1 12.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+                <span class="sw"><canvas class="mo" data-pal="0" data-seed="3.4" aria-hidden="true"></canvas><svg class="folder__ic" width="18" height="15" viewBox="0 0 18 15" aria-hidden="true"><path d="M1 3.2A1.7 1.7 0 0 1 2.7 1.5h3.4l1.6 2h7.6A1.7 1.7 0 0 1 17 5.2v7.1a1.7 1.7 0 0 1-1.7 1.7H2.7A1.7 1.7 0 0 1 1 12.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></span>
                 <span class="folder__name">Wohnen</span>
                 <span class="folder__n is-on">2</span>
               </div>
               <div class="folder">
-                <svg class="folder__ic" width="18" height="15" viewBox="0 0 18 15" aria-hidden="true"><path d="M1 3.2A1.7 1.7 0 0 1 2.7 1.5h3.4l1.6 2h7.6A1.7 1.7 0 0 1 17 5.2v7.1a1.7 1.7 0 0 1-1.7 1.7H2.7A1.7 1.7 0 0 1 1 12.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+                <span class="sw"><canvas class="mo" data-pal="1" data-seed="7.1" aria-hidden="true"></canvas><svg class="folder__ic" width="18" height="15" viewBox="0 0 18 15" aria-hidden="true"><path d="M1 3.2A1.7 1.7 0 0 1 2.7 1.5h3.4l1.6 2h7.6A1.7 1.7 0 0 1 17 5.2v7.1a1.7 1.7 0 0 1-1.7 1.7H2.7A1.7 1.7 0 0 1 1 12.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></span>
                 <span class="folder__name">Behörden</span>
                 <span class="folder__n is-on">1</span>
               </div>
               <div class="folder">
-                <svg class="folder__ic" width="18" height="15" viewBox="0 0 18 15" aria-hidden="true"><path d="M1 3.2A1.7 1.7 0 0 1 2.7 1.5h3.4l1.6 2h7.6A1.7 1.7 0 0 1 17 5.2v7.1a1.7 1.7 0 0 1-1.7 1.7H2.7A1.7 1.7 0 0 1 1 12.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+                <span class="sw"><canvas class="mo" data-pal="2" data-seed="11.8" aria-hidden="true"></canvas><svg class="folder__ic" width="18" height="15" viewBox="0 0 18 15" aria-hidden="true"><path d="M1 3.2A1.7 1.7 0 0 1 2.7 1.5h3.4l1.6 2h7.6A1.7 1.7 0 0 1 17 5.2v7.1a1.7 1.7 0 0 1-1.7 1.7H2.7A1.7 1.7 0 0 1 1 12.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></span>
                 <span class="folder__name">Versicherungen</span>
                 <span class="folder__n is-on">2</span>
               </div>
@@ -334,28 +338,28 @@
   <section class="band band--flip" data-reveal>
     <div class="shell band__in">
       <div class="band__text">
-        <h2 class="title rise">Was einmal drin ist, bleibt Ihnen.</h2>
+        <h2 class="title rise">Was einmal drin ist, bleibt dir.</h2>
         <p class="say rise" style="--delay:.1s">
-          Auch wenn Sie eines Tages aufhören: Ihre Briefe bleiben lesbar,
+          Auch wenn du eines Tages aufhörst: Deine Briefe bleiben lesbar,
           durchsuchbar und exportierbar. Ohne Ablaufdatum.
         </p>
       </div>
       <div class="band__art rise" style="--delay:.15s">
         <div class="keep" role="img" aria-label="Illustration: die Ordner bleiben vollständig, auch wenn kein Abo mehr läuft.">
           <div class="folder">
-            <svg class="folder__ic" width="18" height="15" viewBox="0 0 18 15" aria-hidden="true"><path d="M1 3.2A1.7 1.7 0 0 1 2.7 1.5h3.4l1.6 2h7.6A1.7 1.7 0 0 1 17 5.2v7.1a1.7 1.7 0 0 1-1.7 1.7H2.7A1.7 1.7 0 0 1 1 12.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+            <span class="sw"><canvas class="mo" data-pal="0" data-seed="3.4" aria-hidden="true"></canvas><svg class="folder__ic" width="18" height="15" viewBox="0 0 18 15" aria-hidden="true"><path d="M1 3.2A1.7 1.7 0 0 1 2.7 1.5h3.4l1.6 2h7.6A1.7 1.7 0 0 1 17 5.2v7.1a1.7 1.7 0 0 1-1.7 1.7H2.7A1.7 1.7 0 0 1 1 12.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></span>
             <span class="folder__name">Wohnen</span><span class="folder__n">2</span>
           </div>
           <div class="folder">
-            <svg class="folder__ic" width="18" height="15" viewBox="0 0 18 15" aria-hidden="true"><path d="M1 3.2A1.7 1.7 0 0 1 2.7 1.5h3.4l1.6 2h7.6A1.7 1.7 0 0 1 17 5.2v7.1a1.7 1.7 0 0 1-1.7 1.7H2.7A1.7 1.7 0 0 1 1 12.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+            <span class="sw"><canvas class="mo" data-pal="1" data-seed="7.1" aria-hidden="true"></canvas><svg class="folder__ic" width="18" height="15" viewBox="0 0 18 15" aria-hidden="true"><path d="M1 3.2A1.7 1.7 0 0 1 2.7 1.5h3.4l1.6 2h7.6A1.7 1.7 0 0 1 17 5.2v7.1a1.7 1.7 0 0 1-1.7 1.7H2.7A1.7 1.7 0 0 1 1 12.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></span>
             <span class="folder__name">Behörden</span><span class="folder__n">1</span>
           </div>
           <div class="folder">
-            <svg class="folder__ic" width="18" height="15" viewBox="0 0 18 15" aria-hidden="true"><path d="M1 3.2A1.7 1.7 0 0 1 2.7 1.5h3.4l1.6 2h7.6A1.7 1.7 0 0 1 17 5.2v7.1a1.7 1.7 0 0 1-1.7 1.7H2.7A1.7 1.7 0 0 1 1 12.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+            <span class="sw"><canvas class="mo" data-pal="2" data-seed="11.8" aria-hidden="true"></canvas><svg class="folder__ic" width="18" height="15" viewBox="0 0 18 15" aria-hidden="true"><path d="M1 3.2A1.7 1.7 0 0 1 2.7 1.5h3.4l1.6 2h7.6A1.7 1.7 0 0 1 17 5.2v7.1a1.7 1.7 0 0 1-1.7 1.7H2.7A1.7 1.7 0 0 1 1 12.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></span>
             <span class="folder__name">Versicherungen</span><span class="folder__n">2</span>
           </div>
           <div class="folder">
-            <svg class="folder__ic" width="18" height="15" viewBox="0 0 18 15" aria-hidden="true"><path d="M1 3.2A1.7 1.7 0 0 1 2.7 1.5h3.4l1.6 2h7.6A1.7 1.7 0 0 1 17 5.2v7.1a1.7 1.7 0 0 1-1.7 1.7H2.7A1.7 1.7 0 0 1 1 12.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg>
+            <span class="sw"><canvas class="mo" data-pal="3" data-seed="16.2" aria-hidden="true"></canvas><svg class="folder__ic" width="18" height="15" viewBox="0 0 18 15" aria-hidden="true"><path d="M1 3.2A1.7 1.7 0 0 1 2.7 1.5h3.4l1.6 2h7.6A1.7 1.7 0 0 1 17 5.2v7.1a1.7 1.7 0 0 1-1.7 1.7H2.7A1.7 1.7 0 0 1 1 12.3z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></span>
             <span class="folder__name">Finanzen</span><span class="folder__n">1</span>
           </div>
           <p class="keep__gone">Abo beendet — neue Scans pausieren.</p>
@@ -366,17 +370,20 @@
 
   <!-- 6 — Kontakt ----------------------------------------------------------- -->
   <section class="soon" data-reveal>
-    <div class="shell soon__in">
-      <h2 class="title rise">Sie erreichen uns.</h2>
+    <div class="shell">
+      <div class="soon__in ps-art">
+        <canvas class="mo" data-name="PostSafe" aria-hidden="true"></canvas>
+      <h2 class="title rise">So erreichst du uns.</h2>
       <p class="say rise" style="--delay:.1s">
-        Fragen zur App, zu Ihrem Konto oder zum Datenschutz beantworten wir
+        Fragen zur App, zu deinem Konto oder zum Datenschutz beantworten wir
         schriftlich — so bleibt für beide Seiten nachvollziehbar, was besprochen wurde.
       </p>
       <div class="actions rise" style="--delay:.2s">
-        <a class="btn btn--primary" href="mailto:kontakt@postsafe.eu">
+        <a class="btn btn--primary ps-pill" href="mailto:kontakt@postsafe.eu">
           kontakt@postsafe.eu
         </a>
-        <a class="btn btn--quiet" href="datenschutz.html">Wie wir mit Daten umgehen</a>
+        <a class="btn btn--quiet ps-chip" href="datenschutz.html">Wie wir mit Daten umgehen</a>
+        </div>
       </div>
     </div>
   </section>
@@ -389,9 +396,9 @@
       </div>
       <div class="fine__grid">
         <p class="rise"><b>Gelesen wird in Europa</b>Briefe werden bei einem europäischen Anbieter ausgelesen. Zum Training von KI-Modellen werden sie dort nicht verwendet.</p>
-        <p class="rise" style="--delay:.08s"><b>Ordnernamen bleiben auf dem Gerät</b>Wie Sie Ihre Ordner nennen, erfährt niemand außer Ihnen.</p>
+        <p class="rise" style="--delay:.08s"><b>Ordnernamen bleiben auf dem Gerät</b>Wie du deine Ordner nennst, erfährt niemand außer dir.</p>
         <p class="rise" style="--delay:.16s"><b>Auf dem Server bleibt nichts liegen</b>Kein Bild, kein Text, kein Absender, kein Betrag. So ist die App gebaut, und das wird laufend geprüft.</p>
-        <p class="rise" style="--delay:.24s"><b>Anmeldung mit Apple</b>Ein eigenes Passwort brauchen Sie nicht.</p>
+        <p class="rise" style="--delay:.24s"><b>Anmeldung mit Apple</b>Ein eigenes Passwort brauchst du nicht.</p>
       </div>
       <p class="fine__note rise" style="--delay:.3s">
         PostSafe hilft beim Ordnen und Erinnern und ersetzt keine Rechtsberatung.
@@ -408,14 +415,15 @@
       <p class="site-foot__brand">
         <svg class="brand__mark" width="20" height="20" viewBox="0 0 22 22" aria-hidden="true">
           <rect width="22" height="22" rx="6.5" fill="currentColor" opacity=".92"/>
-          <path d="M5.6 7.4h10.8v7.2H5.6z" fill="none" stroke="var(--bg)" stroke-width="1.5" stroke-linejoin="round"/>
-          <path d="M5.6 8.1l5.4 3.9 5.4-3.9" fill="none" stroke="var(--bg)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M5.6 7.4h10.8v7.2H5.6z" fill="none" stroke="var(--paper)" stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M5.6 8.1l5.4 3.9 5.4-3.9" fill="none" stroke="var(--paper)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         PostSafe
       </p>
       <p class="site-foot__note">Post ordnen, ohne dass jemand mitliest.</p>
     </div>
     <nav class="foot-links" aria-label="Rechtliches und Kontakt">
+      <a href="web.html">PostSafe Web</a>
       <a href="datenschutz.html">Datenschutz</a>
       <a href="agb.html">Nutzungsbedingungen</a>
       <a href="impressum.html">Impressum</a>
@@ -426,5 +434,6 @@
 </footer>
 
 <script src="home.js" defer></script>
+<script src="moire.js" defer></script>
 </body>
 </html>
