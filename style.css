@@ -332,18 +332,21 @@ main {
   border-end-end-radius: var(--rundung);
 }
 
+/* Der Fuß selbst bleibt ohne Hintergrund — das ist keine Marotte.
+   Seit iOS 26 färbt Safari seine schwebende Leiste nicht mehr nach
+   <meta name="theme-color">, sondern sucht Elemente mit position: fixed oder
+   sticky nah am Bildschirmrand (bis 3 px vom unteren, mindestens 80 % breit,
+   mindestens 3 px hoch) und liest deren background-color. Ein klebender Fuß in
+   Schwarz erfüllt das genau — und färbte die Leiste über die ganze Seite hinweg
+   schwarz ein. Die Farbe liegt deshalb in einem absolut gesetzten Kind, das
+   nicht abgetastet wird. Ohne Fundstelle bleibt Safari beim Hintergrund von
+   html und body, und der ist Papier.                                        */
 .site-foot {
   position: sticky;
   bottom: 0;
   z-index: 0;
   margin-top: calc(-1 * var(--rundung));
-  /* Die Szene ist 520vh hoch; bei manchen Fensterhöhen bleibt daraus ein
-     Bruchteil-Pixel unter dem Fuß stehen. Ein Schatten in seiner eigenen Farbe
-     deckt ihn ab, ohne am Aufbau etwas zu ändern. */
-  box-shadow: 0 3px 0 #0B0B0B;
-  /* Eigene, hellere Werte — sonst wäre der Fuß im Dunkeln nicht vom
-     Papier zu unterscheiden und die Karte hätte keine Kante. */
-  background: #0B0B0B;
+  background: none;
   color: #F4F4F1;
   --ink:    #F4F4F1;
   --ink-2:  #A4A4A0;
@@ -354,8 +357,20 @@ main {
   --paper:  #0B0B0B;
 }
 
+/* Die Fläche des Fußes. Absolut gesetzt, damit Safari sie nicht abtastet.
+   Die drei Pixel nach unten schlucken den Bruchteil-Rest, den die 520vh der
+   Szene bei manchen Fensterhöhen stehen lassen. */
+.site-foot::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 -3px;
+  z-index: -1;
+  background: #0B0B0B;
+}
+
 @media (prefers-color-scheme: dark) {
-  .site-foot { background: #151515; --paper: #151515; box-shadow: 0 3px 0 #151515; }
+  .site-foot { --paper: #151515; }
+  .site-foot::before { background: #151515; }
 }
 
 .site-foot__in {
