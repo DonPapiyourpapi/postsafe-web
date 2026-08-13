@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Prüfseite 2 — welche Bauweise lässt die Fläche hell?</title>
+<title>Prüfseite 3 — der Vorschlag</title>
 <meta name="robots" content="noindex">
 <style>
   :root { color-scheme: light; --papier: #F1F1EF; --dunkel: #0B0B0B; }
-  html { background: var(--papier); }
-  body { margin: 0; background: var(--papier); }
+  html, body { background: var(--papier); }
+  body { margin: 0; }
 
   main {
     position: relative;
@@ -30,76 +30,92 @@
   }
   .knopf small { display: block; font-weight: 400; opacity: .8; margin-top: 4px; }
   #a { background: #B03030; }
-  #b { background: #2C6E9B; }
-  #c { background: #2E7D4F; }
   #d { background: #6B4E9B; }
+  #e { background: #1F6F4A; }
   .jetzt { margin-top: 20px; font-weight: 700; font-size: 20px; }
 
-  /* Die lange Strecke: hier ist der Fuss weit weg vom unteren Rand. */
   .strecke { height: 260vh; display: grid; place-items: center; }
   .strecke p {
     max-width: 15em; text-align: center; font: 700 22px/1.35 inherit;
     letter-spacing: -.02em; color: #0D0D0F;
   }
 
-  /* --- Der Fuss, wie auf der echten Seite --------------------------------- */
+  /* --- Der Fuss ----------------------------------------------------------- */
   .site-foot {
-    position: sticky; bottom: 0; z-index: 0; margin-top: -24px;
+    z-index: 0;
+    margin-top: -24px;
     color: #F4F4F1;
     font: 400 16px/1.5 "Helvetica Neue", Helvetica, Arial, sans-serif;
   }
-  .site-foot__in { padding: 40px 20px 70px; }
+  .site-foot__in { padding: 40px 20px 70px; background: var(--dunkel); }
 
-  /* A — wie jetzt auf der echten Seite: Farbe im ::before des Fusses */
-  body.a .site-foot::before {
-    content: ""; position: absolute; inset: 0 0 -3px; z-index: -1;
-    background: var(--dunkel);
-  }
-  /* B — der Fuss ist farblos, dunkel ist der Untergrund (body) */
-  body.b { background: var(--dunkel); }
-  /* C — der Fuss ist farblos, dunkel ist html; body bleibt Papier */
-  body.c { background: var(--papier); }
-  html.c { background: var(--dunkel); }
-  /* D — gar kein Fuss. Nur zur Gegenprobe. */
+  /* A — wie jetzt auf der echten Seite: klebender Fuss */
+  body.a .site-foot { position: sticky; bottom: 0; }
+
+  /* D — gar kein Fuss, Gegenprobe */
   body.d .site-foot { display: none; }
+
+  /* E — der Vorschlag: der Fuss steht ganz normal im Fluss und wird beim
+         Scrollen von einem Skript unten gehalten. Kein sticky, kein fixed —
+         Safaris Suche nach faerbenden Elementen greift ins Leere. */
+  body.e .site-foot { position: relative; will-change: transform; }
 </style>
 </head>
 <body class="a">
 
 <main>
-  <h1>Welche Bauweise lässt die Fläche unten hell?</h1>
-  <p class="lead"><b>Wichtig:</b> nach jedem Antippen ein Stück nach unten scrollen,
-  bis nur noch die helle Fläche zu sehen ist — der Fuß darf nicht am unteren Rand
-  stehen. Dann Bildschirmfoto.</p>
+  <h1>Der Vorschlag</h1>
+  <p class="lead"><b>Nach jedem Antippen springt die Seite in die Mitte.</b>
+  Dort ist nur die helle Fläche zu sehen. Schau auf den unteren Rand und mach
+  ein Bild.</p>
 
-  <button class="knopf" id="a">A — wie jetzt<small>Farbe steckt im Fuß</small></button>
-  <button class="knopf" id="b">B — Untergrund dunkel<small>Fuß farblos, body dunkel</small></button>
-  <button class="knopf" id="c">C — html dunkel<small>Fuß farblos, html dunkel</small></button>
-  <button class="knopf" id="d">D — gar kein Fuß<small>Gegenprobe</small></button>
+  <button class="knopf" id="a">A — wie jetzt<small>klebender Fuß, dunkel</small></button>
+  <button class="knopf" id="d">D — gar kein Fuß<small>Gegenprobe, war hell</small></button>
+  <button class="knopf" id="e">E — der Vorschlag<small>Fuß ohne sticky, vom Skript gehalten</small></button>
 
   <p class="jetzt">Eingestellt: <span id="stand">A</span></p>
 
   <div class="strecke">
-    <p>Hier runterscrollen und schauen,<br>welche Farbe die Fläche<br>ganz unten hat.</p>
+    <p>Runterscrollen und schauen,<br>welche Farbe die Fläche<br>ganz unten hat.</p>
   </div>
 </main>
 
 <footer class="site-foot">
   <div class="site-foot__in">
-    <b>PostSafe</b><br>Der Fuß. Klebt unten, wie auf der echten Seite.
+    <b>PostSafe</b><br>Der Fuß. Sieht in A und E gleich aus.
   </div>
 </footer>
 
 <script>
+var foot  = document.querySelector('.site-foot');
 var stand = document.getElementById('stand');
-['a', 'b', 'c', 'd'].forEach(function (k) {
+var laeuft = false;
+
+/* Haelt den Fuss unten, solange die Seite ueber ihm laeuft — dasselbe
+   Verhalten wie position: sticky, nur ohne sticky. */
+function halten() {
+  laeuft = false;
+  if (document.body.className !== 'e') { foot.style.transform = ''; return; }
+  var hoehe = foot.offsetHeight;
+  var oben  = foot.offsetTop;                       /* Lage im Fluss */
+  var unten = window.scrollY + window.innerHeight;  /* unterer Rand des Fensters */
+  var d = (oben + hoehe) - unten;
+  foot.style.transform = d > 0 ? 'translate3d(0,' + (-d).toFixed(1) + 'px,0)' : '';
+}
+function takt() { if (!laeuft) { laeuft = true; requestAnimationFrame(halten); } }
+window.addEventListener('scroll', takt, { passive: true });
+window.addEventListener('resize', takt);
+
+['a', 'd', 'e'].forEach(function (k) {
   document.getElementById(k).onclick = function () {
     document.body.className = k;
-    document.documentElement.className = k;
     stand.textContent = k.toUpperCase();
+    foot.style.transform = '';
     window.scrollTo({ top: Math.round(window.innerHeight * 1.2), behavior: 'instant' });
+    halten();
   };
 });
+halten();
 </script>
 </body>
 </html>
