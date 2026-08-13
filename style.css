@@ -297,12 +297,58 @@ img, svg { max-width: 100%; }
   .head-back { display: none; }
 }
 
-/* --- Fußzeile ------------------------------------------------------------- */
+/* --- Fußzeile -------------------------------------------------------------
+   Der Fuß liegt fest hinter der Seite. Die Seite selbst ist eine Karte mit
+   runder Unterkante: am Ende schiebt sie sich darüber weg und legt ihn frei.
+   Der Platzhalter davor hält genau die Höhe des Fußes im Fluss frei, damit
+   Unterkante der Karte und Oberkante des Fußes am Dokumentende zusammenfallen.
+   foot.js misst die Höhe; ohne Skript greift der Rückfallwert.              */
+
+/* Rückfall ohne Skript: eher etwas zu hoch als zu niedrig, sonst schöbe sich
+   der Fuß über die letzten Zeilen. Mit Skript steht hier der gemessene Wert. */
+:root { --fusshoehe: 470px; --rundung: var(--r-m); }
+@media (min-width: 380px)  { :root { --fusshoehe: 425px; } }
+@media (min-width: 768px)  { :root { --fusshoehe: 375px; } }
+@media (min-width: 1200px) { :root { --fusshoehe: 250px; } }
+@media (min-width: 768px)  { :root { --rundung: var(--r-l); } }
+
+main {
+  position: relative;
+  z-index: 1;
+  background: var(--paper);
+  border-end-start-radius: var(--rundung);
+  border-end-end-radius: var(--rundung);
+}
+
+/* Der Platzhalter ist um genau eine Rundung kürzer als der Fuß. Dadurch liegt
+   die Unterkante der Karte am Ende eine Rundung tief im Fuß — und erst so
+   werden die runden Ecken sichtbar, statt bündig auf seiner Kante zu sitzen. */
+.foot-slot { height: calc(var(--fusshoehe) - var(--rundung)); }
 
 .site-foot {
-  border-top: 1px solid var(--line);
-  background: var(--paper);
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  /* Eigene, hellere Werte — sonst wäre der Fuß im Dunkeln nicht vom
+     Papier zu unterscheiden und die Karte hätte keine Kante. */
+  background: #0B0B0B;
+  color: #F4F4F1;
+  --ink:    #F4F4F1;
+  --ink-2:  #A4A4A0;
+  --ink-3:  #767674;
+  --card:   #161616;
+  --card-2: #1D1D1D;
+  --line:   #292928;
+  --paper:  #0B0B0B;
 }
+
+@media (prefers-color-scheme: dark) {
+  .site-foot { background: #151515; --paper: #151515; }
+}
+
+
 
 .site-foot__in {
   max-width: 78rem;
