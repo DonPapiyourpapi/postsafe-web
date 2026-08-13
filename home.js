@@ -40,6 +40,7 @@
   var stick = story && story.querySelector(".story__stick");
   var wordsBox = story && story.querySelector("[data-words]");
   var words = story && story.querySelector("[data-words] > div");
+  var marksBar = story && story.querySelector("[data-marks]");
   var hint = story && story.querySelector(".story__hint");
   var folderBox = story && story.querySelector("[data-folders]");
   var phone = story && story.querySelector("[data-phone]");
@@ -94,8 +95,10 @@
     var heroTop = 0;
     var overFolders = boxes.length ? boxes[0].cy - boxes[0].h / 2 - 12 : H;
     if (narrow && stick && wordsBox) {
-      var room = stick.clientHeight - stage.offsetTop - 8;
-      heroTop = wordsBox.offsetTop + wordsBox.offsetHeight - stage.offsetTop + 12;
+      /* Unten steht die Markenleiste; ihr Platz gehoert nicht dem Stapel. */
+      var unten = marksBar ? marksBar.offsetHeight + 20 : 0;
+      var room = stick.clientHeight - stage.offsetTop - 8 - unten;
+      heroTop = wordsBox.offsetTop + wordsBox.offsetHeight - stage.offsetTop + 36;
       cardW = Math.max(112, Math.min(
         cardW,
         (room - heroTop) / (1.32 * 1.36),
@@ -192,6 +195,7 @@
       words.style.transform = "translate3d(0," + (-out * 44).toFixed(1) + "px,0)";
     }
     if (hint) hint.style.opacity = (1 - span(q, 0, 0.04)).toFixed(3);
+    if (marksBar) marksBar.style.opacity = (1 - out).toFixed(3);
 
     /* Am Ende rückt die fertige Ablage in die Mitte. */
     var mid = easeInOut(span(q, 0.91, 1));
