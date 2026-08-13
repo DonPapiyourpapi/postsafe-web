@@ -77,6 +77,7 @@
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
+  background: var(--paper);   /* auch die Fläche hinter Safaris Leiste */
 }
 
 body {
@@ -304,13 +305,24 @@ img, svg { max-width: 100%; }
    Unterkante der Karte und Oberkante des Fußes am Dokumentende zusammenfallen.
    foot.js misst die Höhe; ohne Skript greift der Rückfallwert.              */
 
-/* Rückfall ohne Skript: eher etwas zu hoch als zu niedrig, sonst schöbe sich
-   der Fuß über die letzten Zeilen. Mit Skript steht hier der gemessene Wert. */
-:root { --fusshoehe: 470px; --rundung: var(--r-m); }
-@media (min-width: 380px)  { :root { --fusshoehe: 425px; } }
-@media (min-width: 768px)  { :root { --fusshoehe: 375px; } }
-@media (min-width: 1200px) { :root { --fusshoehe: 250px; } }
-@media (min-width: 768px)  { :root { --rundung: var(--r-l); } }
+/* --- Fußzeile -------------------------------------------------------------
+   Der Fuß hängt am unteren Rand, solange die Seite über ihm läuft, und kommt
+   am Dokumentende zur Ruhe. Die Seite selbst ist eine Karte mit runder
+   Unterkante, die sich darüber wegschiebt.
+
+   Gemacht mit position: sticky, nicht fixed. Sticky bleibt im Fluß — der Fuß
+   bringt seinen Platz selbst mit, es braucht weder einen Platzhalter noch ein
+   Skript, das seine Höhe mißt. Und vor allem hängt am unteren Bildschirmrand
+   dann kein aus dem Fluß gelöstes Element mehr, an dem Safari am iPhone die
+   Fläche hinter seiner Leiste einfärben könnte.
+
+   Der Fuß rückt mit einem negativen oberen Rand eine Rundung nach oben unter
+   die Karte — bündig säße ihre Kante genau auf seiner, und die runden Ecken
+   wären unsichtbar. Der Rand sitzt am Fuß und nicht an der Karte, weil die
+   Rechtstexte ihrem <main> über .wrap ein eigenes margin geben.            */
+
+:root { --rundung: var(--r-m); }
+@media (min-width: 768px) { :root { --rundung: var(--r-l); } }
 
 main {
   position: relative;
@@ -320,17 +332,15 @@ main {
   border-end-end-radius: var(--rundung);
 }
 
-/* Der Platzhalter ist um genau eine Rundung kürzer als der Fuß. Dadurch liegt
-   die Unterkante der Karte am Ende eine Rundung tief im Fuß — und erst so
-   werden die runden Ecken sichtbar, statt bündig auf seiner Kante zu sitzen. */
-.foot-slot { height: calc(var(--fusshoehe) - var(--rundung)); }
-
 .site-foot {
-  position: fixed;
-  left: 0;
-  right: 0;
+  position: sticky;
   bottom: 0;
   z-index: 0;
+  margin-top: calc(-1 * var(--rundung));
+  /* Die Szene ist 520vh hoch; bei manchen Fensterhöhen bleibt daraus ein
+     Bruchteil-Pixel unter dem Fuß stehen. Ein Schatten in seiner eigenen Farbe
+     deckt ihn ab, ohne am Aufbau etwas zu ändern. */
+  box-shadow: 0 3px 0 #0B0B0B;
   /* Eigene, hellere Werte — sonst wäre der Fuß im Dunkeln nicht vom
      Papier zu unterscheiden und die Karte hätte keine Kante. */
   background: #0B0B0B;
@@ -345,10 +355,8 @@ main {
 }
 
 @media (prefers-color-scheme: dark) {
-  .site-foot { background: #151515; --paper: #151515; }
+  .site-foot { background: #151515; --paper: #151515; box-shadow: 0 3px 0 #151515; }
 }
-
-
 
 .site-foot__in {
   max-width: 78rem;
@@ -414,7 +422,10 @@ main {
 
 /* --- Rechtstexte / Fließtext ---------------------------------------------- */
 
-.wrap {
+ /* Die Rechtstexte: <main> ist die Karte über die ganze Breite, die Lesespalte
+    liegt darin. Vorher war <main> selbst die Spalte — dann wäre die Karte nur
+    ein schmaler Streifen mitten auf dem Fuß. */
+.wrap__in {
   max-width: 46rem;
   margin: 0 auto;
   padding: clamp(104px, 14vh, 144px) var(--pad) 74px;
