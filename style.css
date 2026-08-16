@@ -264,7 +264,9 @@ img, svg { max-width: 100%; }
   min-height: 44px;
 }
 
-.brand__mark { flex: none; border-radius: 8px; }
+/* Das Zeichen ist jetzt der blosse Strichzug aus der App-Kachel,
+   ohne Hintergrund — deshalb auch kein Radius mehr. */
+.brand__mark { flex: none; }
 
 .site-nav { display: none; gap: 26px; }
 
