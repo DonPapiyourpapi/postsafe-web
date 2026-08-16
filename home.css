@@ -20,7 +20,58 @@
   letter-spacing: -.045em;
   margin: 0;
   max-width: 13ch;
-  text-wrap: balance;
+  /* Kein balance: der Satz waechst und schrumpft beim Tippen Buchstabe fuer
+     Buchstabe, und ein ausgewogener Umbruch wuerde die schon geschriebenen
+     Woerter bei jedem Anschlag verschieben. */
+  text-wrap: normal;
+}
+
+/* --- Die Ueberschrift schreibt sich selbst --------------------------------
+
+   Alle Saetze stehen in der Ueberschrift uebereinander in derselben Zelle; nur
+   der oberste ist zu sehen, die anderen sind unsichtbar. Dadurch ist sie von
+   selbst so hoch wie ihr laengster Satz — bei jeder Breite, ohne dass etwas
+   nachgemessen werden muss. Waere die Hoehe gerechnet, ruckelte der Briefstapel
+   darunter bei jedem Anschlag. */
+
+.display { display: grid; }
+.display > * { grid-area: 1 / 1; }
+
+.mass { visibility: hidden; }
+.mass::before { content: "Deine Post "; font-weight: 300; }
+
+.tippt { white-space: pre-wrap; }
+
+/* Der Strich hinter dem Text. Etwas schmaler als ein Buchstabe, damit er
+   als Schreibmarke liest und nicht als Satzzeichen. */
+.tippt__strich {
+  display: inline-block;
+  width: .055em;
+  height: .74em;
+  margin-left: .07em;
+  vertical-align: -.02em;
+  border-radius: 1px;
+  background: currentColor;
+  animation: tippstrich 1.05s steps(2, end) infinite;
+}
+
+@keyframes tippstrich { 50% { opacity: 0; } }
+
+.tippt--ruht .tippt__strich { animation: none; opacity: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .tippt__strich { animation: none; opacity: 0; }
+}
+
+/* Fuer Vorleseprogramme steht der Satz einmal fest da; der tippende Teil
+   ist fuer sie ausgeblendet, sonst wuerde er bei jedem Buchstaben vorgelesen. */
+.nur-gelesen {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0; border: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 /* Der leichte Teil des Seitentitels */
